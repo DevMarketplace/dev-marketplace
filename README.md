@@ -45,8 +45,8 @@ To illustrate the site operation better, let's consider the following examples:
 |0.0.0   |         |             |
 
 ## Developer Marketplace architecture and roadmap
-You can find more information about the project roadmap from the ROADMAP.md file.
-The architecture diagrams are located in the docs folder.
+You can find more information about the project roadmap from the [ROADMAP.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/ROADMAP.md) file.
+The architecture diagrams and the [ARCHITECTURE.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/ARCHITECTURE.md) are located in the docs folder.
 
 ## Downloading and building the source code
 You can clone the repository using the following command:
@@ -56,7 +56,7 @@ You can clone the repository using the following command:
 You can build and run the project either using VS2015 or the Build.ps1 located in the build folder.
 
 ## How to contribute
-Please read the CONTRIBUTORS.md file to find out more information about how to contribute to the project.
+Please read the [CONTRIBUTORS.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/CONTRIBUTORS.md) file to find out more information about how to contribute to the project.
 The file contains everything necessary to get you started right away.
 
 ## Legal and Licensing
