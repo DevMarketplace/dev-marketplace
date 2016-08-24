@@ -39,16 +39,27 @@ To illustrate the site operation better, let's consider the following examples:
 ### No currency transactions (a.k.a free transactions)
 - There is no exchange. The developers work on any free story they choose. The team that shares the story chooses to accept the most suitable pull request.
 
-## Latest Release
+## Version Changeset
+|Version | Changes |Release Type |
+|--------|---------|------------:|
+|0.0.0   |         |             |
 
-## Developer Marketplace features
+## Developer Marketplace architecture and roadmap
+You can find more information about the project roadmap from the ROADMAP.md file.
+The architecture diagrams are located in the docs folder.
 
-## Downloading the source code
+## Downloading and building the source code
+You can clone the repository using the following command:
+
+`git clone https://github.com/cracker4o/dev-marketplace.git`
+
+You can build and run the project either using VS2015 or the Build.ps1 located in the build folder.
 
 ## How to contribute
+Please read the CONTRIBUTORS.md file to find out more information about how to contribute to the project.
+The file contains everything necessary to get you started right away.
 
 ## Legal and Licensing
 
 ## Project governance
-
 
