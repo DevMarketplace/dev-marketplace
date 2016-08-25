@@ -63,3 +63,15 @@ The file contains everything necessary to get you started right away.
 
 ## Project governance
 
+The project requires contributors performing the following activities:
+- repository maintenance
+- software development
+- git issues triaging
+- story prioritizing
+
+Volunteers are welcome for any of these roles.
+
+### Team members
+Tosho Toshev - Software Engineer
+---
+
