@@ -71,7 +71,7 @@ The project requires contributors performing the following activities:
 
 Volunteers are welcome for any of these roles.
 
-### Team members
+## Team members
+
 Tosho Toshev - Software Engineer
----
 
