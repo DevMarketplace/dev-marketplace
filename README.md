@@ -68,6 +68,8 @@ The project requires contributors performing the following activities:
 - software development
 - git issues triaging
 - story prioritizing
+- frontend design guidelines
+- database architecture
 
 Volunteers are welcome for any of these roles.
 
