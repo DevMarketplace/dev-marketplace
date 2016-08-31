@@ -7,9 +7,9 @@ Welcome to the Developer Marketplace repository! The Developer Marketplace is a 
 - A team shares a KanBan story on the Developer Marketplace website
 - Developers bid for the story
 - The team selects one or more developers to work on their story based on the bids they get.
-- The software developers who have won the bid pull the working branch from a code repositor and work on the storyy.
+- The software developers who have won the bid pull the working branch from a code repository and work on the story.
 - The team analyzes the pool request and decides wether the code satisfies the initial requirements and accepts it or rejects it.
-- If the story is accepted, the team pays the software developer who worked on the story. There are different payment methods, (time, money, stories, no payment required)
+- If the story is accepted, the team pays the software developer who worked on the story. There are different payment methods, (time, money, stories and no payment required)
 
 To illustrate the site operation better, let's consider the following examples:
 
@@ -34,7 +34,7 @@ To illustrate the site operation better, let's consider the following examples:
 - All Development marketplace decisions are final.
 
 ### Using other stories as currency
-- Consider the same situation as the previous scenarios but this time Team "A" can work on stories that Developer "B" has posted on the Development Marketplace
+- Consider the same situation as the previous scenarios but this time Team "A" can work on stories that Developer "B" has posted on the Development Marketplace in order to pay him back.
 
 ### No currency transactions (a.k.a free transactions)
 - There is no exchange. The developers work on any free story they choose. The team that shares the story chooses to accept the most suitable pull request.
@@ -60,6 +60,21 @@ Please read the [CONTRIBUTORS.md](https://github.com/cracker4o/dev-marketplace/b
 The file contains everything necessary to get you started right away.
 
 ## Legal and Licensing
+The Developer Marketplace project is licensed under the GNU GENERAL PUBLIC LICENSE v3.
+ Copyright (C) 2016  Tosho Toshev
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+A copy of the GNU General Public License should be distributed
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Project governance
 
