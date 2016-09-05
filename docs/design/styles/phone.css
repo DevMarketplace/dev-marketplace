@@ -1,0 +1,69 @@
+@media all and (min-height: 0px) {
+
+    a.btn {
+        font-weight: 500;
+        letter-spacing: 2px;
+    }
+
+    a.btn.primary {
+        background-color: #57648C;
+    }
+
+    a.btn.primary:hover {
+        background-color: #46537B;
+    }
+
+    a.btn.secondary {
+        background-color: #C2B4D6;
+    }
+
+    a.btn.secondary:hover {
+        background-color: #B1A3C5;
+    }
+
+    .mt10 {
+        margin-top: 10px;
+    }
+
+    .ml10 {
+        margin-left: 10px;
+    }
+
+    h1 {
+
+    }
+
+    h2 {
+
+    }
+
+    h3 {
+
+    }
+
+    h4 {
+
+    }
+
+    h5 {
+
+    }
+
+    h6 {
+
+    }
+
+    body {
+        margin: 0;
+        background-color: #FFFFFF;
+        font-weight: 300;
+        font-size: 16px;
+    }    
+    
+    .promo-text {
+        color: #667;
+        line-height: 35px;
+        font-size: 30px;
+        font-weight: 300;
+    }
+}

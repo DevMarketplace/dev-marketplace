@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html>
+<!-- 
+        934A5F / 57648C / C2B4D6 / E5E5E5
+    -->
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link rel="stylesheet" href="styles/phone.css">
+    <link rel="stylesheet" href="styles/tablet.css">
+    <link rel="stylesheet" href="styles/desktop.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+        crossorigin="anonymous"></script>
+    <title>Developer Marketplace</title>
+</head>
+
+<body>
+    <header>
+        <div class="jumbotron">
+            <div class="code-snippets">
+                    <pre>
+init : function() { 
+    var owner = this; 
+    this.promptElement = $("#lightbox"); 
+    $("#purgeAllButton").on("click", function(e) {
+        e.preventDefault(); 
+        owner.purgeAllBtnClick(); 
+    }); 
+
+    $("#purgeButton").on("click", function(e) { 
+        e.preventDefault();
+        owner.purgeBtnClick(); 
+    });
+}
+
+var ngAriaModule = angular.module('ngAria', ['ng']).
+                        provider('$aria', $AriaProvider);
+
+/**
+* Internal Utilities
+*/
+var nodeBlackList = ['BUTTON', 'A', 'INPUT', 'TEXTAREA', 'SELECT', 'DETAILS', 'SUMMARY'];
+
+var isNodeOneOf = function(elem, nodeTypeArray) {
+  if (nodeTypeArray.indexOf(elem[0].nodeName) !== -1) {
+    return true;
+  }
+};
+/**
+ * @ngdoc provider
+ * @name $ariaProvider
+ *
+ * @description
+ *
+ * Used for configuring the ARIA attributes injected and managed by ngAria.
+ *
+ * ```js
+ * angular.module('myApp', ['ngAria'], function config($ariaProvider) {
+ *   $ariaProvider.config({
+ *     ariaValue: true,
+ *     tabindex: false
+ *   });
+ * });
+ *```
+ *
+ * ## Dependencies
+ * Requires the {@link ngAria} module to be installed.
+ *
+ */
+function $AriaProvider() {
+  var config = {
+    ariaHidden: true,
+    ariaChecked: true,
+    ariaReadonly: true,
+    ariaDisabled: true,
+    ariaRequired: true,
+    ariaInvalid: true,
+    ariaValue: true,
+    tabindex: true,
+    bindKeypress: true,
+    bindRoleForClick: true
+  };
+
+  /**
+   * @ngdoc method
+   * @name $ariaProvider#config
+   *
+   * @param {object} config object to enable/disable specific ARIA attributes
+   *
+   *  - **ariaHidden** – `{boolean}` – Enables/disables aria-hidden tags
+   *  - **ariaChecked** – `{boolean}` – Enables/disables aria-checked tags
+   *  - **ariaReadonly** – `{boolean}` – Enables/disables aria-readonly tags
+   *  - **ariaDisabled** – `{boolean}` – Enables/disables aria-disabled tags
+   *  - **ariaRequired** – `{boolean}` – Enables/disables aria-required tags
+   *  - **ariaInvalid** – `{boolean}` – Enables/disables aria-invalid tags
+   *  - **ariaValue** – `{boolean}` – Enables/disables aria-valuemin, aria-valuemax and aria-valuenow tags
+   *  - **tabindex** – `{boolean}` – Enables/disables tabindex tags
+   *  - **bindKeypress** – `{boolean}` – Enables/disables keypress event binding on `div` and
+   *    `li` elements with ng-click
+   *  - **bindRoleForClick** – `{boolean}` – Adds role=button to non-interactive elements like `div`
+   *    using ng-click, making them more accessible to users of assistive technologies
+   *
+   * @description
+   * Enables/disables various ARIA attributes
+   */
+  this.config = function(newConfig) {
+    config = angular.extend(config, newConfig);
+  };
+                    </pre>
+            </div>
+        </div>
+        <div class="navigation-bar">
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="/" class="brand-logo">_Dev_Marketplace</a>
+                    <a href="#" data-activates="nav-mobile" class="button-collapse">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <ul id="nav-desktop" class="right hide-on-med-and-down">                   
+                        <li><a href="#">Start a project</a></li>
+                        <li><a href="#">Log In</a></li>
+                        <li><a href="#">Sign Up</a></li>
+                    </ul>
+                    <ul class="side-nav" id="nav-mobile">
+                        <li><a href="#">Start a project</a></li>
+                        <li><a href="#">Log In</a></li>
+                        <li><a href="#">Sign Up</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="promo valign-wrapper">
+        <div class="search-bar">
+            <div class="valign left search-wrapper">
+                <input id="search" placeholder="Find a project..." type="text" />
+            </div>
+
+            <div class="valign left ml10 search-btn-wrapper">
+                <a id="search-button" class="btn secondary btn-large" href="#">search</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="row promo-projects">
+                        
+            <div class="col s12 m6 l4">
+                <div class="project-details">
+                    <div class="story-count">
+                        31
+                    </div>
+                    <div class="story-count-caption">Open stories</div>
+                    <div class="accepted-count">
+                        54
+                    </div>
+                    <div class="accepted-count-caption">Assigned stories</div>
+                    <div class="like-project">
+                        <i class="material-icons">thumb_up</i>
+                    </div>
+                    <div class="info">
+                        <div class="project-description">
+                            A new website for Insinkerator that
+                            incorporates the Emerson One design
+                        </div>
+                        <div class="project-logo">
+                            insinkerator.com project
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="navigate center-align valign-wrapper">
+                        <a href="#" class="valign">
+                            <i class="material-icons">play_arrow</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="project-details">
+                    <div class="story-count">
+                        31
+                    </div>
+                    <div class="story-count-caption">Open stories</div>
+                    <div class="accepted-count">
+                        54
+                    </div>
+                    <div class="accepted-count-caption">Assigned stories</div>
+                    <div class="like-project">
+                        <i class="material-icons">thumb_up</i>
+                    </div>
+                    <div class="info">
+                        <div class="project-description">
+                            A bot that utilizes the Microsoft
+                            bot framework.
+                        </div>
+                        <div class="project-logo">
+                            Ultra bot project
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="navigate center-align valign-wrapper">
+                        <a href="#" class="valign">
+                            <i class="material-icons">play_arrow</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="project-details">
+                    <div class="story-count">
+                        31
+                    </div>
+                    <div class="story-count-caption">Open stories</div>
+                    <div class="accepted-count">
+                        54
+                    </div>
+                    <div class="accepted-count-caption">Assigned stories</div>
+                    <div class="like-project">
+                        <i class="material-icons">thumb_up</i>
+                    </div>
+                    <div class="info">
+                        <div class="project-description">
+                            Helps record your board games scores
+                            and track your performance
+                        </div>
+                        <div class="project-logo">
+                            nemestats.com
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="navigate center-align valign-wrapper">
+                        <a href="#" class="valign">
+                            <i class="material-icons">play_arrow</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l4">
+                <div class="project-details">
+                    <div class="story-count">
+                        31
+                    </div>
+                    <div class="story-count-caption">Open stories</div>
+                    <div class="accepted-count">
+                        54
+                    </div>
+                    <div class="accepted-count-caption">Assigned stories</div>
+                    <div class="like-project">
+                        <i class="material-icons">thumb_up</i>
+                    </div>
+                    <div class="info">
+                        <div class="project-description">
+                            A Drone scout used to map terrains
+                            and performs various calculations
+                        </div>
+                        <div class="project-logo">
+                            Next drone
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="navigate center-align valign-wrapper">
+                        <a href="#" class="valign">
+                            <i class="material-icons">play_arrow</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="intro">
+            <!--This section provides a detailed look and an introduction for a special project-->
+        </section>
+    </main>
+    <footer>
+        <!--Contains the footer secion-->
+    </footer>
+    <div class="sub-footer">
+        <div class="container ">
+            <div class="left">
+                <span>Developer marketplace 2016</span>
+            </div>
+            <div class="right">
+                <span>Some licensing information here</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
