@@ -1,10 +1,10 @@
-{
+﻿{
   "version": "1.0.0-*",
 
   "dependencies": {
     "NUnit": "3.4.1",
     "dotnet-test-nunit": "3.4.0-beta-2",
-    "BusinessLogic": "1.0.0-*"
+    "RestServices": "1.0.0-*"
   },
 
   "testRunner": "nunit",
