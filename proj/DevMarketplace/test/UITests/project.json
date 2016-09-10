@@ -4,7 +4,8 @@
   "dependencies": {
     "NUnit": "3.4.1",
     "dotnet-test-nunit": "3.4.0-beta-2",
-    "UI": "1.0.0-*"
+    "UI": "1.0.0-*",
+    "Moq": "4.6.38-alpha"
   },
 
     "testRunner": "nunit",

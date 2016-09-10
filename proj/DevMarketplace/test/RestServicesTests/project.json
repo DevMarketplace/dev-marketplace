@@ -1,10 +1,11 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "dependencies": {
     "NUnit": "3.4.1",
     "dotnet-test-nunit": "3.4.0-beta-2",
-    "RestServices": "1.0.0-*"
+    "RestServices": "1.0.0-*",
+    "Moq": "4.6.38-alpha"
   },
 
   "testRunner": "nunit",

@@ -2,7 +2,8 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "DataAccess": "1.0.0-*"
+    "DataAccess": "1.0.0-*",
+    "StructureMap.Microsoft.DependencyInjection": "1.0.1"
   },
 
   "frameworks": {
