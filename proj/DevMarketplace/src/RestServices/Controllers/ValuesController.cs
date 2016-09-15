@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RestServices.Controllers
 {
+    //Example controller
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
