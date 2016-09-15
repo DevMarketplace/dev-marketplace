@@ -8,7 +8,7 @@ If you want to become a contributor, you have to follow this workflow:
 - The Developer Marketplace project abides by [TDD](https://en.wikipedia.org/wiki/Test-driven_development) practices. For every piece of production code there should be a unit test that failed and the production code fixes it and makes it pass. All code is subject to testing except the generated code, business objects, models and POCOs. An AppVeyor CI build is in place to assure that all unit tests pass and the project code base is intact.
 - Follow the coding conventions described in the [CONVENTIONS.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/CODING_CONVENTIONS.md) file.
 - When you are finished implementing the code for the story, please commit and push your changes and make a pull request.
-- Once the pull request is accepted, the comment message on that request should be in the following format: `#xxx closed - Freeform message` where the #xxx is the number of the GitHub issue. 
+- Once the pull request is accepted, the comment message on that request should be in the following format: `Closes #xxx - Freeform message` where the #xxx is the number of the GitHub issue. 
 
 ##Kanban story management
 The Kanban board is managed on Waffle.IO . It is an UI over GitHub issues and it gives kanban states to all GitHub issues. It is preferable for every new issue/story to be created in the Waffle.IO board. It has to be described thoroughly and estimated with story points from 1 to 8 (if a story is greater than 8, then it needs to be split into multiple smaller stories). Every story is tagged with the `enhancement` tag and every defect is tagged as a `bug`. If you need help from some of the other contributors, please tag the defect/story with the `help wanted` tag.
