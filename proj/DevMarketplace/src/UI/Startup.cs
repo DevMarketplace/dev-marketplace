@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using StructureMap;
+using DataAccess;
+using BusinessLogic;
+using Microsoft.EntityFrameworkCore;
 
 namespace UI
 {
@@ -25,10 +29,36 @@ namespace UI
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().AddControllersAsServices();
+
+            return ConfigureIoC(services);
+        }
+
+        public IServiceProvider ConfigureIoC(IServiceCollection services)
+        {
+            var container = new Container();
+
+            container.Configure(config =>
+            {
+                // Register stuff in container, using the StructureMap APIs...
+                config.Scan(x =>
+                {
+                    x.AssemblyContainingType(typeof(Startup));
+                    x.WithDefaultConventions();
+                });
+
+                var connection = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+                services.AddEntityFrameworkSqlServer().AddDbContext<DevMarketplaceDataContext>(options => options.UseSqlServer(connection), ServiceLifetime.Scoped);
+                config.AddRegistry<DataAccessRegistry>();
+                config.AddRegistry<BusinessLogicRegistry>();
+                //Populate the container using the service collection
+                config.Populate(services);
+            });
+
+            return container.GetInstance<IServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

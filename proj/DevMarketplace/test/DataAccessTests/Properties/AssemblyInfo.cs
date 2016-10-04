@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DataAccess")]
+[assembly: AssemblyProduct("DataAccessTests")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,6 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bee4547f-e7b3-4bca-83e6-11376219e8ae")]
-[assembly: InternalsVisibleTo("DataAccessTests")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: Guid("110d2ea8-fa64-477d-8e05-b868974ecdc2")]
