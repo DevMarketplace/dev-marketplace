@@ -8,7 +8,7 @@ Welcome to the Developer Marketplace repository! The Developer Marketplace is a 
 - Developers bid for the story
 - The team selects one or more developers to work on their story based on the bids they get.
 - The software developers who have won the bid pull the working branch from a code repository and work on the story.
-- The team analyzes the pool request and decides wether the code satisfies the initial requirements and accepts it or rejects it.
+- The team analyzes the pull request and decides wether the code satisfies the initial requirements and accepts it or rejects it.
 - If the story is accepted, the team pays the software developer who worked on the story. There are different payment methods, (time, money, stories and no payment required)
 
 To illustrate the site operation better, let's consider the following examples:
@@ -29,8 +29,8 @@ To illustrate the site operation better, let's consider the following examples:
 - Team "A" considers the bids and selects Developer "B" to work on their story.
 - Developer "B" works on the story.
 - Team "A" checks the code of Developer "B" and decides whether to accept his pull request
-- Positive scenario: Team "A" accepts the pull request and pays Developer "B" the requested amount using the Developer Marketplace payment processor
-- Negative scenario: Team "A" rejects the pull request and can return it to the developer for adjustments or fully cancel the transaction with Developer "B" because of poorly written code. Developer "B" can protest and the Developer Marketplace will arbitrate the matter.
+- Positive outcome: Team "A" accepts the pull request and pays Developer "B" the requested amount using the Developer Marketplace payment processor
+- Negative outcome: Team "A" rejects the pull request and can return it to the developer for adjustments or fully cancel the transaction with Developer "B" because of poorly written code. Developer "B" can protest and the Developer Marketplace will arbitrate the matter.
 - All Development marketplace decisions are final.
 
 ### Using other stories as currency
@@ -43,6 +43,9 @@ To illustrate the site operation better, let's consider the following examples:
 |Version | Changes |Release Type |
 |--------|---------|------------:|
 |0.0.0   |         |             |
+
+## Errata
+This section describes all workarounds and issue fixes that were implemented in the project. Currently Asp.Net Core and the related frameworks have some limitations that require workarounds to be implemented until a better version is released. All these workarounds will be put in the [ERRATA.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/ERRATA.md) sheet.
 
 ## Developer Marketplace architecture and roadmap
 You can find more information about the project roadmap from the [ROADMAP.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/ROADMAP.md) file.
