@@ -11,6 +11,7 @@ using StructureMap;
 using DataAccess;
 using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace UI
 {
@@ -31,6 +32,9 @@ namespace UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<DevMarketplaceDataContext>()
+                    .AddDefaultTokenProviders();
             // Add framework services.
             services.AddMvc().AddControllersAsServices();
 

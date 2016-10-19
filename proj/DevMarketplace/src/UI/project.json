@@ -24,7 +24,8 @@
       "version": "1.0.1",
       "type": "platform"
     },
-    "StructureMap.Microsoft.DependencyInjection": "1.2.0"
+    "StructureMap.Microsoft.DependencyInjection": "1.2.0",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0"
   },
 
   "tools": {
