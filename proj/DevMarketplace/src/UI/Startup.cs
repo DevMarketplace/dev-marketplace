@@ -35,6 +35,32 @@ namespace UI
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<DevMarketplaceDataContext>()
                     .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 8;
+
+                var loginPath = Configuration.GetSection("Authentication").GetValue<string>("LogInPath");
+                var logoutPath = Configuration.GetSection("Authentication").GetValue<string>("LogOutPath");
+
+                // Cookie settings
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = loginPath;
+                options.Cookies.ApplicationCookie.LogoutPath = logoutPath;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
             // Add framework services.
             services.AddMvc().AddControllersAsServices();
 
@@ -58,6 +84,7 @@ namespace UI
                 services.AddEntityFrameworkSqlServer().AddDbContext<DevMarketplaceDataContext>(options => options.UseSqlServer(connection), ServiceLifetime.Scoped);
                 config.AddRegistry<DataAccessRegistry>();
                 config.AddRegistry<BusinessLogicRegistry>();
+
                 //Populate the container using the service collection
                 config.Populate(services);
             });

@@ -5,6 +5,10 @@ using System;
 
 namespace DataAccess
 {
+    /// <summary>
+    /// A basic IDataContext interface that provides an abstraction from the real EF DBContext.
+    /// Helps with IoC instantiation
+    /// </summary>
     public interface IDataContext : IDisposable
     {
         DbSet<TEntity> Set<TEntity>() where TEntity : class;

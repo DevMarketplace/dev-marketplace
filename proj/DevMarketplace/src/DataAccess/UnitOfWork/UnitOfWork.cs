@@ -7,9 +7,9 @@ namespace DataAccess.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private bool disposedValue = false;
-        private IDataContext _dataContext;
-        private List<object> _repositories;
+        private bool _disposedValue = false;
+        private readonly IDataContext _dataContext;
+        private readonly List<object> _repositories;
 
         public UnitOfWork(IDataContext dataContext)
         {
@@ -35,12 +35,12 @@ namespace DataAccess.UnitOfWork
                 {
                     try
                     {
-                        (repository as IRepository).SubmitChanges();
+                        ((IRepository)repository).SubmitChanges();
                     }
-                    catch(Exception e)
+                    catch(Exception)
                     {
                         transaction.Rollback();
-                        throw e;
+                        throw;
                     }
                 }
             }
@@ -48,7 +48,7 @@ namespace DataAccess.UnitOfWork
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -58,7 +58,7 @@ namespace DataAccess.UnitOfWork
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
