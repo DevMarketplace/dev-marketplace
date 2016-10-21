@@ -21,8 +21,11 @@ namespace DataAccess.Entity
         [Column(Order = 5), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Column(Order = 6), ForeignKey("IsoCountryCode")]
-        public Country Country { get; set; }
+        [Column(Order = 6), StringLength(2)]
+        public string IsoCountryCode { get; set; }
+
+        [ForeignKey("IsoCountryCode")]
+        public virtual Country Country { get; set; }
 
         [Column(Order=7)]
         public string Location { get; set; }
