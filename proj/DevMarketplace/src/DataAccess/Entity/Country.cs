@@ -12,7 +12,7 @@ namespace DataAccess.Entity
         [Key, StringLength(2), Column(Order=1)]
         public string IsoCountryCode { get; set; }
 
-        [Column(Order=2)]
+        [Column(Order=2), Required]
         public string Name {get; set;}
     }
 }

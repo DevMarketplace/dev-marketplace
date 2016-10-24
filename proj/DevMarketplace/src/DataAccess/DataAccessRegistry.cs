@@ -10,7 +10,11 @@ namespace DataAccess
     {
         public DataAccessRegistry()
         {
-            
+            Scan(scan =>
+            {
+                scan.AssemblyContainingType<DataAccessRegistry>();
+                scan.WithDefaultConventions();
+            });
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿@using UI.Models
+@using UI.Localization;
+@model RegisterViewModel
+
+<form asp-controller="Account" asp-action="Register">
+    <label asp-for="FirstName"></label>
+    <input asp-for="FirstName"/>
+    <label asp-for="LastName"></label>
+    <input asp-for="LastName"/>
+    <label asp-for="Email"></label>
+    <input asp-for="Email"/>
+    <label asp-for="Password"></label>
+    <input asp-for="Password"/>
+    <input type="submit" value="@AccountContent.RegisterText"/>
+</form>

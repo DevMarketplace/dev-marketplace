@@ -22,6 +22,8 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<Guid>("CompanyId");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -29,6 +31,14 @@ namespace DataAccess.Migrations
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 100);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 100);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -54,6 +64,8 @@ namespace DataAccess.Migrations
                         .HasAnnotation("MaxLength", 256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -97,7 +109,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("IsoCountryCode")
                         .HasAnnotation("MaxLength", 2);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("IsoCountryCode");
 
@@ -209,6 +222,14 @@ namespace DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DataAccess.ApplicationUser", b =>
+                {
+                    b.HasOne("DataAccess.Entity.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataAccess.Entity.Company", b =>

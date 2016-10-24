@@ -18,10 +18,10 @@ namespace DataAccess.Entity
         [Column(Order = 4)]
         public string Description { get; set; }
 
-        [Column(Order = 5), DataType(DataType.EmailAddress)]
+        [Required, Column(Order = 5), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Column(Order = 6), StringLength(2)]
+        [Required, Column(Order = 6), StringLength(2)]
         public string IsoCountryCode { get; set; }
 
         [ForeignKey("IsoCountryCode")]
