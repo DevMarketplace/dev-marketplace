@@ -31,9 +31,15 @@ namespace BusinessLogic.Facade
 
     public class EmailSenderConfiguration
     {
-        public FromConfiguration From { get; set; }
+        public EmailSenderConfiguration()
+        {
+            From = new FromConfiguration();
+            To = new ToConfiguration();
+        }
 
-        public ToConfiguration To { get; set; }
+        public FromConfiguration From { get; }
+
+        public ToConfiguration To { get; }
 
         public TextFormat EmailFormat { get; set; }
 

@@ -8,6 +8,18 @@ namespace BusinessLogic.Facade
 {
     public class EmailSender : IEmailSender
     {
+        private SmtpClient _smtpClient;
+
+        internal EmailSender(SmtpClient smtpClient)
+        {
+            _smtpClient = smtpClient;
+        }
+
+        public EmailSender()
+        {
+            _smtpClient = new SmtpClient();
+        }
+
         public async Task SendEmailAsync(EmailSenderConfiguration configuration)
         {
             var emailMessage = new MimeMessage();
