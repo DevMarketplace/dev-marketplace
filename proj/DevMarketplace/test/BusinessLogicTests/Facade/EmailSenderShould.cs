@@ -3,6 +3,10 @@ using MailKit.Net.Smtp;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Linq;
+using MailKit.Security;
+using MimeKit.Text;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 
 namespace BusinessLogicTests.Facade
 {
@@ -19,14 +23,23 @@ namespace BusinessLogicTests.Facade
             _emailSender = new EmailSender(_smtpClientMock.Object);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _emailSender.Dispose();
+        }
+
         [Test]
         public void DoThrowExceptionWhenNoRecipient()
         {
             //Arrange
-            var configuration = new EmailSenderConfiguration();
+            var configuration = BuildTestConfiguration(new ToConfiguration());
+            
 
             //Act/Assert
-            Assert.Throws<InvalidOperationException>(() => _emailSender.SendEmailAsync(configuration).Wait());
+            var asyncAggregatedException = Assert.Throws<AggregateException>(() => _emailSender.SendEmailAsync(configuration).Wait());
+            Assert.IsTrue(asyncAggregatedException.InnerExceptions.Count == 1);
+            CollectionAssert.AllItemsAreInstancesOfType(asyncAggregatedException.InnerExceptions, typeof(InvalidOperationException));
         }
 
 
@@ -34,15 +47,39 @@ namespace BusinessLogicTests.Facade
         public void DoSendToARecipient()
         {
             //Arrange
-            var configuration = new EmailSenderConfiguration();
+            var configuration = BuildTestConfiguration();
 
             //Act
             _emailSender.SendEmailAsync(configuration).Wait();
 
             //Assert
-            //_smtpClientMock.Object.
         }
 
+        private EmailSenderConfiguration BuildTestConfiguration(ToConfiguration toConfiguration= null)
+        {
+            var configuration = new EmailSenderConfiguration();
+            configuration.From.Name = "Somebody";
+            configuration.From.EmailAddress = "some@email.com";
+            configuration.SmtpPort = 25;
+            configuration.Domain = "someDomain.com";
+            configuration.EmailFormat = TextFormat.Text;
+            configuration.SecureSocketOption = SecureSocketOptions.None;
+
+            if (toConfiguration != null)
+            {
+                configuration.To = toConfiguration;
+            }
+            else
+            {
+                configuration.To.Subject = "Hello";
+                configuration.To.EmailAddress = "someEmail@mail.com";
+                configuration.To.Name = "some recipient";
+            }
+
+            configuration.EmailBody = "this is the body of the e-mail";
+
+            return configuration;
+        }
 
     }
 }

@@ -39,7 +39,7 @@ namespace BusinessLogic.Facade
 
         public FromConfiguration From { get; }
 
-        public ToConfiguration To { get; }
+        public ToConfiguration To { get; set; }
 
         public TextFormat EmailFormat { get; set; }
 

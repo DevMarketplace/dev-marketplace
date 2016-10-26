@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Facade
 {
-    public class EmailSender : IEmailSender
+    public class EmailSender : IEmailSender, IDisposable
     {
-        private SmtpClient _smtpClient;
-
-        internal EmailSender(SmtpClient smtpClient)
-        {
-            _smtpClient = smtpClient;
-        }
+        private readonly SmtpClient _smtpClient;
 
         public EmailSender()
         {
             _smtpClient = new SmtpClient();
+        }
+
+        internal EmailSender(SmtpClient smtpClient)
+        {
+            _smtpClient = smtpClient;
         }
 
         public async Task SendEmailAsync(EmailSenderConfiguration configuration)
@@ -34,14 +34,10 @@ namespace BusinessLogic.Facade
 
             emailMessage.Subject = configuration.To.Subject;
             emailMessage.Body = new TextPart(configuration.EmailFormat) { Text = configuration.EmailBody };
-
-            using (var client = new SmtpClient())
-            {
-                client.LocalDomain = configuration.Domain;
-                await client.ConnectAsync(configuration.SmtpServer, configuration.SmtpPort, configuration.SecureSocketOption).ConfigureAwait(false);
-                await client.SendAsync(emailMessage).ConfigureAwait(false);
-                await client.DisconnectAsync(true).ConfigureAwait(false);
-            }
+            _smtpClient.LocalDomain = configuration.Domain;
+            await _smtpClient.ConnectAsync(configuration.SmtpServer, configuration.SmtpPort, configuration.SecureSocketOption).ConfigureAwait(false);
+            await _smtpClient.SendAsync(emailMessage).ConfigureAwait(false);
+            await _smtpClient.DisconnectAsync(true).ConfigureAwait(false);
         }
 
         private static void SetCarbonCopy(EmailSenderConfiguration configuration, MimeMessage emailMessage)
@@ -77,6 +73,12 @@ namespace BusinessLogic.Facade
             }
 
             return hasRecipients;
+        }
+
+        public void Dispose()
+        {
+            _smtpClient?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
