@@ -3,10 +3,11 @@ using MailKit.Net.Smtp;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using MailKit.Security;
 using MimeKit.Text;
-using Org.BouncyCastle.Asn1.X509.Qualified;
+using MimeKit;
+using System.Threading;
+using MailKit;
 
 namespace BusinessLogicTests.Facade
 {
@@ -53,6 +54,7 @@ namespace BusinessLogicTests.Facade
             _emailSender.SendEmailAsync(configuration).Wait();
 
             //Assert
+            _smtpClientMock.Verify(x => x.SendAsync(It.IsAny<MimeMessage>(), It.IsAny<CancellationToken>(), It.IsAny<ITransferProgress>()));
         }
 
         private EmailSenderConfiguration BuildTestConfiguration(ToConfiguration toConfiguration= null)
@@ -60,6 +62,7 @@ namespace BusinessLogicTests.Facade
             var configuration = new EmailSenderConfiguration();
             configuration.From.Name = "Somebody";
             configuration.From.EmailAddress = "some@email.com";
+            configuration.SmtpServer = "smtp.test.com";
             configuration.SmtpPort = 25;
             configuration.Domain = "someDomain.com";
             configuration.EmailFormat = TextFormat.Text;

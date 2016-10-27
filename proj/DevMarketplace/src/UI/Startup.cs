@@ -12,6 +12,7 @@ using DataAccess;
 using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using BusinessLogic.Facade;
 
 namespace UI
 {
