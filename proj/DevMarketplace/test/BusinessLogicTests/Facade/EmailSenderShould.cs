@@ -4,7 +4,11 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using MailKit;
 using MailKit.Security;
+using MimeKit;
 using MimeKit.Text;
 using Org.BouncyCastle.Asn1.X509.Qualified;
 
@@ -47,12 +51,43 @@ namespace BusinessLogicTests.Facade
         public void DoSendToARecipient()
         {
             //Arrange
+            MimeMessage resultMessage = null;
             var configuration = BuildTestConfiguration();
+            _smtpClientMock.Setup(x => x.SendAsync(It.IsAny<MimeMessage>(), It.IsAny<CancellationToken>(), It.IsAny<ITransferProgress>()))
+                .Returns(Task.Factory.StartNew(() => { }))
+                .Callback<MimeMessage, CancellationToken, ITransferProgress>((message, token, transferProgress) => resultMessage = message);
 
             //Act
             _emailSender.SendEmailAsync(configuration).Wait();
 
             //Assert
+            Assert.AreEqual(configuration.To.EmailAddress, resultMessage.To.Mailboxes.First().Address);
+        }
+
+        [Test]
+        public void DoSendToMultipleRecipients()
+        {
+            //Arrange
+            MimeMessage resultMessage = null;
+            var toConfiguration = new ToConfiguration
+            {
+                Recipients =
+                {
+                    {"test@test.com", "Test User 1"},
+                    { "test2@test.com", "Test User 2" },
+                    { "test3@test.com", "Test User 3" }
+                }
+            };
+            var configuration = BuildTestConfiguration();
+            _smtpClientMock.Setup(x => x.SendAsync(It.IsAny<MimeMessage>(), It.IsAny<CancellationToken>(), It.IsAny<ITransferProgress>()))
+                .Returns(Task.Factory.StartNew(() => { }))
+                .Callback<MimeMessage, CancellationToken, ITransferProgress>((message, token, transferProgress) => resultMessage = message);
+
+            //Act
+            _emailSender.SendEmailAsync(configuration).Wait();
+
+            //Assert
+            Assert.AreEqual(configuration.To.EmailAddress, resultMessage.To.Mailboxes.First().Address);
         }
 
         private EmailSenderConfiguration BuildTestConfiguration(ToConfiguration toConfiguration= null)
