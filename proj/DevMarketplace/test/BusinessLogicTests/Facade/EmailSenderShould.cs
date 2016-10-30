@@ -10,7 +10,9 @@ using MailKit;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
-using Org.BouncyCastle.Asn1.X509.Qualified;
+using MimeKit;
+using System.Threading;
+using MailKit;
 
 namespace BusinessLogicTests.Facade
 {
@@ -95,6 +97,7 @@ namespace BusinessLogicTests.Facade
             var configuration = new EmailSenderConfiguration();
             configuration.From.Name = "Somebody";
             configuration.From.EmailAddress = "some@email.com";
+            configuration.SmtpServer = "smtp.test.com";
             configuration.SmtpPort = 25;
             configuration.Domain = "someDomain.com";
             configuration.EmailFormat = TextFormat.Text;

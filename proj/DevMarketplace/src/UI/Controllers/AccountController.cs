@@ -41,6 +41,7 @@ namespace UI.Controllers
         {
             var newUser = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
             var result = await _userManager.CreateAsync(newUser, model.Password);
+            //await _emailSender.SendEmailAsync();
             return View(model);
         }
     }

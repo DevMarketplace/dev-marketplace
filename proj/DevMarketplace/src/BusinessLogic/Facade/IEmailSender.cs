@@ -7,5 +7,6 @@ namespace BusinessLogic.Facade
 {
     public interface IEmailSender
     {
+        Task SendEmailAsync(EmailSenderConfiguration configuration);
     }
 }
