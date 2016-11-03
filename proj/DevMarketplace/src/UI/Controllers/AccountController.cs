@@ -15,7 +15,7 @@ namespace UI.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
-        private IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public AccountController(UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
@@ -41,9 +41,14 @@ namespace UI.Controllers
         {
             var newUser = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
             var result = await _userManager.CreateAsync(newUser, model.Password);
-            var configuration = new EmailSenderConfiguration();
-            configuration.To.EmailAddress = model.Email;
-            configuration.To.Name = $"{model.FirstName} {model.LastName}";
+            var configuration = new EmailSenderConfiguration
+            {
+                To =
+                {
+                    EmailAddress = model.Email,
+                    Name = $"{model.FirstName} {model.LastName}"
+                }
+            };
             await _emailSender.SendEmailAsync(configuration);
             return View(model);
         }
