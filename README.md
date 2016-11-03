@@ -4,7 +4,7 @@ Welcome to the Developer Marketplace repository! The Developer Marketplace is a 
 
 ## Developer marketplace Workflow
 
-- A team shares a KanBan story on the Developer Marketplace website
+- A team shares a KanBan story card on the Developer Marketplace website from their project management application (Trello, GitHub Issues, JIRA, Redmine, Rally, FogBugs) through a Developer Marketplace wizard page.
 - Developers bid for the story
 - The team selects one or more developers to work on their story based on the bids they get.
 - The software developers who have won the bid pull the working branch from a code repository and work on the story.
