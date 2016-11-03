@@ -10,9 +10,6 @@ using MailKit;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
-using MimeKit;
-using System.Threading;
-using MailKit;
 
 namespace BusinessLogicTests.Facade
 {
@@ -40,7 +37,6 @@ namespace BusinessLogicTests.Facade
         {
             //Arrange
             var configuration = BuildTestConfiguration(new ToConfiguration());
-            
 
             //Act/Assert
             var asyncAggregatedException = Assert.Throws<AggregateException>(() => _emailSender.SendEmailAsync(configuration).Wait());
@@ -73,14 +69,15 @@ namespace BusinessLogicTests.Facade
             MimeMessage resultMessage = null;
             var toConfiguration = new ToConfiguration
             {
+                Subject = "test subject",
                 Recipients =
                 {
-                    {"test@test.com", "Test User 1"},
+                    { "test@test.com", "Test User 1"},
                     { "test2@test.com", "Test User 2" },
                     { "test3@test.com", "Test User 3" }
                 }
             };
-            var configuration = BuildTestConfiguration();
+            var configuration = BuildTestConfiguration(toConfiguration);
             _smtpClientMock.Setup(x => x.SendAsync(It.IsAny<MimeMessage>(), It.IsAny<CancellationToken>(), It.IsAny<ITransferProgress>()))
                 .Returns(Task.Factory.StartNew(() => { }))
                 .Callback<MimeMessage, CancellationToken, ITransferProgress>((message, token, transferProgress) => resultMessage = message);
@@ -89,7 +86,35 @@ namespace BusinessLogicTests.Facade
             _emailSender.SendEmailAsync(configuration).Wait();
 
             //Assert
-            Assert.AreEqual(configuration.To.EmailAddress, resultMessage.To.Mailboxes.First().Address);
+            Assert.AreEqual(toConfiguration.Recipients.Count, resultMessage.To.Mailboxes.Count());
+            Assert.AreEqual("test@test.com", resultMessage.To.Mailboxes.First().Address);
+            Assert.AreEqual("test2@test.com", resultMessage.To.Mailboxes.ToList()[1].Address);
+        }
+
+        [Test]
+        public void DoSendToCarbonCopies()
+        {
+            //Arrange
+            MimeMessage resultMessage = null;
+            var toConfiguration = new ToConfiguration
+            {
+                Subject = "test subject",
+                EmailAddress = "test@test.com",
+                CarbonCopyRecipients =
+                {
+                    { "cc1@test.com", "Name1" }
+                }
+            };
+            var configuration = BuildTestConfiguration(toConfiguration);
+            _smtpClientMock.Setup(x => x.SendAsync(It.IsAny<MimeMessage>(), It.IsAny<CancellationToken>(), It.IsAny<ITransferProgress>()))
+                .Returns(Task.Factory.StartNew(() => { }))
+                .Callback<MimeMessage, CancellationToken, ITransferProgress>((message, token, transferProgress) => resultMessage = message);
+
+            //Act
+            _emailSender.SendEmailAsync(configuration).Wait();
+
+            //Assert
+            Assert.AreEqual("cc1@test.com", resultMessage.Cc.Mailboxes.First().Address);
         }
 
         private EmailSenderConfiguration BuildTestConfiguration(ToConfiguration toConfiguration= null)
