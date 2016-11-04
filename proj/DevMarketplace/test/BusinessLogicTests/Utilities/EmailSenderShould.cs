@@ -1,17 +1,17 @@
-﻿using BusinessLogic.Facade;
-using MailKit.Net.Smtp;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BusinessLogic.Utilities;
 using MailKit;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
+using Moq;
+using NUnit.Framework;
 
-namespace BusinessLogicTests.Facade
+namespace BusinessLogicTests.Utilities
 {
     [TestFixture]
     public class EmailSenderShould

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,9 +7,10 @@ using Microsoft.Extensions.Logging;
 using StructureMap;
 using DataAccess;
 using BusinessLogic;
+using DataAccess.Abstractions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using BusinessLogic.Facade;
 
 namespace UI
 {
@@ -25,7 +23,7 @@ namespace UI
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 builder.AddUserSecrets();
             }
@@ -93,6 +91,14 @@ namespace UI
                 config.Populate(services);
                 config.AddRegistry<DataAccessRegistry>();
                 config.AddRegistry<BusinessLogicRegistry>();
+
+                config.ForConcreteType<UserManagerWrapper<ApplicationUser>>()
+                    .Configure.Setter<UserManager<ApplicationUser>>()
+                    .Is(c => c.GetInstance<UserManager<ApplicationUser>>());
+
+                config.ForConcreteType<SignInManagerWrapper<ApplicationUser>>()
+                    .Configure.Setter<SignInManager<ApplicationUser>>()
+                    .Is(c => c.GetInstance<SignInManager<ApplicationUser>>());
             });
 
             return container.GetInstance<IServiceProvider>();

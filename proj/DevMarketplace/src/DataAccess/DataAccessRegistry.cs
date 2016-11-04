@@ -1,8 +1,6 @@
 ﻿using StructureMap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DataAccess.Abstractions;
+using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess
 {

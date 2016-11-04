@@ -1,29 +1,31 @@
-﻿using BusinessLogic.Facade;
-using DataAccess;
+﻿using DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Utilities;
+using DataAccess.Abstractions;
+using Microsoft.Extensions.Logging;
 using UI.Models;
 
 namespace UI.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<ApplicationUser> _userManager;
-        private SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserManagerWrapper<ApplicationUser> _userManager;
+        private ISignInManagerWrapper<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, 
-            SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+        public AccountController(IUserManagerWrapper<ApplicationUser> userManager, 
+            ISignInManagerWrapper<ApplicationUser> signInManager,
+            IEmailSender emailSender,
+            ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -41,6 +43,17 @@ namespace UI.Controllers
         {
             var newUser = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
             var result = await _userManager.CreateAsync(newUser, model.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    _logger.LogError($"Registration error: {error.Code} - {error.Description}");
+                }
+
+                return View(model);
+            }
+
             var configuration = new EmailSenderConfiguration
             {
                 To =

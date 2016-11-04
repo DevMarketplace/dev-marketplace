@@ -1,10 +1,10 @@
-﻿using MailKit.Net.Smtp;
-using MimeKit;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using MimeKit;
 
-namespace BusinessLogic.Facade
+namespace BusinessLogic.Utilities
 {
     public class EmailSender : IEmailSender, IDisposable
     {

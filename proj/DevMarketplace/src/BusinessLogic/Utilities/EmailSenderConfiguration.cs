@@ -2,7 +2,7 @@
 using MailKit.Security;
 using MimeKit.Text;
 
-namespace BusinessLogic.Facade
+namespace BusinessLogic.Utilities
 {
     public class FromConfiguration
     {
