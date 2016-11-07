@@ -60,6 +60,42 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Thank you for registering with DevMarketplace. Please activate your account by clicking on the following link: {0}.
+        /// </summary>
+        public static string ActivationEmailBodyText {
+            get {
+                return ResourceManager.GetString("ActivationEmailBodyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Activate your DevMarketplace account.
+        /// </summary>
+        public static string ActivationEmailSubject {
+            get {
+                return ResourceManager.GetString("ActivationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Dear {0},.
+        /// </summary>
+        public static string AddressUserByNameText {
+            get {
+                return ResourceManager.GetString("AddressUserByNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The DevMarketplace team.
+        /// </summary>
+        public static string DevMarketplaceTeamText {
+            get {
+                return ResourceManager.GetString("DevMarketplaceTeamText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Email.
         /// </summary>
         public static string EmailText {

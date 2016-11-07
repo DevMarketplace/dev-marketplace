@@ -1,0 +1,15 @@
+﻿@using System.Threading.Tasks
+@using DataAccess
+@using UI.Localization
+@model dynamic
+@{
+    ApplicationUser user = Model.AppUser;
+    string activationUrl = Model.ActivationUrl;
+}
+
+<div>
+    @string.Format(AccountContent.AddressUserByNameText, user.FirstName)    
+</div>
+<div>
+    @string.Format(AccountContent.ActivationEmailBodyText, "<a href=\"" + activationUrl + "\">" + activationUrl + "</a>")
+</div>

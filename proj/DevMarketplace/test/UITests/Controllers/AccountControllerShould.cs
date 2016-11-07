@@ -3,12 +3,15 @@ using System.Threading.Tasks;
 using BusinessLogic.Utilities;
 using DataAccess;
 using DataAccess.Abstractions;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using UI.Controllers;
 using UI.Models;
+using UI.Utilities;
 
 namespace UITests.Controllers
 {
@@ -20,6 +23,9 @@ namespace UITests.Controllers
         private ISignInManagerWrapper<ApplicationUser> _signInManagerMock;
         private IEmailSender _emailSenderMock;
         private ILogger<AccountController> _loggerMock;
+        private IViewRenderer _viewRendererMock;
+        private IConfiguration _configurationMock;
+        private IDataProtector _protectorMock;
 
         [SetUp]
         public void SetUp()
@@ -28,7 +34,12 @@ namespace UITests.Controllers
             _signInManagerMock = Mock.Of<ISignInManagerWrapper<ApplicationUser>>();
             _emailSenderMock = Mock.Of<IEmailSender>();
             _loggerMock = Mock.Of<ILogger<AccountController>>();
-            _accountControllerPartialMock = new Mock<AccountController>(_userManagerMock, _signInManagerMock, _emailSenderMock, _loggerMock) { CallBase = true };
+            _viewRendererMock = Mock.Of<IViewRenderer>();
+            _protectorMock = Mock.Of<IDataProtector>();
+            _configurationMock = Mock.Of<IConfiguration>();
+            _accountControllerPartialMock = new Mock<AccountController>(_userManagerMock, 
+                _signInManagerMock, _emailSenderMock, _loggerMock, 
+                _protectorMock, _viewRendererMock, _configurationMock) { CallBase = true };
         }
 
         [Test]

@@ -9,6 +9,12 @@ using Microsoft.Extensions.Logging;
 using UI.Models;
 using Microsoft.AspNetCore.DataProtection;
 using System;
+using MailKit.Security;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using MimeKit.Text;
+using UI.Localization;
+using UI.Utilities;
 
 namespace UI.Controllers
 {
@@ -18,18 +24,24 @@ namespace UI.Controllers
         private ISignInManagerWrapper<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<AccountController> _logger;
+        private readonly IViewRenderer _viewRenderer;
+        private readonly IConfiguration _configuration;
         private readonly IDataProtector _protector;
 
         public AccountController(IUserManagerWrapper<ApplicationUser> userManager, 
             ISignInManagerWrapper<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IDataProtectionProvider protectionProvider)
+            IDataProtectionProvider protectionProvider,
+            IViewRenderer viewRenderer,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _viewRenderer = viewRenderer;
+            _configuration = configuration;
             _protector = protectionProvider.CreateProtector(GetType().FullName);
         }
 
@@ -60,7 +72,7 @@ namespace UI.Controllers
                 return View(model);
             }
 
-            await SendActivationEmail(newUser);
+            await SendActivationEmail(newUser, returnUrl);
             
             return RedirectToAction("RegistrationComplete", new { sequence = _protector.Protect(model.Email) });
         }
@@ -68,8 +80,7 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult SignIn(string returnUrl = null)
         {
-            var model = new SignInViewModel();
-            model.ReturnUrl = returnUrl;
+            var model = new SignInViewModel {ReturnUrl = returnUrl};
             return View(model);
         }
 
@@ -90,7 +101,7 @@ namespace UI.Controllers
             {
                 _logger.LogWarning(2, "The user account is not activated");
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                await SendActivationEmail(user);
+                await SendActivationEmail(user, model.ReturnUrl);
 
                 return RedirectToAction(nameof(RegistrationComplete), new { sequence =  _protector.Protect(model.Email)});
             }
@@ -109,16 +120,16 @@ namespace UI.Controllers
 
         [HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public async Task<IActionResult> ConfirmEmail(string sequence, string code, string returnUrl = null)
+        public async Task<IActionResult> ConfirmEmail(string protectedSequence, string code, string returnUrl = null)
         {
             try
             {
-                if(string.IsNullOrEmpty(sequence))
+                if(string.IsNullOrEmpty(protectedSequence))
                 {
-                    throw new ArgumentOutOfRangeException("invalid UserId");                        
+                    throw new ArgumentOutOfRangeException(nameof(protectedSequence));                        
                 }
 
-                var user = await _userManager.FindByIdAsync(_protector.Unprotect(sequence));
+                var user = await _userManager.FindByIdAsync(_protector.Unprotect(protectedSequence));
                 var identityResult = await _userManager.ConfirmEmailAsync(user, code);
                 
                 if(identityResult.Succeeded)
@@ -141,32 +152,54 @@ namespace UI.Controllers
 
         [HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public async Task<IActionResult> RegistrationComplete(string sequence)
+        public async Task<IActionResult> RegistrationComplete(string protectedSequence)
         {
-            string email = _protector.Unprotect(sequence);
+            string email = _protector.Unprotect(protectedSequence);
             var user = await _userManager.FindByEmailAsync(email);
 
             if(user?.EmailConfirmed == false)
             {
-                var model = new RegistrationCompleteViewModel();
-                model.Email = email;
+                var model = new RegistrationCompleteViewModel {Email = email};
                 return View(model);
             }
 
             return NotFound();
         }
 
-        private async Task SendActivationEmail(ApplicationUser user)
+        private async Task SendActivationEmail(ApplicationUser user, string returnUrl = null)
         {
             string confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string activationUrl = Url.Action(nameof(ConfirmEmail), "Account", 
+                new
+                {
+                    protectedSequence = _protector.Protect(user.Email),
+                    code = confirmationToken,
+                    returnUrl = returnUrl
+                }, 
+                protocol: HttpContext.Request.Scheme);
+
+            var emailBody = _viewRenderer.Render("ActivationEmailTemplate", new { AppUser = user, ActivationUrl = activationUrl });
             var configuration = new EmailSenderConfiguration
             {
+                From =
+                {
+                    Name = AccountContent.DevMarketplaceTeamText,
+                    EmailAddress = _configuration.GetSection("EmailSettings")["FromEmail"]
+                },
                 To =
                 {
                     EmailAddress = user.Email,
-                    Name = $"{user.FirstName} {user.LastName}"
-                }
+                    Name = $"{user.FirstName} {user.LastName}",
+                    Subject = AccountContent.ActivationEmailSubject
+                },
+                EmailBody = emailBody,
+                EmailFormat = TextFormat.Html,
+                SecureSocketOption = SecureSocketOptions.Auto,
+                SmtpServer = _configuration.GetSection("EmailSettings")["SmtpServer"],
+                SmtpPort = int.Parse(_configuration.GetSection("EmailSettings")["SmtpPort"]),
+                Domain = _configuration.GetSection("EmailSettings")["Domain"]
             };
+
             await _emailSender.SendEmailAsync(configuration);
         }
         

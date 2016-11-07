@@ -11,6 +11,7 @@ using DataAccess.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using UI.Utilities;
 
 namespace UI
 {
@@ -92,6 +93,8 @@ namespace UI
                 config.AddRegistry<DataAccessRegistry>();
                 config.AddRegistry<BusinessLogicRegistry>();
 
+                config.For<IConfiguration>().Use(Configuration).Singleton();
+                config.For<IViewRenderer>().Use<ViewRender>().Singleton();
                 config.ForConcreteType<UserManagerWrapper<ApplicationUser>>()
                     .Configure.Setter<UserManager<ApplicationUser>>()
                     .Is(c => c.GetInstance<UserManager<ApplicationUser>>());
