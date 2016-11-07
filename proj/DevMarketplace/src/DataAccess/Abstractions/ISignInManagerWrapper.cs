@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess.Abstractions
 {
@@ -28,5 +29,27 @@ namespace DataAccess.Abstractions
         /// </summary>
         /// <returns></returns>
         Task SignOutAsync();
+
+        /// <summary>
+        /// Signs in an user with a password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <param name="isPersistent"></param>
+        /// <param name="lockoutOnFailure"></param>
+        /// <returns></returns>
+        Task<SignInResult> PasswordSignInAsync(TUser user, string password, bool isPersistent, bool lockoutOnFailure);
+
+        /// <summary>
+        /// Signs in by username and a password
+        /// </summary>
+        /// <param name="userName">The user name to sign in.</param>
+        /// <param name="password">The password to attempt to sign in with.</param>
+        /// <param name="isPersistent">Flag indicating whether the sign-in cookie should persist after the browser is
+        /// closed.</param>
+        /// <param name="lockoutOnFailure">Flag indicating if the user account should be locked if the sign in fails.</param>
+        /// <returns>The task object representing the asynchronous operation containing the SignInResult
+        ///     for the sign-in attempt.</returns>
+        Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure);
     }
 }

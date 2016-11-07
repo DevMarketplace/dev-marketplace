@@ -2,14 +2,14 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "NUnit": "3.5.0",
     "Moq": "4.6.38-alpha",
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
       "type": "platform"
     },
     "dotnet-test-nunit": "3.4.0-beta-3",
-    "BusinessLogic": "1.0.0-*"
+    "BusinessLogic": "1.0.0-*",
+    "NUnit": "3.5.0"
   },
 
   "testRunner": "nunit",

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BusinessLogic.Utilities;
 using DataAccess;
 using DataAccess.Abstractions;
@@ -86,7 +87,7 @@ namespace UITests.Controllers
             await _accountControllerPartialMock.Object.Register(model);
 
             //Assert
-            Mock.Get(_userManagerMock).Verify(x => x.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Never);
+            Mock.Get(_userManagerMock).Verify(x => x.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()), Times.Never);
         }
     }
 }
