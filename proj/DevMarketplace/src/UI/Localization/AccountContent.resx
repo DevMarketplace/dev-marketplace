@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActivationEmailBodyText" xml:space="preserve">
-    <value>Thank you for registering with DevMarketplace. Please activate your account by clicking on the following link: {0}</value>
+    <value>Thank you for registering with DevMarketplace. Please activate your account by clicking on the following link: &lt;a class="btn" href="{0}"&gt;Activate&lt;/a&gt;</value>
   </data>
   <data name="ActivationEmailSubject" xml:space="preserve">
     <value>Activate your DevMarketplace account</value>
+  </data>
+  <data name="ActivationGuideText" xml:space="preserve">
+    <value>{0} you should receive your account activation e-mail in a moment. Please check your e-mail at {1} and click on the activation link.</value>
   </data>
   <data name="AddressUserByNameText" xml:space="preserve">
     <value>Dear {0},</value>
@@ -146,5 +149,11 @@
   </data>
   <data name="RegisterText" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="RegistrationCompleteText" xml:space="preserve">
+    <value>Registration Complete</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Sign In</value>
   </data>
 </root>

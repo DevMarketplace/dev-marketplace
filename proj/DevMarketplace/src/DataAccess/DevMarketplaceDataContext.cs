@@ -23,6 +23,14 @@ namespace DataAccess
             
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Company>()
+                .Property(b => b.Id)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+        }
+
         void IDataContext.SaveChanges()
         {
             SaveChanges();

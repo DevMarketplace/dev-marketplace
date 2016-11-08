@@ -39,6 +39,7 @@ namespace UITests.Controllers
             _viewRendererMock = Mock.Of<IViewRenderer>();
             _protectorMock = Mock.Of<IDataProtector>();
             _configurationMock = Mock.Of<IConfiguration>();
+            _companyManagerMock = Mock.Of<ICompanyManager>();
             _accountControllerPartialMock = new Mock<AccountController>(_userManagerMock, 
                 _signInManagerMock, _emailSenderMock, _loggerMock, 
                 _protectorMock, _viewRendererMock, _configurationMock, _companyManagerMock) { CallBase = true };

@@ -1,5 +1,6 @@
 ﻿using StructureMap;
 using DataAccess.Abstractions;
+using DataAccess.Repository;
 using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess
@@ -12,7 +13,10 @@ namespace DataAccess
             {
                 scan.AssemblyContainingType<DataAccessRegistry>();
                 scan.WithDefaultConventions();
+                scan.AddAllTypesOf(typeof(IGenericRepository<>));
             });
+
+            For<IDataContext>().Use<DevMarketplaceDataContext>();
         }
     }
 }

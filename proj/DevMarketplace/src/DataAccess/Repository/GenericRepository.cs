@@ -9,8 +9,8 @@ namespace DataAccess.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private IDataContext _dataContext;
-        private DbSet<TEntity> _dbSet;
+        private readonly IDataContext _dataContext;
+        private readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(IDataContext dataContext) {
             _dataContext = dataContext;
@@ -28,20 +28,21 @@ namespace DataAccess.Repository
             {
                 query = query.Where(filter);
             }
-            
-            foreach (var includeProperty in includeProperties)
+
+            if (includeProperties != null)
             {
-                query = query.Include(includeProperty);
+                foreach (var includeProperty in includeProperties)
+                {
+                    query = query.Include(includeProperty);
+                }
             }
 
             if (orderBy != null)
             {
                 return orderBy(query).ToList();
             }
-            else
-            {
-                return query.ToList();
-            }
+            
+            return query.ToList();
         }
 
         public virtual TEntity GetByID(Guid id)

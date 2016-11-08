@@ -12,6 +12,6 @@
     <label asp-for="Password"></label>
     <input asp-for="Password"/>
     <label asp-for="CompanyId"></label>
-    <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))"></select>
+    <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
     <input type="submit" value="@AccountContent.RegisterText"/>
 </form>

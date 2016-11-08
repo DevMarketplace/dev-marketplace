@@ -60,7 +60,7 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Thank you for registering with DevMarketplace. Please activate your account by clicking on the following link: {0}.
+        ///    Looks up a localized string similar to Thank you for registering with DevMarketplace. Please activate your account by clicking on the following link: &lt;a class=&quot;btn&quot; href=&quot;{0}&quot;&gt;Activate&lt;/a&gt;.
         /// </summary>
         public static string ActivationEmailBodyText {
             get {
@@ -74,6 +74,15 @@ namespace UI.Localization {
         public static string ActivationEmailSubject {
             get {
                 return ResourceManager.GetString("ActivationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to {0} you should receive your account activation e-mail in a moment. Please check your e-mail at {1} and click on the activation link..
+        /// </summary>
+        public static string ActivationGuideText {
+            get {
+                return ResourceManager.GetString("ActivationGuideText", resourceCulture);
             }
         }
         
@@ -146,6 +155,24 @@ namespace UI.Localization {
         public static string RegisterText {
             get {
                 return ResourceManager.GetString("RegisterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Registration Complete.
+        /// </summary>
+        public static string RegistrationCompleteText {
+            get {
+                return ResourceManager.GetString("RegistrationCompleteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string SignInText {
+            get {
+                return ResourceManager.GetString("SignInText", resourceCulture);
             }
         }
     }

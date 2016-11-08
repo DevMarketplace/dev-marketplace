@@ -1,0 +1,12 @@
+﻿@using System.Threading.Tasks
+@using UI.Localization
+@model UI.Models.SignInViewModel
+
+<form asp-controller="Account" asp-action="SignIn">
+    <label asp-for="Email"></label>
+    <input asp-for="Email" />
+    <label asp-for="Password"></label>
+    <input asp-for="Password" />
+ 
+    <input type="submit" value="@AccountContent.SignInText" />
+</form>

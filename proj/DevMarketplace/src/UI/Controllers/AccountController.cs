@@ -22,7 +22,7 @@ namespace UI.Controllers
     public class AccountController : Controller
     {
         private readonly IUserManagerWrapper<ApplicationUser> _userManager;
-        private ISignInManagerWrapper<ApplicationUser> _signInManager;
+        private readonly ISignInManagerWrapper<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<AccountController> _logger;
         private readonly IViewRenderer _viewRenderer;
@@ -53,13 +53,15 @@ namespace UI.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            var model = new RegisterViewModel();
-            model.Companies = _companyManager.GetCompanies()
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.Name
-                }).ToList();
+            var model = new RegisterViewModel
+            {
+                Companies = _companyManager.GetCompanies()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Id.ToString(),
+                        Text = x.Name
+                    }).ToList()
+            };
 
             return View(model);
         }
@@ -70,6 +72,11 @@ namespace UI.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var newUser = new ApplicationUser
             {
                 UserName = model.Email,
@@ -93,7 +100,7 @@ namespace UI.Controllers
 
             await SendActivationEmail(newUser, returnUrl);
 
-            return RedirectToAction("RegistrationComplete", new { sequence = _protector.Protect(model.Email) });
+            return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
         }
 
         [HttpGet]
@@ -113,7 +120,7 @@ namespace UI.Controllers
             if (signInResult.Succeeded)
             {
                 _logger.LogInformation(1, "User logged in.");
-                return Redirect(model.ReturnUrl);
+                return Redirect(string.IsNullOrWhiteSpace(model.ReturnUrl) ? "/" : model.ReturnUrl);
             }
 
             if (signInResult.IsNotAllowed)
@@ -122,7 +129,7 @@ namespace UI.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 await SendActivationEmail(user, model.ReturnUrl);
 
-                return RedirectToAction(nameof(RegistrationComplete), new { sequence = _protector.Protect(model.Email) });
+                return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
             }
 
             if (signInResult.IsLockedOut)
@@ -130,11 +137,19 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "User account locked out.");
                 return View("Lockout");
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View(model);
-            }
+            
+            
+            ModelState.AddModelError("LoginAttempt", "Invalid login attempt.");
+            return View(model);
+        }
+
+        [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction(nameof(SignIn));
         }
 
         [HttpGet]
@@ -148,19 +163,15 @@ namespace UI.Controllers
                     throw new ArgumentOutOfRangeException(nameof(protectedSequence));
                 }
 
-                var user = await _userManager.FindByIdAsync(_protector.Unprotect(protectedSequence));
+                var user = await _userManager.FindByEmailAsync(_protector.Unprotect(protectedSequence));
                 var identityResult = await _userManager.ConfirmEmailAsync(user, code);
 
                 if (identityResult.Succeeded)
                 {
-                    RedirectToAction("SignIn", returnUrl);
-                }
-                else
-                {
-                    throw new Exception();
+                    return RedirectToAction("SignIn", returnUrl);
                 }
 
-                return View();
+                return NotFound();
             }
             catch (Exception exp)
             {
@@ -178,7 +189,7 @@ namespace UI.Controllers
 
             if (user?.EmailConfirmed == false)
             {
-                var model = new RegistrationCompleteViewModel { Email = email };
+                var model = new RegistrationCompleteViewModel { Email = email, FirstName = user.FirstName };
                 return View(model);
             }
 
@@ -197,7 +208,7 @@ namespace UI.Controllers
                 },
                 protocol: HttpContext.Request.Scheme);
 
-            var emailBody = _viewRenderer.Render("ActivationEmailTemplate", new { AppUser = user, ActivationUrl = activationUrl });
+            var emailBody = _viewRenderer.Render("Account\\ActivationEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = activationUrl });
             var configuration = new EmailSenderConfiguration
             {
                 From =
@@ -213,7 +224,7 @@ namespace UI.Controllers
                 },
                 EmailBody = emailBody,
                 EmailFormat = TextFormat.Html,
-                SecureSocketOption = SecureSocketOptions.Auto,
+                SecureSocketOption = bool.Parse(_configuration.GetSection("EmailSettings")["UseSSL"]) ? SecureSocketOptions.Auto : SecureSocketOptions.None,
                 SmtpServer = _configuration.GetSection("EmailSettings")["SmtpServer"],
                 SmtpPort = int.Parse(_configuration.GetSection("EmailSettings")["SmtpPort"]),
                 Domain = _configuration.GetSection("EmailSettings")["Domain"]

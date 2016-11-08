@@ -18,7 +18,6 @@ namespace BusinessLogic.BusinessObjects
             Description = entity.Description;
             Email = entity.Email;
             IsoCountryCode = entity.IsoCountryCode;
-            Country = new CountryBo(entity.Country);
             Location = entity.Location;
         }
 
@@ -33,8 +32,6 @@ namespace BusinessLogic.BusinessObjects
         public string Email { get; set; }
 
         public string IsoCountryCode { get; set; }
-
-        public virtual CountryBo Country { get; set; }
 
         public string Location { get; set; }
 
