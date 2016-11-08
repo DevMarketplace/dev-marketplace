@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entity
 {
-    public class Company
+    public class Company : IHasIdentityEntity
     {
         [Key, Column(Order=1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [Column(Order=2), Required, MinLength(1), MaxLength(300)]

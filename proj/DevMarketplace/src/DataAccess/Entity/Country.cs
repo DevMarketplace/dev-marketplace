@@ -10,6 +10,7 @@ namespace DataAccess.Entity
     public class Country
     {
         [Key, StringLength(2), Column(Order=1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string IsoCountryCode { get; set; }
 
         [Column(Order=2), Required]

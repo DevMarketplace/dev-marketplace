@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,5 +21,10 @@ namespace UI.Models
 
         [Required, DataType(DataType.Password), Display(Name = "PasswordText", ResourceType = typeof(AccountContent))]
         public string Password { get; set; }
+
+        [Required, Display(Name="CompanyText", ResourceType= typeof(AccountContent))]
+        public Guid CompanyId { get; set; }
+
+        public List<SelectListItem> Companies { get; set; }
     }
 }

@@ -126,6 +126,9 @@
   <data name="AddressUserByNameText" xml:space="preserve">
     <value>Dear {0},</value>
   </data>
+  <data name="CompanyText" xml:space="preserve">
+    <value>Company</value>
+  </data>
   <data name="DevMarketplaceTeamText" xml:space="preserve">
     <value>The DevMarketplace team</value>
   </data>

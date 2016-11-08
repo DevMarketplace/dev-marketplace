@@ -12,6 +12,7 @@ using NUnit.Framework;
 using UI.Controllers;
 using UI.Models;
 using UI.Utilities;
+using BusinessLogic.Services;
 
 namespace UITests.Controllers
 {
@@ -26,6 +27,7 @@ namespace UITests.Controllers
         private IViewRenderer _viewRendererMock;
         private IConfiguration _configurationMock;
         private IDataProtector _protectorMock;
+        private ICompanyManager _companyManagerMock;
 
         [SetUp]
         public void SetUp()
@@ -39,7 +41,7 @@ namespace UITests.Controllers
             _configurationMock = Mock.Of<IConfiguration>();
             _accountControllerPartialMock = new Mock<AccountController>(_userManagerMock, 
                 _signInManagerMock, _emailSenderMock, _loggerMock, 
-                _protectorMock, _viewRendererMock, _configurationMock) { CallBase = true };
+                _protectorMock, _viewRendererMock, _configurationMock, _companyManagerMock) { CallBase = true };
         }
 
         [Test]

@@ -1,6 +1,5 @@
 ﻿using DataAccess;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BusinessLogic.Utilities;
@@ -10,11 +9,13 @@ using UI.Models;
 using Microsoft.AspNetCore.DataProtection;
 using System;
 using MailKit.Security;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using MimeKit.Text;
 using UI.Localization;
 using UI.Utilities;
+using BusinessLogic.Services;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UI.Controllers
 {
@@ -27,14 +28,16 @@ namespace UI.Controllers
         private readonly IViewRenderer _viewRenderer;
         private readonly IConfiguration _configuration;
         private readonly IDataProtector _protector;
+        private readonly ICompanyManager _companyManager;
 
-        public AccountController(IUserManagerWrapper<ApplicationUser> userManager, 
+        public AccountController(IUserManagerWrapper<ApplicationUser> userManager,
             ISignInManagerWrapper<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             IDataProtectionProvider protectionProvider,
             IViewRenderer viewRenderer,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ICompanyManager companyManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +46,7 @@ namespace UI.Controllers
             _viewRenderer = viewRenderer;
             _configuration = configuration;
             _protector = protectionProvider.CreateProtector(GetType().FullName);
+            _companyManager = companyManager;
         }
 
         [HttpGet]
@@ -50,6 +54,13 @@ namespace UI.Controllers
         public IActionResult Register()
         {
             var model = new RegisterViewModel();
+            model.Companies = _companyManager.GetCompanies()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
+
             return View(model);
         }
 
@@ -59,7 +70,15 @@ namespace UI.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
-            var newUser = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+            var newUser = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                CompanyId = model.CompanyId
+            };
+
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
             if (!result.Succeeded)
@@ -73,14 +92,14 @@ namespace UI.Controllers
             }
 
             await SendActivationEmail(newUser, returnUrl);
-            
+
             return RedirectToAction("RegistrationComplete", new { sequence = _protector.Protect(model.Email) });
         }
 
         [HttpGet]
         public IActionResult SignIn(string returnUrl = null)
         {
-            var model = new SignInViewModel {ReturnUrl = returnUrl};
+            var model = new SignInViewModel { ReturnUrl = returnUrl };
             return View(model);
         }
 
@@ -90,20 +109,20 @@ namespace UI.Controllers
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
             var signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
-            
+
             if (signInResult.Succeeded)
             {
                 _logger.LogInformation(1, "User logged in.");
                 return Redirect(model.ReturnUrl);
             }
 
-            if(signInResult.IsNotAllowed)
+            if (signInResult.IsNotAllowed)
             {
                 _logger.LogWarning(2, "The user account is not activated");
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 await SendActivationEmail(user, model.ReturnUrl);
 
-                return RedirectToAction(nameof(RegistrationComplete), new { sequence =  _protector.Protect(model.Email)});
+                return RedirectToAction(nameof(RegistrationComplete), new { sequence = _protector.Protect(model.Email) });
             }
 
             if (signInResult.IsLockedOut)
@@ -124,15 +143,15 @@ namespace UI.Controllers
         {
             try
             {
-                if(string.IsNullOrEmpty(protectedSequence))
+                if (string.IsNullOrEmpty(protectedSequence))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(protectedSequence));                        
+                    throw new ArgumentOutOfRangeException(nameof(protectedSequence));
                 }
 
                 var user = await _userManager.FindByIdAsync(_protector.Unprotect(protectedSequence));
                 var identityResult = await _userManager.ConfirmEmailAsync(user, code);
-                
-                if(identityResult.Succeeded)
+
+                if (identityResult.Succeeded)
                 {
                     RedirectToAction("SignIn", returnUrl);
                 }
@@ -140,7 +159,7 @@ namespace UI.Controllers
                 {
                     throw new Exception();
                 }
-                
+
                 return View();
             }
             catch (Exception exp)
@@ -157,9 +176,9 @@ namespace UI.Controllers
             string email = _protector.Unprotect(protectedSequence);
             var user = await _userManager.FindByEmailAsync(email);
 
-            if(user?.EmailConfirmed == false)
+            if (user?.EmailConfirmed == false)
             {
-                var model = new RegistrationCompleteViewModel {Email = email};
+                var model = new RegistrationCompleteViewModel { Email = email };
                 return View(model);
             }
 
@@ -169,13 +188,13 @@ namespace UI.Controllers
         private async Task SendActivationEmail(ApplicationUser user, string returnUrl = null)
         {
             string confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            string activationUrl = Url.Action(nameof(ConfirmEmail), "Account", 
+            string activationUrl = Url.Action(nameof(ConfirmEmail), "Account",
                 new
                 {
                     protectedSequence = _protector.Protect(user.Email),
                     code = confirmationToken,
                     returnUrl = returnUrl
-                }, 
+                },
                 protocol: HttpContext.Request.Scheme);
 
             var emailBody = _viewRenderer.Render("ActivationEmailTemplate", new { AppUser = user, ActivationUrl = activationUrl });
@@ -202,6 +221,6 @@ namespace UI.Controllers
 
             await _emailSender.SendEmailAsync(configuration);
         }
-        
+
     }
 }

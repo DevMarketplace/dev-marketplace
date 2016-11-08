@@ -87,6 +87,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Company.
+        /// </summary>
+        public static string CompanyText {
+            get {
+                return ResourceManager.GetString("CompanyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The DevMarketplace team.
         /// </summary>
         public static string DevMarketplaceTeamText {
