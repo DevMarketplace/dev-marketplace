@@ -114,6 +114,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to You must have a confirmed email to log in..
+        /// </summary>
+        public static string EmailConfirmationRequiredErrorText {
+            get {
+                return ResourceManager.GetString("EmailConfirmationRequiredErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Email.
         /// </summary>
         public static string EmailText {

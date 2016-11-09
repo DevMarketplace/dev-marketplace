@@ -135,6 +135,9 @@
   <data name="DevMarketplaceTeamText" xml:space="preserve">
     <value>The DevMarketplace team</value>
   </data>
+  <data name="EmailConfirmationRequiredErrorText" xml:space="preserve">
+    <value>You must have a confirmed email to log in.</value>
+  </data>
   <data name="EmailText" xml:space="preserve">
     <value>Email</value>
   </data>

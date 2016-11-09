@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess.Abstractions
@@ -53,5 +50,41 @@ namespace DataAccess.Abstractions
         ///  the user matching the specified userId if it exists.
         /// </returns>
         Task<TUser> FindByIdAsync(string userId);
+
+        /// <summary>
+        /// Gets a flag indicating whether the email address for the specified user has been
+        /// verified, true if the email address is verified otherwise false.
+        /// </summary>
+        /// <param name="user">The user whose email confirmation status should be returned.</param>
+        /// <returns>
+        /// The task object containing the results of the asynchronous operation, a flag
+        /// indicating whether the email address for the specified user has been confirmed
+        /// or not.
+        /// </returns>
+        Task<bool> IsEmailConfirmedAsync(TUser user);
+
+        /// <summary>
+        /// Generates a password reset token for the specified user, using the configured
+        /// password reset token provider.
+        /// </summary>
+        /// <param name="user">The user to generate a password reset token for.</param>
+        /// <returns>
+        /// The System.Threading.Tasks.Task that represents the asynchronous operation, containing
+        /// a password reset token for the specified user.
+        /// </returns>
+        Task<string> GeneratePasswordResetTokenAsync(TUser user);
+
+        /// <summary>
+        /// Resets the user's password to the specified newPassword after validating the
+        /// given password reset token.
+        /// </summary>
+        /// <param name="user">The user whose password should be reset.</param>
+        /// <param name="token">The password reset token to verify.</param>
+        /// <param name="newPassword">The new password to set if reset token verification fails.</param>
+        /// <returns>
+        /// The System.Threading.Tasks.Task that represents the asynchronous operation, containing
+        /// the Microsoft.AspNetCore.Identity.IdentityResult of the operation.
+        /// </returns>
+        Task<IdentityResult> ResetPasswordAsync(TUser user, string token, string newPassword);
     }
 }

@@ -32,5 +32,20 @@ namespace DataAccess.Abstractions
         {
             return UserManager.FindByIdAsync(userId);
         }
+
+        public Task<bool> IsEmailConfirmedAsync(TUser user)
+        {
+            return UserManager.IsEmailConfirmedAsync(user);
+        }
+
+        public Task<string> GeneratePasswordResetTokenAsync(TUser user)
+        {
+            return UserManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public Task<IdentityResult> ResetPasswordAsync(TUser user, string token, string newPassword)
+        {
+            return UserManager.ResetPasswordAsync(user, token, newPassword);
+        }
     }
 }

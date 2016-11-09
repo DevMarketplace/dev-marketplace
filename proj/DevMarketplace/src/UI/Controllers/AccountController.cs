@@ -115,6 +115,13 @@ namespace UI.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                ModelState.AddModelError(string.Empty, AccountContent.EmailConfirmationRequiredErrorText);
+                return View(model);
+            }
+
             var signInResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
 
             if (signInResult.Succeeded)
@@ -126,7 +133,6 @@ namespace UI.Controllers
             if (signInResult.IsNotAllowed)
             {
                 _logger.LogWarning(2, "The user account is not activated");
-                var user = await _userManager.FindByEmailAsync(model.Email);
                 await SendActivationEmail(user, model.ReturnUrl);
 
                 return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
@@ -184,18 +190,67 @@ namespace UI.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> RegistrationComplete(string protectedSequence)
         {
-            string email = _protector.Unprotect(protectedSequence);
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user?.EmailConfirmed == false)
+            try
             {
-                var model = new RegistrationCompleteViewModel { Email = email, FirstName = user.FirstName };
-                return View(model);
+                string email = _protector.Unprotect(protectedSequence);
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user?.EmailConfirmed == false)
+                {
+                    var model = new RegistrationCompleteViewModel { Email = email, FirstName = user.FirstName };
+                    return View(model);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(2, e, e.Message);
+                return NotFound();
             }
 
             return NotFound();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    return View("ForgotPasswordConfirmation");
+                }
+
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _protector.Protect(user.Id), code = code }, protocol: HttpContext.Request.Scheme);
+                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                return View("ForgotPasswordConfirmation");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        public async Task<IActionResult> ResetPassword(string protectedSequence, string code)
+        {
+            try
+            {
+                var userId = Guid.Parse(_protector.Unprotect(protectedSequence));
+                //await _userManager.ResetPasswordAsync()
+                return RedirectToAction(nameof(SignIn));
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(2, exp, exp.Message);
+            }
+
+            return NotFound();
+        }
+
+        [NonAction]
         private async Task SendActivationEmail(ApplicationUser user, string returnUrl = null)
         {
             string confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);

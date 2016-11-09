@@ -42,7 +42,8 @@ namespace UITests.Controllers
             _companyManagerMock = Mock.Of<ICompanyManager>();
             _accountControllerPartialMock = new Mock<AccountController>(_userManagerMock, 
                 _signInManagerMock, _emailSenderMock, _loggerMock, 
-                _protectorMock, _viewRendererMock, _configurationMock, _companyManagerMock) { CallBase = true };
+                _protectorMock, _viewRendererMock, 
+                _configurationMock, _companyManagerMock) { CallBase = true };
         }
 
         [Test]
