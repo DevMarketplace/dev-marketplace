@@ -150,6 +150,24 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string NewPasswordText {
+            get {
+                return ResourceManager.GetString("NewPasswordText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The password doesn&apos;t match the password confirmation.
+        /// </summary>
+        public static string PasswordDoesNotMatchError {
+            get {
+                return ResourceManager.GetString("PasswordDoesNotMatchError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Password.
         /// </summary>
         public static string PasswordText {
@@ -173,6 +191,42 @@ namespace UI.Localization {
         public static string RegistrationCompleteText {
             get {
                 return ResourceManager.GetString("RegistrationCompleteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Repeat Password.
+        /// </summary>
+        public static string RepeatPasswordText {
+            get {
+                return ResourceManager.GetString("RepeatPasswordText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Please reset your password by clicking on this link: &lt;a class=&quot;btn&quot; href=&quot;{0}&quot;&gt;Reset Password&lt;/a&gt;.
+        /// </summary>
+        public static string ResetPasswordEmailBodyText {
+            get {
+                return ResourceManager.GetString("ResetPasswordEmailBodyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Reset your DevMarketplace password.
+        /// </summary>
+        public static string ResetPasswordEmailSubjectText {
+            get {
+                return ResourceManager.GetString("ResetPasswordEmailSubjectText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Reset Password.
+        /// </summary>
+        public static string ResetPasswordText {
+            get {
+                return ResourceManager.GetString("ResetPasswordText", resourceCulture);
             }
         }
         

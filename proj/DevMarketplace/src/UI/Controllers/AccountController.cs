@@ -210,6 +210,13 @@ namespace UI.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            var model = new ForgotPasswordViewModel();
+            return View(model);
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -223,10 +230,7 @@ namespace UI.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _protector.Protect(user.Id), code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                await SendPasswordResetEmail(user);
                 return View("ForgotPasswordConfirmation");
             }
 
@@ -234,20 +238,54 @@ namespace UI.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> ResetPassword(string protectedSequence, string code)
+        [HttpGet]
+        public IActionResult ResetPassword(string protectedSequence, string code)
         {
-            try
+            if (string.IsNullOrWhiteSpace(protectedSequence) || string.IsNullOrWhiteSpace(code))
             {
-                var userId = Guid.Parse(_protector.Unprotect(protectedSequence));
-                //await _userManager.ResetPasswordAsync()
+                return NotFound();
+            }
+
+            var model = new ResetPasswordViewModel
+            {
+                ProtectedId = protectedSequence,
+                ResetToken = code
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByIdAsync(_protector.Unprotect(model.ProtectedId));
+            var result = await _userManager.ResetPasswordAsync(user, model.ResetToken, model.NewPassword);
+
+            if (result.Succeeded)
+            {
                 return RedirectToAction(nameof(SignIn));
             }
-            catch (Exception exp)
+
+            foreach (var resultError in result.Errors)
             {
-                _logger.LogError(2, exp, exp.Message);
+                _logger.LogWarning($"{resultError.Code}-{resultError.Description}");
             }
 
             return NotFound();
+        }
+
+        [NonAction]
+        private async Task SendPasswordResetEmail(ApplicationUser user)
+        {
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _protector.Protect(user.Id), code = code }, protocol: HttpContext.Request.Scheme);
+            var emailBody = _viewRenderer.Render("Account\\ForgottenPasswordEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = callbackUrl });
+            await SendEmailAsync(user, AccountContent.ResetPasswordEmailSubjectText, emailBody);
         }
 
         [NonAction]
@@ -264,6 +302,11 @@ namespace UI.Controllers
                 protocol: HttpContext.Request.Scheme);
 
             var emailBody = _viewRenderer.Render("Account\\ActivationEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = activationUrl });
+            await SendEmailAsync(user, AccountContent.ActivationEmailSubject, emailBody);
+        }
+
+        private async Task SendEmailAsync(ApplicationUser user, string subject, string emailBody)
+        {
             var configuration = new EmailSenderConfiguration
             {
                 From =
@@ -275,11 +318,14 @@ namespace UI.Controllers
                 {
                     EmailAddress = user.Email,
                     Name = $"{user.FirstName} {user.LastName}",
-                    Subject = AccountContent.ActivationEmailSubject
+                    Subject = subject
                 },
                 EmailBody = emailBody,
                 EmailFormat = TextFormat.Html,
-                SecureSocketOption = bool.Parse(_configuration.GetSection("EmailSettings")["UseSSL"]) ? SecureSocketOptions.Auto : SecureSocketOptions.None,
+                SecureSocketOption =
+                    bool.Parse(_configuration.GetSection("EmailSettings")["UseSSL"])
+                        ? SecureSocketOptions.Auto
+                        : SecureSocketOptions.None,
                 SmtpServer = _configuration.GetSection("EmailSettings")["SmtpServer"],
                 SmtpPort = int.Parse(_configuration.GetSection("EmailSettings")["SmtpPort"]),
                 Domain = _configuration.GetSection("EmailSettings")["Domain"]
@@ -287,6 +333,5 @@ namespace UI.Controllers
 
             await _emailSender.SendEmailAsync(configuration);
         }
-
     }
 }

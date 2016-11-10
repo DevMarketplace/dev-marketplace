@@ -25,6 +25,10 @@ namespace UI.Models
         [Required, Display(Name="CompanyText", ResourceType= typeof(AccountContent))]
         public Guid CompanyId { get; set; }
 
+        [Required, DataType(DataType.Password), Display(Name = "RepeatPasswordText", ResourceType = typeof(AccountContent))]
+        [Compare(nameof(Password), ErrorMessageResourceName = "PasswordDoesNotMatchError", ErrorMessageResourceType = typeof(AccountContent))]
+        public string PasswordConfirm { get; set; }
+
         public List<SelectListItem> Companies { get; set; }
     }
 }

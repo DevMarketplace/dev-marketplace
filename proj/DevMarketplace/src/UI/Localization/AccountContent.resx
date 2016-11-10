@@ -147,6 +147,12 @@
   <data name="LastNameText" xml:space="preserve">
     <value>Last Name</value>
   </data>
+  <data name="NewPasswordText" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="PasswordDoesNotMatchError" xml:space="preserve">
+    <value>The password doesn't match the password confirmation</value>
+  </data>
   <data name="PasswordText" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -155,6 +161,18 @@
   </data>
   <data name="RegistrationCompleteText" xml:space="preserve">
     <value>Registration Complete</value>
+  </data>
+  <data name="RepeatPasswordText" xml:space="preserve">
+    <value>Repeat Password</value>
+  </data>
+  <data name="ResetPasswordEmailBodyText" xml:space="preserve">
+    <value>Please reset your password by clicking on this link: &lt;a class="btn" href="{0}"&gt;Reset Password&lt;/a&gt;</value>
+  </data>
+  <data name="ResetPasswordEmailSubjectText" xml:space="preserve">
+    <value>Reset your DevMarketplace password</value>
+  </data>
+  <data name="ResetPasswordText" xml:space="preserve">
+    <value>Reset Password</value>
   </data>
   <data name="SignInText" xml:space="preserve">
     <value>Sign In</value>
