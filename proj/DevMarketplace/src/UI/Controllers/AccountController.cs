@@ -74,6 +74,11 @@ namespace UI.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
                 return View(model);
             }
 
@@ -227,11 +232,12 @@ namespace UI.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
-                    return View("ForgotPasswordConfirmation");
+                    _logger.LogWarning($"An attempt to reset the password of an invalid e-mail was made for: {model.Email}");
+                    return View("ForgotPasswordConfirmation", model);
                 }
 
                 await SendPasswordResetEmail(user);
-                return View("ForgotPasswordConfirmation");
+                return View("ForgotPasswordConfirmation", model);
             }
 
             // If we got this far, something failed, redisplay form

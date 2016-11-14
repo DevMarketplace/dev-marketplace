@@ -6420,3 +6420,174 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 @media (min-height: 40.125em) {
   .picker--time .picker__box {
     margin-bottom: 5em; } }
+
+@font-face {
+  font-family: 'Hacked';
+  src: url("../fonts/HACKED_Title.woff"); }
+
+body {
+  margin: 0;
+  background-color: #FFFFFF;
+  font-weight: 300;
+  font-size: 16px; }
+
+a.btn, a.btn-large {
+  font-weight: 500;
+  letter-spacing: 2px; }
+
+a.btn.primary, a.primary.btn-large {
+  background-color: #57648C; }
+
+a.btn.primary:hover, a.primary.btn-large:hover {
+  background-color: #46537B; }
+
+a.btn.secondary, a.secondary.btn-large {
+  background-color: #C2B4D6; }
+
+a.btn.secondary:hover, a.secondary.btn-large:hover {
+  background-color: #B1A3C5; }
+
+.mt10 {
+  margin-top: 10px; }
+
+.ml10 {
+  margin-left: 10px; }
+
+.promo-text {
+  color: #667;
+  line-height: 35px;
+  font-size: 30px;
+  font-weight: 300; }
+
+.nav-wrapper a {
+  font-family: 'Hacked';
+  font-size: 25px; }
+
+a.brand-logo {
+  font-family: 'Hacked';
+  font-size: 32px; }
+
+nav {
+  background-color: #934A5F; }
+
+footer {
+  background-color: #E5E5E5;
+  height: 400px;
+  margin-top: 10px; }
+
+.sub-footer {
+  font-family: 'Hacked';
+  padding-top: 12px;
+  color: #FFFFFF;
+  background-color: #57648C;
+  height: 40px; }
+
+.jumbotron {
+  position: relative;
+  height: 300px;
+  background: url("../content/it-guy.jpg") no-repeat center center;
+  background-size: cover; }
+
+.code-snippets {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: none;
+  font-size: 8px;
+  color: #444444; }
+
+.promo {
+  height: 200px;
+  background-color: #57648C; }
+
+.search-bar {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  position: relative; }
+
+.search-wrapper {
+  width: 70%; }
+
+.search-btn-wrapper {
+  width: 25%; }
+
+#search {
+  font-family: 'Hacked';
+  font-size: 4vw;
+  color: #FFFFFF;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  letter-spacing: 3px;
+  word-spacing: 9px; }
+  #search:focus {
+    border-bottom: 1px solid #934A5F;
+    box-shadow: 0 1px 0 0 #934A5F; }
+  #search::-webkit-input-placeholder {
+    color: #999999;
+    font-weight: 300;
+    opacity: 0.7;
+    text-align: center; }
+  #search::-ms-input-placeholder {
+    color: #999999;
+    font-weight: 300;
+    opacity: 0.7;
+    text-align: center; }
+  #search::-moz-placeholder {
+    color: #999999;
+    font-weight: 300;
+    opacity: 0.7;
+    text-align: center; }
+
+#search-button {
+  font-family: 'Hacked';
+  font-size: 3.5vw;
+  display: block;
+  padding-left: 1em;
+  padding-right: 1em; }
+
+@media only screen and (min-width: 601px) {
+  .jumbotron {
+    height: 450px; }
+  .search-bar {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    position: relative; }
+  .search-wrapper {
+    width: 75%; }
+  .search-btn-wrapper {
+    width: 20%; }
+  #search {
+    font-size: 40px; }
+  #search-button {
+    font-size: 25px;
+    min-width: 150px;
+    padding-left: 1em;
+    padding-right: 1em; }
+  .intro {
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #934A5F; } }
+
+@media only screen and (min-width: 993px) {
+  .code-snippets {
+    display: block; }
+    .code-snippets > pre {
+      font-family: Courier New, Courier, monospace;
+      font-weight: 300;
+      overflow: hidden;
+      -webkit-user-select: none;
+      /* Chrome/Safari */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* IE10+ */
+      /* Rules below not implemented in browsers yet */
+      -o-user-select: none;
+      user-select: none; } }

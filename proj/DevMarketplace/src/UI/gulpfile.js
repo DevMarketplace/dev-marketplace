@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean' AfterBuild='sass' Clean='clean' />
+/// <binding BeforeBuild='clean' AfterBuild='sass, min:js, min:css' Clean='clean' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -30,6 +30,17 @@ gulp.task("clean:css", function (cb) {
 
 gulp.task("clean", ["clean:js", "clean:css"]);
 
+gulp.task('sass', function () {
+    return gulp.src(paths.webroot + 'sass/**/*.scss')
+      .pipe(sass().on('error', sass.logError))
+      .pipe(gulp.dest(paths.webroot + 'css'));
+});
+
+gulp.task('sass:watch', function () {
+    gulp.watch(paths.webroot + 'sass/**/*.scss', ['sass']);
+});
+
+
 gulp.task("min:js", function () {
     return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
       .pipe(concat(paths.concatJsDest))
@@ -42,16 +53,6 @@ gulp.task("min:css", function () {
       .pipe(concat(paths.concatCssDest))
       .pipe(cssmin())
       .pipe(gulp.dest("."));
-});
-
-gulp.task('sass', function () {
-    return gulp.src(paths.webroot + 'sass/**/*.scss')
-      .pipe(sass().on('error', sass.logError))
-      .pipe(gulp.dest(paths.webroot + 'css'));
-});
-
-gulp.task('sass:watch', function () {
-    gulp.watch(paths.webroot + 'sass/**/*.scss', ['sass']);
 });
 
 gulp.task("min", ["min:js", "min:css"]);
