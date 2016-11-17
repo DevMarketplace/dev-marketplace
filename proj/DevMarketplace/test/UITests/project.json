@@ -5,7 +5,7 @@
     "NUnit": "3.5.0",
     "Moq": "4.6.38-alpha",
     "Microsoft.NETCore.App": {
-      "version": "1.0.1",
+      "version": "1.1.0",
       "type": "platform"
     },
     "dotnet-test-nunit": "3.4.0-beta-3",
@@ -15,7 +15,7 @@
   "testRunner": "nunit",
 
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.1": {
       "imports": "portable-net45+win8",
       "dependencies": {
       }
