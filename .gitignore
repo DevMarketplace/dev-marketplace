@@ -235,4 +235,4 @@ _Pvt_Extensions
 .fake/
 
 #CSS stylesheets
-css/*.css
+proj/DevMarketplace/src/UI/wwwroot/css/
