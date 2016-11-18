@@ -1,3 +1,17 @@
-﻿@{
+﻿@using System.Threading.Tasks
+@using UI.Localization
+@{
     ViewBag.Title = "Home Page";
+}
+
+@section PromoSection {
+    <div class="search-bar">
+    <div class="valign left search-wrapper">
+        <input id="search" placeholder="@LayoutContent.FindAProjectText" type="text" />
+    </div>
+
+    <div class="valign left ml10 search-btn-wrapper">
+        <a id="search-button" class="btn secondary btn-large" href="#">@LayoutContent.SearchButtonText</a>
+    </div>
+</div>
 }

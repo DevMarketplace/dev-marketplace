@@ -5,9 +5,12 @@
         },
 
         documentReadySetup: function () {
-
             if ($.fn.sideNav !== 'undefined') {
                 $(".button-collapse").sideNav();
+            }
+
+            if ($.fn.material_select !== 'undefined') {
+                $('select').material_select();
             }
 
             $(window).on("scroll", function () {

@@ -129,6 +129,9 @@
   <data name="SignUpMenuText" xml:space="preserve">
     <value>Sign Up</value>
   </data>
+  <data name="SiteName" xml:space="preserve">
+    <value>Developer marketplace</value>
+  </data>
   <data name="SiteTitleText" xml:space="preserve">
     <value>Developer Marketplace</value>
   </data>

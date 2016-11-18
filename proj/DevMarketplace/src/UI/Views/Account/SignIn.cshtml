@@ -1,12 +1,37 @@
 ﻿@using System.Threading.Tasks
 @using UI.Localization
 @model UI.Models.SignInViewModel
-
-<form asp-controller="Account" asp-action="SignIn">
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
-    <input asp-for="ReturnUrl" type="hidden"/>
-    <input type="submit" value="@AccountContent.SignInText" />
-</form>
+@{
+    ViewBag.Title = AccountContent.SignInText;
+}
+<section class="mt20">
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <form asp-controller="Account" asp-action="SignIn">
+                    <div class="row paper">
+                        <div class="col s12 m8 push-m2">
+                            <div class="input-field col s12">
+                                <input asp-for="Email"/>
+                                <label asp-for="Email"></label>
+                                <span asp-validation-for="Email" class="field-validation-error"></span>
+                            </div>
+                            <div class="input-field col s12">
+                                <input asp-for="Password"/>
+                                <label asp-for="Password"></label>
+                                <span asp-validation-for="Password" class="field-validation-error"></span>
+                                <input asp-for="ReturnUrl" type="hidden"/>
+                            </div>
+                            <div class="col s6">
+                                <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col s12">
+                
+            </div>
+        </div>
+    </div>
+</section>

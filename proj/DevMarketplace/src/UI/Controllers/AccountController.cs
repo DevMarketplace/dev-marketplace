@@ -120,6 +120,11 @@ namespace UI.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {

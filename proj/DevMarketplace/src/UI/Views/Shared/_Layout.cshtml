@@ -7,17 +7,17 @@
     <title>@(ViewData["Title"] ?? LayoutContent.SiteTitleText)</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <environment names="Development">
-        <link rel="stylesheet" href="~/css/site.css"/>
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
-<header>
-    <div class="jumbotron">
-        <div class="code-snippets">
-            <pre>
+    <header>
+        <div class="jumbotron">
+            <div class="code-snippets">
+                <pre>
 init : function() { 
     var owner = this; 
     this.promptElement = $("#lightbox"); 
@@ -101,63 +101,66 @@ function $AriaProvider() {
     config = angular.extend(config, newConfig);
   };
                     </pre>
-        </div>
-    </div>
-
-    <div class="navigation-bar">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="/" class="brand-logo">_Dev_Marketplace</a>
-                <a href="#" data-activates="nav-mobile" class="button-collapse">
-                    <i class="material-icons">menu</i>
-                </a>
-                <ul id="nav-desktop" class="right hide-on-med-and-down">
-                    <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
-                    <li><a href="#">@LayoutContent.LogInMenuText</a></li>
-                    <li><a href="#">@LayoutContent.SignUpMenuText</a></li>
-                </ul>
-                <ul class="side-nav" id="nav-mobile">
-                    <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
-                    <li><a href="#">@LayoutContent.LogInMenuText</a></li>
-                    <li><a href="#">@LayoutContent.SignUpMenuText</a></li>
-                </ul>
             </div>
-        </nav>
-    </div>
-</header>
+        </div>
+
+        <div class="navigation-bar">
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="/" class="brand-logo">_Dev_Marketplace</a>
+                    <a href="#" data-activates="nav-mobile" class="button-collapse">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <ul id="nav-desktop" class="right hide-on-med-and-down">
+                        <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
+                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+                    </ul>
+                    <ul class="side-nav" id="nav-mobile">
+                        <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
+                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
     
-<div class="promo valign-wrapper">
-    <div class="search-bar">
-        <div class="valign left search-wrapper">
-            <input id="search" placeholder="@LayoutContent.FindAProjectText" type="text" />
+    @if (IsSectionDefined("PromoSection"))
+    {
+        <div class="promo valign-wrapper">
+            @RenderSection("PromoSection", false)
         </div>
-
-        <div class="valign left ml10 search-btn-wrapper">
-            <a id="search-button" class="btn secondary btn-large" href="#">@LayoutContent.SearchButtonText</a>
+    }
+    <main>
+        @RenderBody()
+    </main>
+    <footer></footer>
+    <div class="sub-footer">
+        <div class="container row">
+            <div class="col s12">
+                <span>@LayoutContent.SiteName @DateTime.UtcNow.Year</span>
+            </div>
+            <div class="col s12 licensing-info">
+                <span>Some licensing information here</span>
+            </div>
         </div>
     </div>
-</div>    
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/js/materialize.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
 
-<main>
-    @RenderBody()
-</main>
-<footer>
-
-</footer>
-<environment names="Development">
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/js/materialize.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</environment>
-<environment names="Staging,Production">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery">
-    </script>
-    <script src="~/js/materialize.min.js"></script>
-    <script src="~/js/site.min.js" asp-append-version="true"></script>
-</environment>
-
-@RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 </body>
 </html>

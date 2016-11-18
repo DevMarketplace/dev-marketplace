@@ -2,18 +2,43 @@
 @using UI.Localization;
 @model RegisterViewModel
 
-<form asp-controller="Account" asp-action="Register">
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName"/>
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName"/>
-    <label asp-for="Email"></label>
-    <input asp-for="Email"/>
-    <label asp-for="Password"></label>
-    <input asp-for="Password"/>
-    <label asp-for="PasswordConfirm"></label>
-    <input asp-for="PasswordConfirm"/>
-    <label asp-for="CompanyId"></label>
-    <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
-    <input type="submit" value="@AccountContent.RegisterText"/>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <form asp-controller="Account" asp-action="Register">
+                <div class="row">
+                    <div class="col s12 m8 push-m2">
+                        <div class="input-field col s12 m6">
+                            <input asp-for="FirstName" />
+                            <label asp-for="FirstName"></label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input asp-for="LastName" />
+                            <label asp-for="LastName"></label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input asp-for="Email" />    
+                            <label asp-for="Email"></label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input asp-for="Password" />
+                            <label asp-for="Password"></label>    
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <input asp-for="PasswordConfirm" />
+                            <label asp-for="PasswordConfirm"></label>
+                        </div>
+                        
+                        <div class="input-field col s12">
+                            <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
+                            <label asp-for="CompanyId"></label>
+                        </div>
+                        <div class="col s6">
+                            <input type="submit" class="btn primary" value="@AccountContent.RegisterText" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

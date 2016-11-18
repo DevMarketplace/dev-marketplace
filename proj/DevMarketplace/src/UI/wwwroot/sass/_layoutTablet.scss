@@ -7,25 +7,25 @@
     margin-right: auto;
     width: 70%;
     position: relative;
-}
 
-.search-wrapper {
-    width: 75%;
-}
+    .search-wrapper {
+        width: 75%;
 
-.search-btn-wrapper {
-    width: 20%;
-}
+        #search {
+            font-size: 40px;
+        }
+    }
 
-#search {
-    font-size: 40px;
-}
+    .search-btn-wrapper {
+        width: 20%;
 
-#search-button {
-    font-size: 25px;
-    min-width: 150px;
-    padding-left: 1em;
-    padding-right: 1em;   
+        #search-button {
+            font-size: 25px;
+            min-width: 150px;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    }
 }
 
 .intro {
@@ -33,4 +33,3 @@
     padding-top: 25px;
     border-top: 1px solid #934A5F;
 }
-

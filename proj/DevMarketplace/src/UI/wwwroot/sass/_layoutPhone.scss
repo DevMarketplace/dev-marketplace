@@ -1,34 +1,60 @@
-﻿@font-face { 
-        font-family: 'Hacked'; 
-        src: url("../fonts/HACKED_Title.woff"); 
-    } 
+﻿@import "_colors.scss";
 
 body {
     margin: 0;
     background-color: #FFFFFF;
     font-weight: 300;
     font-size: 16px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-a.btn {
+header, footer {
+    flex: none;
+}
+
+main {
+    flex: 1 0 auto; /* 2 */
+    padding: var(--space) var(--space) 0;
+    width: 100%;
+
+    &::after {
+        content: '\00a0'; /* &nbsp; */
+        display: block;
+        margin-top: var(--space);
+        height: 0px;
+        visibility: hidden;
+    }
+}
+
+a.btn, input.btn, button.btn {
     font-weight: 500;
     letter-spacing: 2px;
+
+    &.primary {
+        background-color: $primary-color;
+
+        &:hover {
+            background-color: $primary-color-hover;
+        }
+    }
+
+    &.secondary {
+        background-color: $secondary-color;
+
+        &:hover {
+            background-color: $secondary-color-hover;
+        }
+    }
 }
 
-a.btn.primary {
-    background-color: #57648C;
+.mt20 {
+    margin-top: 20px;
 }
 
-a.btn.primary:hover {
-    background-color: #46537B;
-}
-
-a.btn.secondary {
-    background-color: #C2B4D6;
-}
-
-a.btn.secondary:hover {
-    background-color: #B1A3C5;
+.ml20 {
+    margin-left: 20px;
 }
 
 .mt10 {
@@ -40,27 +66,21 @@ a.btn.secondary:hover {
 }
 
 h1 {
-
 }
 
 h2 {
-
 }
 
 h3 {
-
 }
 
 h4 {
-
 }
 
 h5 {
-
 }
 
 h6 {
-
 }
 
 .promo-text {
@@ -78,10 +98,20 @@ h6 {
 a.brand-logo {
     font-family: 'Hacked';
     font-size: 32px;
-}    
+}
 
 nav {
     background-color: #934A5F;
+
+    .button-collapse i {
+        font-size: 2.7rem;
+        height: 56px;
+        line-height: 56px;
+    }
+}
+
+#sidenav-overlay {
+    z-index: auto;
 }
 
 footer {
@@ -95,7 +125,10 @@ footer {
     padding-top: 12px;
     color: #FFFFFF;
     background-color: #57648C;
-    height: 40px;
+
+    .row {
+        margin-bottom: 0px;
+    }
 }
 
 .jumbotron {
@@ -128,61 +161,96 @@ footer {
     margin-right: auto;
     width: 95%;
     position: relative;
+
+    .search-wrapper {
+        width: 70%;
+
+        #search {
+            font-family: 'Hacked';
+            font-size: 4vw;
+            color: #FFFFFF;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            letter-spacing: 3px;
+            word-spacing: 9px;
+
+            &:focus {
+                border-bottom: 1px solid #934A5F;
+                box-shadow: 0 1px 0 0 #934A5F;
+            }
+
+            $color: #999999;
+            $fontWeight: 300;
+            $opacity: 0.7;
+            $textAlign: center;
+
+            &::-webkit-input-placeholder {
+                color: $color;
+                font-weight: $fontWeight;
+                opacity: $opacity;
+                text-align: $textAlign;
+            }
+
+            &:-ms-input-placeholder {
+                color: $color;
+                font-weight: $fontWeight;
+                opacity: $opacity;
+                text-align: $textAlign;
+            }
+
+            &::-moz-placeholder {
+                color: $color;
+                font-weight: $fontWeight;
+                opacity: $opacity;
+                text-align: $textAlign;
+            }
+        }
+    }
+
+    .search-btn-wrapper {
+        width: 25%;
+
+        #search-button {
+            font-family: 'Hacked';
+            font-size: 3.5vw;
+            display: block;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    }
 }
 
-.search-wrapper {
-    width: 70%;
+
+input:not([type]).input-validation-error, 
+input[type=text].input-validation-error, 
+input[type=password].input-validation-error, 
+input[type=email].input-validation-error, 
+input[type=url].input-validation-error, 
+input[type=time].input-validation-error, 
+input[type=date].input-validation-error, 
+input[type=datetime].input-validation-error, 
+input[type=datetime-local].input-validation-error, 
+input[type=tel].input-validation-error, 
+input[type=number].input-validation-error, 
+input[type=search].input-validation-error, 
+textarea.materialize-textarea.input-validation-error {
+    border-bottom: 1px solid #da291c;
+    -moz-box-shadow: 0 1px 0 0 #da291c;
+    -webkit-box-shadow: 0 1px 0 0 #da291c;
+    box-shadow: 0 1px 0 0 #da291c;
 }
 
-.search-btn-wrapper {
-    width: 25%;
-}
-
-#search {
-    font-family: 'Hacked';
-    font-size: 4vw;
-    color: #FFFFFF;
-    margin-left: auto;
-    margin-right: auto;
+.field-validation-error {
+    color: $validation-error-color;
+    font-size: 12px;
     display: block;
-    letter-spacing: 3px;
-    word-spacing: 9px;
-
-    &:focus {
-        border-bottom: 1px solid #934A5F;
-        box-shadow: 0 1px 0 0 #934A5F;
-    }
-
-    $color : #999999;
-    $fontWeight : 300;
-    $opacity : 0.7;
-    $textAlign : center;
-    &::-webkit-input-placeholder {
-        color:$color;
-        font-weight: $fontWeight;
-        opacity: $opacity;
-        text-align: $textAlign;
-    }
-
-    &::-ms-input-placeholder {
-        color:$color;
-        font-weight: $fontWeight;
-        opacity: $opacity;
-        text-align: $textAlign;
-    }
-
-    &::-moz-placeholder {
-        color:$color;
-        font-weight: $fontWeight;
-        opacity: $opacity;
-        text-align: $textAlign;
-    }
+    line-height: 20px;
+    font-weight: 500;
+    margin: -20px 0 10px;
 }
 
-#search-button {
-    font-family: 'Hacked';
-    font-size: 3.5vw;
-    display: block; 
-    padding-left: 1em;
-    padding-right: 1em;       
+.licensing-info {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
 }
