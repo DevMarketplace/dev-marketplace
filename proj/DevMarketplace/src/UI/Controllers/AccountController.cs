@@ -100,10 +100,22 @@ namespace UI.Controllers
                     _logger.LogError($"Registration error: {error.Code} - {error.Description}");
                 }
 
+                model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
+
                 return View(model);
             }
 
-            await SendActivationEmail(newUser, returnUrl);
+            try
+            {
+                await SendActivationEmail(newUser, returnUrl);
+            } catch (Exception exp)
+            {
+                _logger.LogError(2, exp, "SMTP sender failed.");
+            }
 
             return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
         }
@@ -153,8 +165,8 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "User account locked out.");
                 return View("Lockout");
             }
-            
-            
+
+
             ModelState.AddModelError("LoginAttempt", "Invalid login attempt.");
             return View(model);
         }

@@ -105,6 +105,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Create an account.
+        /// </summary>
+        public static string CreateAnAccountText {
+            get {
+                return ResourceManager.GetString("CreateAnAccountText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The DevMarketplace team.
         /// </summary>
         public static string DevMarketplaceTeamText {
@@ -141,6 +150,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Forgotten password?.
+        /// </summary>
+        public static string ForgottenPasswordText {
+            get {
+                return ResourceManager.GetString("ForgottenPasswordText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastNameText {
@@ -168,6 +186,24 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The password must be at least 8 characters long.
+        /// </summary>
+        public static string PasswordLengthRequirementText {
+            get {
+                return ResourceManager.GetString("PasswordLengthRequirementText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The password must be at least 8 characters and must contain 1 lowercase character, 1 uppercase character and a number.
+        /// </summary>
+        public static string PasswordRequirementsText {
+            get {
+                return ResourceManager.GetString("PasswordRequirementsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Password.
         /// </summary>
         public static string PasswordText {
@@ -191,6 +227,15 @@ namespace UI.Localization {
         public static string RegistrationCompleteText {
             get {
                 return ResourceManager.GetString("RegistrationCompleteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Create an account.
+        /// </summary>
+        public static string RegistrationPageTitle {
+            get {
+                return ResourceManager.GetString("RegistrationPageTitle", resourceCulture);
             }
         }
         

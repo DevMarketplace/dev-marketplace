@@ -14,7 +14,7 @@ namespace UI.Models
         /// The email serves as a username
         /// </summary>
         [Required]
-        [Display(ResourceType = typeof(AccountContent), Name = "EmailText")]
+        [Display(ResourceType = typeof(AccountContent), Name = nameof(AccountContent.EmailText))]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -22,7 +22,7 @@ namespace UI.Models
         /// Password
         /// </summary>
         [Required]
-        [Display(ResourceType = typeof(AccountContent), Name = "PasswordText")]
+        [Display(ResourceType = typeof(AccountContent), Name = nameof(AccountContent.PasswordText))]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

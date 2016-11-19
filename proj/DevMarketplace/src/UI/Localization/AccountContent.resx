@@ -132,6 +132,9 @@
   <data name="CompanyText" xml:space="preserve">
     <value>Company</value>
   </data>
+  <data name="CreateAnAccountText" xml:space="preserve">
+    <value>Create an account</value>
+  </data>
   <data name="DevMarketplaceTeamText" xml:space="preserve">
     <value>The DevMarketplace team</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="FirstNameText" xml:space="preserve">
     <value>First Name</value>
   </data>
+  <data name="ForgottenPasswordText" xml:space="preserve">
+    <value>Forgotten password?</value>
+  </data>
   <data name="LastNameText" xml:space="preserve">
     <value>Last Name</value>
   </data>
@@ -153,6 +159,12 @@
   <data name="PasswordDoesNotMatchError" xml:space="preserve">
     <value>The password doesn't match the password confirmation</value>
   </data>
+  <data name="PasswordLengthRequirementText" xml:space="preserve">
+    <value>The password must be at least 8 characters long</value>
+  </data>
+  <data name="PasswordRequirementsText" xml:space="preserve">
+    <value>The password must be at least 8 characters and must contain 1 lowercase character, 1 uppercase character and a number</value>
+  </data>
   <data name="PasswordText" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -161,6 +173,9 @@
   </data>
   <data name="RegistrationCompleteText" xml:space="preserve">
     <value>Registration Complete</value>
+  </data>
+  <data name="RegistrationPageTitle" xml:space="preserve">
+    <value>Create an account</value>
   </data>
   <data name="RepeatPasswordText" xml:space="preserve">
     <value>Repeat Password</value>

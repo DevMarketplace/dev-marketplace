@@ -11,6 +11,7 @@
                 <form asp-controller="Account" asp-action="SignIn">
                     <div class="row paper">
                         <div class="col s12 m8 push-m2">
+                            <div class="col s12 page-title">@AccountContent.SignInText</div>
                             <div class="input-field col s12">
                                 <input asp-for="Email"/>
                                 <label asp-for="Email"></label>
@@ -22,7 +23,13 @@
                                 <span asp-validation-for="Password" class="field-validation-error"></span>
                                 <input asp-for="ReturnUrl" type="hidden"/>
                             </div>
-                            <div class="col s6">
+                            <div class="input-field col s12 m3">
+                                <a asp-controller="Account" asp-action="Register">@AccountContent.CreateAnAccountText</a>
+                            </div>
+                            <div class="input-field col s12 m9">
+                                <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ForgottenPasswordText</a>
+                            </div>
+                            <div class="col s6 push-s6 right-align">
                                 <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
                             </div>
                         </div>
