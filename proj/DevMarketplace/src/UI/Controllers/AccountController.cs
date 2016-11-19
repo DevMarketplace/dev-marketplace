@@ -138,6 +138,13 @@ namespace UI.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if(user == null)
+            {
+                ModelState.AddModelError(string.Empty, AccountContent.InvalidUsernameErrorText);
+                return View(model);
+            }
+
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
                 ModelState.AddModelError(string.Empty, AccountContent.EmailConfirmationRequiredErrorText);

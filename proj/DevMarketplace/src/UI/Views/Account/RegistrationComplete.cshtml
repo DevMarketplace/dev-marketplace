@@ -1,5 +1,13 @@
 ﻿@using UI.Localization
 @model UI.Models.RegistrationCompleteViewModel
 
-<div>@AccountContent.RegistrationCompleteText</div>
-<div>@string.Format(AccountContent.ActivationGuideText, Model.FirstName, Model.Email)</div>
+<div class="container">
+    <div class="row">
+        <div class="col s12 page-title mt20">
+            @AccountContent.RegistrationCompleteText
+        </div>
+        <div class="col s12">
+            @string.Format(AccountContent.ActivationGuideText, Model.FirstName, Model.Email)
+        </div>
+    </div>
+</div>

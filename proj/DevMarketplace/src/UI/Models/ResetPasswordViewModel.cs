@@ -11,8 +11,10 @@ namespace UI.Models
         [Required]
         public string ResetToken { get; set; }
 
-        [Required]
-        [Display(Name = nameof(AccountContent.NewPasswordText), ResourceType = typeof(AccountContent)), DataType(DataType.Password)]
+        [Required, DataType(DataType.Password), Display(Name = nameof(AccountContent.NewPasswordText), ResourceType = typeof(AccountContent))]
+        [MinLength(8, ErrorMessageResourceName = nameof(AccountContent.PasswordLengthRequirementText), ErrorMessageResourceType = typeof(AccountContent)), RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessageResourceType = typeof(AccountContent),
+           ErrorMessageResourceName = nameof(AccountContent.PasswordRequirementsText))]
+
         public string NewPassword { get; set; }
 
         [Required]

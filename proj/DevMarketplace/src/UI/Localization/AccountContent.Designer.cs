@@ -159,6 +159,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Invalid username/password combination.
+        /// </summary>
+        public static string InvalidUsernameErrorText {
+            get {
+                return ResourceManager.GetString("InvalidUsernameErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastNameText {
@@ -249,6 +258,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to An e-mail with a reset link was sent to {0}.
+        /// </summary>
+        public static string ResetLinkEmailText {
+            get {
+                return ResourceManager.GetString("ResetLinkEmailText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Please reset your password by clicking on this link: &lt;a class=&quot;btn&quot; href=&quot;{0}&quot;&gt;Reset Password&lt;/a&gt;.
         /// </summary>
         public static string ResetPasswordEmailBodyText {
@@ -281,6 +299,15 @@ namespace UI.Localization {
         public static string SignInText {
             get {
                 return ResourceManager.GetString("SignInText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Success.
+        /// </summary>
+        public static string SuccessText {
+            get {
+                return ResourceManager.GetString("SuccessText", resourceCulture);
             }
         }
     }

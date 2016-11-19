@@ -150,6 +150,9 @@
   <data name="ForgottenPasswordText" xml:space="preserve">
     <value>Forgotten password?</value>
   </data>
+  <data name="InvalidUsernameErrorText" xml:space="preserve">
+    <value>Invalid username/password combination</value>
+  </data>
   <data name="LastNameText" xml:space="preserve">
     <value>Last Name</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="RepeatPasswordText" xml:space="preserve">
     <value>Repeat Password</value>
   </data>
+  <data name="ResetLinkEmailText" xml:space="preserve">
+    <value>An e-mail with a reset link was sent to {0}</value>
+  </data>
   <data name="ResetPasswordEmailBodyText" xml:space="preserve">
     <value>Please reset your password by clicking on this link: &lt;a class="btn" href="{0}"&gt;Reset Password&lt;/a&gt;</value>
   </data>
@@ -191,5 +197,8 @@
   </data>
   <data name="SignInText" xml:space="preserve">
     <value>Sign In</value>
+  </data>
+  <data name="SuccessText" xml:space="preserve">
+    <value>Success</value>
   </data>
 </root>

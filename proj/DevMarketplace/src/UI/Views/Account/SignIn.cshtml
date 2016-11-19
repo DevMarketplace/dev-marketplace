@@ -32,12 +32,15 @@
                             <div class="col s6 push-s6 right-align">
                                 <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
                             </div>
+                            <div class="col s12">
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="col s12">
-                
             </div>
         </div>
     </div>
