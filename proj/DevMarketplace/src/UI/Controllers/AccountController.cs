@@ -29,6 +29,7 @@ namespace UI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IDataProtector _protector;
         private readonly ICompanyManager _companyManager;
+        private readonly IUrlUtilityWrapper _urlEncoderWrapper;
 
         public AccountController(IUserManagerWrapper<ApplicationUser> userManager,
             ISignInManagerWrapper<ApplicationUser> signInManager,
@@ -37,7 +38,8 @@ namespace UI.Controllers
             IDataProtectionProvider protectionProvider,
             IViewRenderer viewRenderer,
             IConfiguration configuration,
-            ICompanyManager companyManager)
+            ICompanyManager companyManager,
+            IUrlUtilityWrapper urlEncoderWrapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,6 +49,7 @@ namespace UI.Controllers
             _configuration = configuration;
             _protector = protectionProvider.CreateProtector(GetType().FullName);
             _companyManager = companyManager;
+            _urlEncoderWrapper = urlEncoderWrapper;
         }
 
         [HttpGet]
@@ -117,7 +120,7 @@ namespace UI.Controllers
                 _logger.LogError(2, exp, "SMTP sender failed.");
             }
 
-            return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
+            return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(model.Email)) });
         }
 
         [HttpGet]
@@ -325,7 +328,7 @@ namespace UI.Controllers
             string activationUrl = Url.Action(nameof(ConfirmEmail), "Account",
                 new
                 {
-                    protectedSequence = _protector.Protect(user.Email),
+                    protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Email)),
                     code = confirmationToken,
                     returnUrl = returnUrl
                 },

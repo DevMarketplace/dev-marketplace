@@ -28,9 +28,20 @@ main {
     }
 }
 
+a {
+    color: $primary-color;
+    &:hover {
+        text-decoration:underline;
+    }
+}
+
 a.btn, input.btn, button.btn {
     font-weight: 500;
     letter-spacing: 2px;
+
+    &:hover {
+        text-decoration:none;
+    }
 
     &.primary {
         background-color: $primary-color;
@@ -93,6 +104,9 @@ h6 {
 .nav-wrapper a {
     font-family: 'Hacked';
     font-size: 25px;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 a.brand-logo {

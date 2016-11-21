@@ -95,6 +95,7 @@ namespace UI
 
                 config.For<IConfiguration>().Use(Configuration).Singleton();
                 config.For<IViewRenderer>().Use<ViewRender>().Singleton();
+                config.For<IUrlUtilityWrapper>().Use<UrlUtilityWrapper>().Singleton();
                 config.ForConcreteType<UserManagerWrapper<ApplicationUser>>()
                     .Configure.Setter<UserManager<ApplicationUser>>()
                     .Is(c => c.GetInstance<UserManager<ApplicationUser>>());
