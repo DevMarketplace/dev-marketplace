@@ -167,7 +167,7 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "The user account is not activated");
                 await SendActivationEmail(user, model.ReturnUrl);
 
-                return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
+                return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(_urlEncoderWrapper.UrlEncode(model.Email)) });
             }
 
             if (signInResult.IsLockedOut)
@@ -175,9 +175,8 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "User account locked out.");
                 return View("Lockout");
             }
-
-
-            ModelState.AddModelError("LoginAttempt", "Invalid login attempt.");
+            
+            ModelState.AddModelError(string.Empty, AccountContent.InvalidLoginAttemptText);
             return View(model);
         }
 
@@ -201,6 +200,7 @@ namespace UI.Controllers
                     throw new ArgumentOutOfRangeException(nameof(protectedSequence));
                 }
 
+                protectedSequence = _urlEncoderWrapper.UrlDecode(protectedSequence);
                 var user = await _userManager.FindByEmailAsync(_protector.Unprotect(protectedSequence));
                 var identityResult = await _userManager.ConfirmEmailAsync(user, code);
 
@@ -224,7 +224,7 @@ namespace UI.Controllers
         {
             try
             {
-                string email = _protector.Unprotect(protectedSequence);
+                string email = _protector.Unprotect(_urlEncoderWrapper.UrlDecode(protectedSequence));
                 var user = await _userManager.FindByEmailAsync(email);
 
                 if (user?.EmailConfirmed == false)
@@ -279,6 +279,7 @@ namespace UI.Controllers
                 return NotFound();
             }
 
+            protectedSequence = _urlEncoderWrapper.UrlDecode(protectedSequence);
             var model = new ResetPasswordViewModel
             {
                 ProtectedId = protectedSequence,
@@ -316,7 +317,7 @@ namespace UI.Controllers
         private async Task SendPasswordResetEmail(ApplicationUser user)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _protector.Protect(user.Id), code = code }, protocol: HttpContext.Request.Scheme);
+            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Id)), code = code }, protocol: HttpContext.Request.Scheme);
             var emailBody = _viewRenderer.Render("Account\\ForgottenPasswordEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = callbackUrl });
             await SendEmailAsync(user, AccountContent.ResetPasswordEmailSubjectText, emailBody);
         }

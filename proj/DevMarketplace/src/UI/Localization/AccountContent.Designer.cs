@@ -159,6 +159,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Invalid login attempt.
+        /// </summary>
+        public static string InvalidLoginAttemptText {
+            get {
+                return ResourceManager.GetString("InvalidLoginAttemptText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Invalid username/password combination.
         /// </summary>
         public static string InvalidUsernameErrorText {

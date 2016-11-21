@@ -150,6 +150,9 @@
   <data name="ForgottenPasswordText" xml:space="preserve">
     <value>Forgotten password?</value>
   </data>
+  <data name="InvalidLoginAttemptText" xml:space="preserve">
+    <value>Invalid login attempt</value>
+  </data>
   <data name="InvalidUsernameErrorText" xml:space="preserve">
     <value>Invalid username/password combination</value>
   </data>
