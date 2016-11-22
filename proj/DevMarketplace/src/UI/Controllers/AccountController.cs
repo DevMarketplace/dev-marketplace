@@ -206,7 +206,7 @@ namespace UI.Controllers
 
                 if (identityResult.Succeeded)
                 {
-                    return RedirectToAction("SignIn", returnUrl);
+                    return RedirectToAction(nameof(SignIn), returnUrl);
                 }
 
                 return NotFound();

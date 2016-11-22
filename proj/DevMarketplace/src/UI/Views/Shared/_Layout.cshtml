@@ -148,17 +148,24 @@ function $AriaProvider() {
     </div>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/npm/core-js/shim.min.js"></script>
+        <script src="~/npm/zone.js"></script>
+        <script src="~/npm/Reflect.js"></script>
+        <script src="~/npm/system.src.js"></script>
         <script src="~/js/materialize.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/systemjs.config.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script>
+            System.import('app').catch(function(err){ console.error(err); });
+        </script>
     </environment>
 
     @RenderSection("scripts", required: false)
