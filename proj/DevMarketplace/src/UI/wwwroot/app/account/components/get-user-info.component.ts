@@ -7,5 +7,7 @@
 
 export class GetUserInfoComponent
 {
-    
+    firstName: string;
+    email: string;
+    lastName: string;
 }
