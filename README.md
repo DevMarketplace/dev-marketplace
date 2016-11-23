@@ -1,9 +1,10 @@
 # Developer Marketplace
 
-|Ready|In progress|Done|
-|------|--------|----|
-|[![Stories in Ready](https://badge.waffle.io/cracker4o/dev-marketplace.svg?label=ready&title=Ready)](http://waffle.io/cracker4o/dev-marketplace)|[![Stories in progress](https://badge.waffle.io/cracker4o/dev-marketplace.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/cracker4o/dev-marketplace)|[![Stories done](https://badge.waffle.io/cracker4o/dev-marketplace.svg?label=Done&title=Done)](http://waffle.io/cracker4o/dev-marketplace)|
 Welcome to the Developer Marketplace repository! The Developer Marketplace is a web application that allows individuals, teams and companies share KanBan stories, cards, tasks and items from their KanBan boards and Scrum boards. All shared stories become available on the Developer Marketplace website and software engineers from all over the world can work on these stories. The companies and people that share stories will be called the story producers. The Developer Marketplace will support multiple workflows for transaction and bidding strategies that enable the producers to define the rules under which they will accept bids and allow the story developers to work on their items.
+
+|Ready|In progress|
+|------|--------|
+|[![Stories in Ready](https://badge.waffle.io/cracker4o/dev-marketplace.svg?label=ready&title=Ready)](http://waffle.io/cracker4o/dev-marketplace)|[![Stories in progress](https://badge.waffle.io/cracker4o/dev-marketplace.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/cracker4o/dev-marketplace)|
 
 ## Developer marketplace Workflow
 
