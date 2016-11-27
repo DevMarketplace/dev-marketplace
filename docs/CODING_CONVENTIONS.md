@@ -13,3 +13,7 @@ Since the project uses Angular 2, it is recommended to follow the Angular 2 styl
 
 ## SASS style guide
 The SASS guidelines that the project follows are described [here](https://sass-guidelin.es/).
+
+## REST API conventions
+REST Api conventions
+[Fetch specification](https://fetch.spec.whatwg.org/#response-class)
