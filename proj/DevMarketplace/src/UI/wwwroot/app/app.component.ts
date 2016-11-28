@@ -1,11 +1,7 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { GetUserInfoComponent } from './account/components/get-user-info.component';
+﻿import { Component } from "@angular/core";
 
 @Component ({
-    selector: 'dev-marketplace'
+    selector: "dev-marketplace",
+    template: " "
 })
-export class AppComponent implements OnInit {
-    ngOnInit(): void {
-        
-    }
-}
+export class AppComponent { }

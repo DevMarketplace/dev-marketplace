@@ -8,16 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
+var account_service_1 = require("../services/account.service");
 var GetUserInfoComponent = (function () {
-    function GetUserInfoComponent() {
+    function GetUserInfoComponent(accountService) {
+        this.accountService = accountService;
     }
+    GetUserInfoComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.accountService.getCurrentUser().subscribe(function (userResponse) { return _this.user = userResponse; }, function (error) { return console.log(error); });
+    };
     GetUserInfoComponent = __decorate([
         core_1.Component({
-            selector: 'account-user-info',
-            templateUrl: './templates/get-user-info.component.html'
+            selector: "account-user-info",
+            templateUrl: "./app/account/templates/get-user-info.component.html",
+            providers: [account_service_1.AccountService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [account_service_1.AccountService])
     ], GetUserInfoComponent);
     return GetUserInfoComponent;
 }());

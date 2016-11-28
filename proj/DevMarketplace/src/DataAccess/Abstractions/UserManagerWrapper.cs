@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -46,6 +47,11 @@ namespace DataAccess.Abstractions
         public Task<IdentityResult> ResetPasswordAsync(TUser user, string token, string newPassword)
         {
             return UserManager.ResetPasswordAsync(user, token, newPassword);
+        }
+
+        public Task<TUser> GetUserAsync(ClaimsPrincipal principal)
+        {
+            return UserManager.GetUserAsync(principal);
         }
     }
 }

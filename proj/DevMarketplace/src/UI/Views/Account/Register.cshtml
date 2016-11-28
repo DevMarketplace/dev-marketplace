@@ -1,11 +1,11 @@
 ﻿@using UI.Models
 @using UI.Localization;
 @model RegisterViewModel
-
 <div class="container">
     <div class="row paper mt20">
         <div class="col s12">
             <form asp-controller="Account" asp-action="Register">
+                @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col s12 m8 push-m2">
                         <div class="col s12 page-title">@AccountContent.RegistrationPageTitle</div>

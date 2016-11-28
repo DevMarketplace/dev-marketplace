@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IUserManagerWrapper<ApplicationUser> _userManager;
@@ -124,6 +125,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult SignIn(string returnUrl = null)
         {
             var model = new SignInViewModel { ReturnUrl = returnUrl };
@@ -131,6 +133,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> SignIn(SignInViewModel model)
@@ -190,6 +193,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> ConfirmEmail(string protectedSequence, string code, string returnUrl = null)
         {
@@ -219,6 +223,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> RegistrationComplete(string protectedSequence)
         {
@@ -243,6 +248,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             var model = new ForgotPasswordViewModel();
@@ -272,6 +278,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ResetPassword(string protectedSequence, string code)
         {
             if (string.IsNullOrWhiteSpace(protectedSequence) || string.IsNullOrWhiteSpace(code))
@@ -290,6 +297,8 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -311,6 +320,29 @@ namespace UI.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var model = new AccountInfoViewModel();
+            if(!User.Identity.IsAuthenticated)
+            {
+                return Json(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if(user == null)
+            {
+                return Json(model);
+            }
+            
+            model.FirstName = user.FirstName;
+            model.Email = user.Email;
+            model.Authenticated = true;
+
+            return Json(model);
         }
 
         [NonAction]

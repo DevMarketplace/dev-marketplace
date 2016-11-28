@@ -65,7 +65,7 @@ gulp.task("copy-systemjs", function () {
     }).pipe(gulp.dest(paths.packageLib + 'systemjs/'));
 });
 gulp.task("copy-angular2", function () {
-    return gulp.src([paths.nodeModules + '@angular/**/bundles/*.js'])
+    return gulp.src([paths.nodeModules + '@angular/**/'])
         .pipe(gulp.dest(paths.packageLib + '@angular/'));
 });
 gulp.task("copy-reflect-metadata", function () {
@@ -73,9 +73,7 @@ gulp.task("copy-reflect-metadata", function () {
         .pipe(gulp.dest(paths.packageLib + 'reflect-metadata/'));
 });
 gulp.task("copy-rxjs", function () {
-    return gulp.src(paths.nodeModules + 'rxjs/bundles/*.*', {
-        base: paths.nodeModules + 'rxjs/bundles/'
-    }).pipe(gulp.dest(paths.packageLib + 'rxjs/'));
+    return gulp.src([paths.nodeModules + 'rxjs/**/']).pipe(gulp.dest(paths.packageLib + 'rxjs/'));
 });
 gulp.task("copy-corejs", function () {
     return gulp.src(paths.nodeModules + 'core-js/client/*.*', {
@@ -89,4 +87,10 @@ gulp.task("copy-angular-in-memory-web-api", function() {
     }).pipe(gulp.dest(paths.packageLib + 'angular-in-memory-web-api/'));
 });
 
-gulp.task("copy-all", ["copy-rxjs", 'copy-angular2', 'copy-systemjs', 'copy-reflect-metadata', 'copy-corejs', 'copy-angular-in-memory-web-api']);
+gulp.task("copy-zonejs", function () {
+    return gulp.src(paths.nodeModules + 'zone.js/dist/*.*', {
+        base: paths.nodeModules + 'zone.js/dist/'
+    }).pipe(gulp.dest(paths.packageLib + 'zone.js/'));
+});
+
+gulp.task("copy-all", ["copy-rxjs", 'copy-angular2', 'copy-systemjs', 'copy-reflect-metadata', 'copy-corejs', 'copy-angular-in-memory-web-api', 'copy-zonejs']);

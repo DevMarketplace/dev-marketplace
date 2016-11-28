@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace DataAccess.Abstractions
 {
@@ -86,5 +87,16 @@ namespace DataAccess.Abstractions
         /// the Microsoft.AspNetCore.Identity.IdentityResult of the operation.
         /// </returns>
         Task<IdentityResult> ResetPasswordAsync(TUser user, string token, string newPassword);
+
+        /// <summary>
+        /// Returns the user corresponding to the IdentityOptions.ClaimsIdentity.UserIdClaimType
+        /// claim in the principal or null.
+        /// </summary>
+        /// <param name="principal">The principal which contains the user id claim.</param>
+        /// <returns>
+        /// The user corresponding to the IdentityOptions.ClaimsIdentity.UserIdClaimType
+        /// claim in the principal or null
+        /// </returns>
+        Task<TUser> GetUserAsync(ClaimsPrincipal principal);
     }
 }

@@ -9,25 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var app_component_1 = require("./app.component");
-var http_1 = require("@angular/http");
-var get_user_info_component_1 = require("./account/components/get-user-info.component");
-var AppModule = (function () {
-    function AppModule() {
+var AppComponent = (function () {
+    function AppComponent() {
     }
-    AppModule = __decorate([
-        core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, http_1.HttpModule, http_1.JsonpModule],
-            declarations: [
-                app_component_1.AppComponent,
-                get_user_info_component_1.GetUserInfoComponent
-            ],
-            bootstrap: [app_component_1.AppComponent, get_user_info_component_1.GetUserInfoComponent]
+    AppComponent = __decorate([
+        core_1.Component({
+            selector: "dev-marketplace",
+            template: " "
         }), 
         __metadata('design:paramtypes', [])
-    ], AppModule);
-    return AppModule;
+    ], AppComponent);
+    return AppComponent;
 }());
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+exports.AppComponent = AppComponent;
+//# sourceMappingURL=app.component.js.map
