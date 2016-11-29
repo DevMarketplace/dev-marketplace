@@ -9,13 +9,13 @@ import { CurrentUser } from "../models/current-user.model";
 })
 
 export class GetUserInfoComponent implements OnInit {
-    private user: CurrentUser;
+    private user: CurrentUser = new CurrentUser();
 
     constructor(private accountService: AccountService) { }
 
     ngOnInit(): void {
         this.accountService.getCurrentUser().subscribe(
-            (userResponse: CurrentUser) => this.user = userResponse,
-            (error : any) => console.log(<any>error));
+            (userResponse: CurrentUser) => { this.user = userResponse; },
+            (error: any) => console.log(<any>error));
     }
 }

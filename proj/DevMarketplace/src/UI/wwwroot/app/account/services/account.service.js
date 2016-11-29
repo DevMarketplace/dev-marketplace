@@ -21,7 +21,7 @@ var AccountService = (function () {
         var headers = new http_1.Headers({ "Content-Type": "application/json" });
         var options = new http_1.RequestOptions({ headers: headers, withCredentials: true });
         return this.http.post(this.CurrentUserUrl, "", options)
-            .map(function (res) { return res; })
+            .map(function (res) { return res.json(); })
             .catch(function (error) { return Observable_1.Observable.throw(error.json().error || "Server error"); });
     };
     AccountService = __decorate([

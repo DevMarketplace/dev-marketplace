@@ -10,13 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var account_service_1 = require("../services/account.service");
+var current_user_model_1 = require("../models/current-user.model");
 var GetUserInfoComponent = (function () {
     function GetUserInfoComponent(accountService) {
         this.accountService = accountService;
+        this.user = new current_user_model_1.CurrentUser();
     }
     GetUserInfoComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.accountService.getCurrentUser().subscribe(function (userResponse) { return _this.user = userResponse; }, function (error) { return console.log(error); });
+        this.accountService.getCurrentUser().subscribe(function (userResponse) { _this.user = userResponse; }, function (error) { return console.log(error); });
     };
     GetUserInfoComponent = __decorate([
         core_1.Component({

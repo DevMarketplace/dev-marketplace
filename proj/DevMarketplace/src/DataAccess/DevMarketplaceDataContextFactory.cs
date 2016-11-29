@@ -12,7 +12,7 @@ namespace DataAccess
         public DevMarketplaceDataContext Create(DbContextFactoryOptions options)
         {
             var builder = new DbContextOptionsBuilder<DevMarketplaceDataContext>();
-            builder.UseSqlServer("Server=.;Database=DevMarketplace;Trusted_Connection=True;MultipleActiveResultSets=true");
+            builder.UseSqlServer("Server=.\\SQLEXPRESS;Database=DevMarketplace;Trusted_Connection=True;MultipleActiveResultSets=true");
             return new DevMarketplaceDataContext(builder.Options);
         }
     }
