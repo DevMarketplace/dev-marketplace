@@ -11,10 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var account_service_1 = require("../services/account.service");
 var current_user_model_1 = require("../models/current-user.model");
+var ng2_translate_1 = require("ng2-translate");
 var GetUserInfoComponent = (function () {
-    function GetUserInfoComponent(accountService) {
+    function GetUserInfoComponent(accountService, translate) {
         this.accountService = accountService;
+        this.translate = translate;
         this.user = new current_user_model_1.CurrentUser();
+        translate.addLangs(["en"]);
+        translate.setDefaultLang("en");
+        var browserLang = translate.getBrowserLang();
+        translate.use(browserLang.match(/en/) ? browserLang : "en");
     }
     GetUserInfoComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -26,7 +32,7 @@ var GetUserInfoComponent = (function () {
             templateUrl: "./app/account/templates/get-user-info.component.html",
             providers: [account_service_1.AccountService]
         }), 
-        __metadata('design:paramtypes', [account_service_1.AccountService])
+        __metadata('design:paramtypes', [account_service_1.AccountService, ng2_translate_1.TranslateService])
     ], GetUserInfoComponent);
     return GetUserInfoComponent;
 }());

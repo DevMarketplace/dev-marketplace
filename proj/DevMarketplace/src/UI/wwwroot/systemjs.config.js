@@ -1,8 +1,4 @@
-﻿/**
- * System configuration for Angular samples
- * Adjust as necessary for your application needs.
- */
-(function (global) {
+﻿(function (global) {
     System.config({
         paths: {
             // paths serve as alias
@@ -25,6 +21,7 @@
             '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
             '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
             // other libraries
+            'ng2-translate': 'npm:ng2-translate',
             'rxjs': 'npm:rxjs',
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/in-memory-web-api.umd.js'
         },
@@ -35,6 +32,9 @@
                 defaultExtension: 'js'
             },
             rxjs: {
+                defaultExtension: 'js'
+            },
+            'ng2-translate': {
                 defaultExtension: 'js'
             }
         }

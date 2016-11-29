@@ -115,6 +115,7 @@ function $AriaProvider() {
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+                        <account-user-info></account-user-info>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
@@ -133,9 +134,9 @@ function $AriaProvider() {
         </div>
     }
     <main>
-        <account-user-info></account-user-info>
-        <dev-marketplace></dev-marketplace>
-        @RenderBody()
+        <dev-marketplace>
+            @RenderBody()
+        </dev-marketplace>
     </main>
     <footer></footer>
     <div class="sub-footer">
