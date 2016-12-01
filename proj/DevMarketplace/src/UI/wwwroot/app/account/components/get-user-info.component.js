@@ -11,28 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var account_service_1 = require("../services/account.service");
 var current_user_model_1 = require("../models/current-user.model");
-var ng2_translate_1 = require("ng2-translate");
 var GetUserInfoComponent = (function () {
-    function GetUserInfoComponent(accountService, translate) {
+    function GetUserInfoComponent(accountService, elementRef) {
         this.accountService = accountService;
-        this.translate = translate;
+        this.elementRef = elementRef;
         this.user = new current_user_model_1.CurrentUser();
-        translate.addLangs(["en"]);
-        translate.setDefaultLang("en");
-        var browserLang = translate.getBrowserLang();
-        translate.use(browserLang.match(/en/) ? browserLang : "en");
     }
     GetUserInfoComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.accountService.getCurrentUser().subscribe(function (userResponse) { _this.user = userResponse; }, function (error) { return console.log(error); });
     };
+    GetUserInfoComponent.prototype.ngAfterViewChecked = function () {
+        $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false });
+    };
     GetUserInfoComponent = __decorate([
         core_1.Component({
             selector: "account-user-info",
-            templateUrl: "./app/account/templates/get-user-info.component.html",
+            templateUrl: "/angular/template?name=UserAccountMenuPartial",
             providers: [account_service_1.AccountService]
         }), 
-        __metadata('design:paramtypes', [account_service_1.AccountService, ng2_translate_1.TranslateService])
+        __metadata('design:paramtypes', [account_service_1.AccountService, core_1.ElementRef])
     ], GetUserInfoComponent);
     return GetUserInfoComponent;
 }());

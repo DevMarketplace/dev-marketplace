@@ -312,6 +312,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Sign Out.
+        /// </summary>
+        public static string SignOutText {
+            get {
+                return ResourceManager.GetString("SignOutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Success.
         /// </summary>
         public static string SuccessText {

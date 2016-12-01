@@ -22,7 +22,7 @@ var AccountService = (function () {
         var options = new http_1.RequestOptions({ headers: headers, withCredentials: true });
         return this.http.post(this.CurrentUserUrl, "", options)
             .map(function (res) { return res.json(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json().error || "Server error"); });
+            .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
     };
     AccountService = __decorate([
         core_1.Injectable(), 

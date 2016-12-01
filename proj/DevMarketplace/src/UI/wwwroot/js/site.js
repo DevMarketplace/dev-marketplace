@@ -9,10 +9,6 @@
                 $(".button-collapse").sideNav();
             }
 
-            if ($.fn.dropdown !== 'undefined') {
-                $(".account-dropdown").dropdown({ hover: false });
-            }
-
             if ($.fn.material_select !== 'undefined') {
                 $('select').material_select();
             }

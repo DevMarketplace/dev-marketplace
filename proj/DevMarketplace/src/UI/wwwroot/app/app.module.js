@@ -10,12 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
-var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
-var http_2 = require("@angular/http");
-var ng2_translate_1 = require("ng2-translate");
-var ng2_translate_2 = require("ng2-translate");
-var ng2_translate_3 = require("ng2-translate");
+var http_1 = require("@angular/http");
 var get_user_info_component_1 = require("./account/components/get-user-info.component");
 var AppModule = (function () {
     function AppModule() {
@@ -24,13 +20,8 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
-                http_2.HttpModule,
-                http_2.JsonpModule,
-                ng2_translate_1.TranslateModule.forRoot({
-                    provide: ng2_translate_2.TranslateLoader,
-                    useFactory: function (http) { return new ng2_translate_3.TranslateStaticLoader(http, "/app/localization", ".json"); },
-                    deps: [http_1.Http]
-                })
+                http_1.HttpModule,
+                http_1.JsonpModule
             ],
             declarations: [
                 app_component_1.AppComponent,

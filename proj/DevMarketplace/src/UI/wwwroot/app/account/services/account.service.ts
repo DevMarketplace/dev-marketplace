@@ -17,6 +17,6 @@ export class AccountService {
 
         return this.http.post(this.CurrentUserUrl, "", options)
             .map((res: Response) => res.json())
-            .catch((error: any) => Observable.throw(error.json().error || "Server error"));
+            .catch((error: any) => Observable.throw(error || "Server error"));
     }
 }

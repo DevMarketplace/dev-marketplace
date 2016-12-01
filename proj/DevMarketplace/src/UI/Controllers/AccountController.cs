@@ -323,6 +323,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCurrentUser()
         {
             var model = new AccountInfoViewModel();
