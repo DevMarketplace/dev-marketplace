@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
-var app_component_1 = require("./app.component");
 var http_1 = require("@angular/http");
 var get_user_info_component_1 = require("./account/components/get-user-info.component");
 var AppModule = (function () {
@@ -24,10 +23,9 @@ var AppModule = (function () {
                 http_1.JsonpModule
             ],
             declarations: [
-                app_component_1.AppComponent,
                 get_user_info_component_1.GetUserInfoComponent
             ],
-            bootstrap: [app_component_1.AppComponent, get_user_info_component_1.GetUserInfoComponent]
+            bootstrap: [get_user_info_component_1.GetUserInfoComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

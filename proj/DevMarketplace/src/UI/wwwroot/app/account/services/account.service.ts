@@ -7,7 +7,7 @@ import { CurrentUser } from "../models/current-user.model";
 @Injectable()
 
 export class AccountService {
-    private CurrentUserUrl : string = "account/GetCurrentUser";
+    private CurrentUserUrl : string = "/account/getcurrentuser";
 
     constructor(private http: Http) { }
 

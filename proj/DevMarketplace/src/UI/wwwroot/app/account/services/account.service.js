@@ -15,7 +15,7 @@ var Observable_1 = require("rxjs/Observable");
 var AccountService = (function () {
     function AccountService(http) {
         this.http = http;
-        this.CurrentUserUrl = "account/GetCurrentUser";
+        this.CurrentUserUrl = "/account/getcurrentuser";
     }
     AccountService.prototype.getCurrentUser = function () {
         var headers = new http_1.Headers({ "Content-Type": "application/json" });

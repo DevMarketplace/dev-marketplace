@@ -1,4 +1,6 @@
 ﻿@using UI.Localization
+@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,7 +117,8 @@ function $AriaProvider() {
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        <account-user-info>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</account-user-info>
+                        <account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>
+                        <li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
@@ -134,9 +137,7 @@ function $AriaProvider() {
         </div>
     }
     <main>
-        <dev-marketplace>
-            @RenderBody()
-        </dev-marketplace>
+        @RenderBody()
     </main>
     <footer></footer>
     <div class="sub-footer">
