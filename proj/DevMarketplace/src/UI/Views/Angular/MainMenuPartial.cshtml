@@ -1,0 +1,20 @@
+﻿@using System.Threading.Tasks
+@using UI.Localization
+<div class="nav-wrapper">
+    <a href="/" class="brand-logo">_Dev_Marketplace</a>
+    <a href="#" data-activates="nav-mobile" class="button-collapse">
+        <i class="material-icons">menu</i>
+    </a>
+    <ul id="nav-desktop" class="right hide-on-med-and-down">
+        <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
+        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
+        <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+        <account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>
+    </ul>
+    <ul class="side-nav" id="nav-mobile">
+        <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
+        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
+        <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+        <account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>
+    </ul>
+</div>

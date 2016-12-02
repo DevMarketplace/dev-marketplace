@@ -21,6 +21,6 @@ export class GetUserInfoComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false });
+        $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     }
 }

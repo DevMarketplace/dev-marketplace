@@ -22,7 +22,7 @@ var GetUserInfoComponent = (function () {
         this.accountService.getCurrentUser().subscribe(function (userResponse) { _this.user = userResponse; }, function (error) { return console.log(error); });
     };
     GetUserInfoComponent.prototype.ngAfterViewChecked = function () {
-        $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false });
+        $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     };
     GetUserInfoComponent = __decorate([
         core_1.Component({

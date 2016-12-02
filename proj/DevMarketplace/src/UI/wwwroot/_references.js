@@ -3,7 +3,6 @@
 /// <reference path="app/account/components/get-user-info.component.js" />
 /// <reference path="app/account/models/current-user.model.js" />
 /// <reference path="app/account/services/account.service.js" />
-/// <reference path="app/app.component.js" />
 /// <reference path="app/app.module.js" />
 /// <reference path="app/main.js" />
 /// <reference path="app/rxjs-operators.js" />
