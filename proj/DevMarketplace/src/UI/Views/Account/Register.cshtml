@@ -39,6 +39,14 @@
                             <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
                             <label asp-for="CompanyId"></label>
                         </div>
+                        
+                        <div class="input-field col s12">
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
+                            }
+                        </div>
+
                         <div class="col s6 push-s6 right-align">
                             <input type="submit" class="btn primary" value="@AccountContent.RegisterText" />
                         </div>

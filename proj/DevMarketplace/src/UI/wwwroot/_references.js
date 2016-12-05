@@ -1023,7 +1023,6 @@
 /// <reference path="npm/rxjs/src/operator/zipall.js" />
 /// <reference path="npm/rxjs/src/outersubscriber.js" />
 /// <reference path="npm/rxjs/src/replaysubject.js" />
-/// <reference path="npm/rxjs/src/Rx.global.js" />
 /// <reference path="npm/rxjs/src/rx.js" />
 /// <reference path="npm/rxjs/src/scheduler.js" />
 /// <reference path="npm/rxjs/src/scheduler/action.js" />

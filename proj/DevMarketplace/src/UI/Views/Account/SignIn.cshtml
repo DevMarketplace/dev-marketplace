@@ -30,14 +30,14 @@
                             <div class="input-field col s12 m9">
                                 <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ForgottenPasswordText</a>
                             </div>
-                            <div class="col s6 push-s6 right-align">
-                                <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
-                            </div>
-                            <div class="col s12">
+                            <div class="input-field col s12">
                                 @if (!ViewData.ModelState.IsValid)
                                 {
                                     <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
                                 }
+                            </div>
+                            <div class="col s6 push-s6 right-align">
+                                <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
                             </div>
                         </div>
                     </div>

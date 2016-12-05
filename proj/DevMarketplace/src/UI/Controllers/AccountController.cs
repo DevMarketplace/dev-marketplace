@@ -1,4 +1,29 @@
-﻿using DataAccess;
+﻿#region License
+// The Developer Marketplace is a web application that allows individuals, 
+// teams and companies share KanBan stories, cards, tasks and items from 
+// their KanBan boards and Scrum boards. 
+// All shared stories become available on the Developer Marketplace website
+//  and software engineers from all over the world can work on these stories. 
+// 
+// Copyright (C) 2016 Tosho Toshev
+// 
+//     This program is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//     You should have received a copy of the GNU General Public License
+//     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// GitHub repository: https://github.com/cracker4o/dev-marketplace
+// e-mail: cracker4o@gmail.com
+#endregion
+using DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -102,6 +127,7 @@ namespace UI.Controllers
                 foreach (var error in result.Errors)
                 {
                     _logger.LogError($"Registration error: {error.Code} - {error.Description}");
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
 
                 model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
@@ -199,7 +225,8 @@ namespace UI.Controllers
                 return View(new ProfileViewModel(model, _companyManager));
             }
 
-            var user = ProfileViewModel.GetUser(model);
+            var user = await _userManager.GetUserAsync(User);
+            ProfileViewModel.SetUserProperties(model, user);
             var result = await _userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
@@ -207,14 +234,13 @@ namespace UI.Controllers
                 foreach (var error in result.Errors)
                 {
                     _logger.LogError($"Error while updating the user: {error.Code} - {error.Description}");
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
-
-                ModelState.AddModelError(string.Empty, LayoutContent.GenericErrorText);
 
                 return View(new ProfileViewModel(model, _companyManager));
             }
 
-            return View(model);
+            return View(new ProfileViewModel(model, _companyManager));
         }
 
         [HttpGet]
