@@ -30,6 +30,7 @@ main {
 
 a {
     color: $primary-color;
+    font-weight: 400;
     &:hover {
         text-decoration:underline;
     }
@@ -128,6 +129,10 @@ nav {
         height: 25px;
         top: 7px;
     }
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: black;
 }
 
 #sidenav-overlay {

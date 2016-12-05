@@ -184,6 +184,40 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var model = new ProfileViewModel(user, _companyManager);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>Profile(ProfileViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(new ProfileViewModel(model, _companyManager));
+            }
+
+            var user = ProfileViewModel.GetUser(model);
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    _logger.LogError($"Error while updating the user: {error.Code} - {error.Description}");
+                }
+
+                ModelState.AddModelError(string.Empty, LayoutContent.GenericErrorText);
+
+                return View(new ProfileViewModel(model, _companyManager));
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> SignOut()
         {

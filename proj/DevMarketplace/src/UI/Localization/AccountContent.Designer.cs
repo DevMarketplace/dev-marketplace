@@ -328,5 +328,14 @@ namespace UI.Localization {
                 return ResourceManager.GetString("SuccessText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string UserProfilePageTitle {
+            get {
+                return ResourceManager.GetString("UserProfilePageTitle", resourceCulture);
+            }
+        }
     }
 }

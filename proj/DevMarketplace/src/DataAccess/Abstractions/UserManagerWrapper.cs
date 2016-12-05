@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -52,6 +51,11 @@ namespace DataAccess.Abstractions
         public Task<TUser> GetUserAsync(ClaimsPrincipal principal)
         {
             return UserManager.GetUserAsync(principal);
+        }
+
+        public Task<IdentityResult> UpdateAsync(TUser user)
+        {
+            return UserManager.UpdateAsync(user);
         }
     }
 }

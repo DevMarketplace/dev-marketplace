@@ -98,5 +98,15 @@ namespace DataAccess.Abstractions
         /// claim in the principal or null
         /// </returns>
         Task<TUser> GetUserAsync(ClaimsPrincipal principal);
+
+        /// <summary>
+        /// Updates the specified user in the backing store.
+        /// </summary>
+        /// <param name="user">The user to update.</param>
+        /// <returns>
+        /// The System.Threading.Tasks.Task that represents the asynchronous operation, containing
+        /// the Microsoft.AspNetCore.Identity.IdentityResult of the operation.
+        /// </returns>
+        Task<IdentityResult> UpdateAsync(TUser user);
     }
 }

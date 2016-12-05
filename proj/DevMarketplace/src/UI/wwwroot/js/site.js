@@ -1,17 +1,33 @@
 ﻿(function ($) {
     var operations = {
         init: function () {
-            //Init functions for different 3rd party libraries
+            if (System != null) {
+                System.import("app").catch(function (err) { console.error(err); });
+            }
+
+            operations.setAccountMenu();
+        },
+
+        setAccountMenu: function() {
+            if ($(".hide-on-med-and-down").is(":visible")) {
+                $("#nav-desktop").append($("account-user-info"));
+            } else {
+                $("#nav-mobile").append($("account-user-info"));
+            }
         },
 
         documentReadySetup: function () {
             if ($.fn.sideNav !== 'undefined') {
-                $(".button-collapse").sideNav();
+                $(".button-collapse").sideNav({ menuWidth: 320 });
             }
 
             if ($.fn.material_select !== 'undefined') {
                 $('select').material_select();
             }
+
+            $(window).on("resize orientationchange", function () {
+                operations.setAccountMenu();
+            });
 
             $(window).on("scroll", function () {
                 if ($(this).scrollTop() > $(".jumbotron").height()) {

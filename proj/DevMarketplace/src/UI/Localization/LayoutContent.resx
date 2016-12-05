@@ -120,8 +120,14 @@
   <data name="FindAProjectText" xml:space="preserve">
     <value>Find a project...</value>
   </data>
+  <data name="GenericErrorText" xml:space="preserve">
+    <value>An unknown error occurred</value>
+  </data>
   <data name="LogInMenuText" xml:space="preserve">
     <value>Log In</value>
+  </data>
+  <data name="SaveChangesText" xml:space="preserve">
+    <value>Save changes</value>
   </data>
   <data name="SearchButtonText" xml:space="preserve">
     <value>Search</value>
