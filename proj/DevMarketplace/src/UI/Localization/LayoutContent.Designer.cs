@@ -105,6 +105,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string SignInMenuText {
+            get {
+                return ResourceManager.GetString("SignInMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Sign Up.
         /// </summary>
         public static string SignUpMenuText {

@@ -44,5 +44,14 @@
                 </form>
             </div>
         </div>
+        <div class="row">
+            <div class="col s12">
+                <form asp-controller="Account" asp-action="SignInExternal">
+                    <input type="hidden" name="Provider" value="GitHub" />
+                    <input asp-for="ReturnUrl" type="hidden" id="return-url" />
+                    <input type="submit" class="btn primary" value="@AccountContent.SignInUsingGitHub" />
+                </form>
+            </div>
+        </div>
     </div>
 </section>

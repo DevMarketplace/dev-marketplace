@@ -129,6 +129,9 @@
   <data name="AddressUserByNameText" xml:space="preserve">
     <value>Dear {0},</value>
   </data>
+  <data name="ChangePasswordText" xml:space="preserve">
+    <value>Change password</value>
+  </data>
   <data name="CompanyText" xml:space="preserve">
     <value>Company</value>
   </data>
@@ -196,13 +199,16 @@
     <value>Reset your DevMarketplace password</value>
   </data>
   <data name="ResetPasswordText" xml:space="preserve">
-    <value>Reset Password</value>
+    <value>Reset password</value>
   </data>
   <data name="SignInText" xml:space="preserve">
-    <value>Sign In</value>
+    <value>Sign in</value>
+  </data>
+  <data name="SignInUsingGitHub" xml:space="preserve">
+    <value>Sign in using GitHub</value>
   </data>
   <data name="SignOutText" xml:space="preserve">
-    <value>Sign Out</value>
+    <value>Sign out</value>
   </data>
   <data name="SuccessText" xml:space="preserve">
     <value>Success</value>

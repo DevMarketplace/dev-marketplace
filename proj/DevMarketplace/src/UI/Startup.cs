@@ -151,6 +151,11 @@ namespace UI
 
             app.UseStaticFiles();
             app.UseIdentity();
+            app.UseGitHubAuthentication(options => {
+                options.ClientId = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientId"];
+                options.ClientSecret = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientSecret"];
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

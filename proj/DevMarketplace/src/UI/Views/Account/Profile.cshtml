@@ -31,6 +31,9 @@
                             <label asp-for="CompanyId"></label>
                         </div>
                         <div class="input-field col s12">
+                            <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ChangePasswordText</a>
+                        </div>
+                        <div class="input-field col s12">
                             @if (!ViewData.ModelState.IsValid)
                             {
                                 <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>

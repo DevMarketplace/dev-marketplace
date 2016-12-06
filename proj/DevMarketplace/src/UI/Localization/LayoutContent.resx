@@ -132,6 +132,9 @@
   <data name="SearchButtonText" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SignInMenuText" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
   <data name="SignUpMenuText" xml:space="preserve">
     <value>Sign Up</value>
   </data>

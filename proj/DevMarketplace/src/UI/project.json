@@ -28,7 +28,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
     "BundlerMinifier.Core": "2.2.306",
-    "System.Runtime.Extensions": "4.3.0"
+    "System.Runtime.Extensions": "4.3.0",
+    "AspNet.Security.OAuth.GitHub": "1.0.0-beta2-final"
   },
 
   "tools": {

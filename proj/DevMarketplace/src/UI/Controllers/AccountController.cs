@@ -41,6 +41,7 @@ using UI.Utilities;
 using BusinessLogic.Services;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace UI.Controllers
 {
@@ -207,6 +208,54 @@ namespace UI.Controllers
             
             ModelState.AddModelError(string.Empty, AccountContent.InvalidLoginAttemptText);
             return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult SignInExternal([FromForm] string provider, string returnUrl = null)
+        {
+            if (string.IsNullOrWhiteSpace(provider))
+            {
+                return BadRequest();
+            }
+
+            if(provider.ToLower() != "GitHub".ToLower())
+            {
+                return BadRequest();
+            }
+            return Challenge(new AuthenticationProperties { RedirectUri = returnUrl });
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
+        {
+            var loginInfo = await authenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Sign in the user with this external login provider if the user already has a login
+            var user = await userManager.FindAsync(loginInfo.Login);
+            if (user != null)
+            {
+                await SignInAsync(user, true);
+
+                if (string.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToAction(MVC.GamingGroup.Index());
+                }
+
+                return RedirectToLocal(returnUrl);
+            }
+            else
+            {
+                // If the user does not have an account, then prompt the user to create an account
+                ViewBag.ReturnUrl = returnUrl;
+                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
+            }
         }
 
         [HttpGet]
