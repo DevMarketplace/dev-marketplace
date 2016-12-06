@@ -40,6 +40,7 @@ using UI.Localization;
 using UI.Utilities;
 using BusinessLogic.Services;
 using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http.Authentication;
 
@@ -212,50 +213,56 @@ namespace UI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult SignInExternal([FromForm] string provider, string returnUrl = null)
+        public IActionResult SignInExternal([FromForm] string provider, string returnUrl)
         {
             if (string.IsNullOrWhiteSpace(provider))
             {
                 return BadRequest();
             }
 
-            if(provider.ToLower() != "GitHub".ToLower())
+            var scheme = _signInManager.GetExternalAuthenticationSchemes().FirstOrDefault(x => x.DisplayName.ToLower() == provider.ToLower());
+            if (scheme == null)
             {
                 return BadRequest();
             }
-            return Challenge(new AuthenticationProperties { RedirectUri = returnUrl });
+            return Challenge(new AuthenticationProperties { RedirectUri = $"Account/{nameof(SignInExternal)}?returnUrl={returnUrl}" }, scheme.DisplayName);
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
+        public async Task<IActionResult> SignInExternal(string returnUrl)
         {
-            var loginInfo = await authenticationManager.GetExternalLoginInfoAsync();
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            AuthenticateInfo loginInfo = await HttpContext.Authentication.GetAuthenticateInfoAsync("GitHub");
             if (loginInfo == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction(nameof(SignIn));
             }
 
-            // Sign in the user with this external login provider if the user already has a login
-            var user = await userManager.FindAsync(loginInfo.Login);
+            var user = await _userManager.GetUserAsync(loginInfo.Principal);
             if (user != null)
             {
-                await SignInAsync(user, true);
+                await _signInManager.SignInAsync(user, new AuthenticationProperties());
 
                 if (string.IsNullOrEmpty(returnUrl))
                 {
-                    return RedirectToAction(MVC.GamingGroup.Index());
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
 
-                return RedirectToLocal(returnUrl);
+                return Redirect(returnUrl);
             }
-            else
+            
+            return View(nameof(Register),new RegisterViewModel
             {
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
-            }
+                FirstName = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+                Email = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value,
+                Companies = _companyManager.GetCompanies()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList()
+            });
         }
 
         [HttpGet]

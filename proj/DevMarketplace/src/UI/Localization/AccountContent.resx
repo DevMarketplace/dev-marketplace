@@ -147,6 +147,9 @@
   <data name="EmailText" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="ExternalLoginSuccess" xml:space="preserve">
+    <value>Congratulations {0}, you are now signed in with {1}. Please confirm that your info is correct and select a company,</value>
+  </data>
   <data name="FirstNameText" xml:space="preserve">
     <value>First Name</value>
   </data>

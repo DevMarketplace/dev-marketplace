@@ -150,6 +150,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Congratulations {0}, you are now signed in with {1}. Please confirm that your info is correct and select a company,.
+        /// </summary>
+        public static string ExternalLoginSuccess {
+            get {
+                return ResourceManager.GetString("ExternalLoginSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstNameText {

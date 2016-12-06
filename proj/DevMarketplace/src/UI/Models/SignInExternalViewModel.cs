@@ -23,33 +23,10 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System.ComponentModel.DataAnnotations;
-using DataAccess;
-using UI.Localization;
-
 namespace UI.Models
 {
-    public class SignInViewModel
+    public class SignInExternalViewModel : RegisterViewModel
     {
-        /// <summary>
-        /// Optional return URL
-        /// </summary>
-        public string ReturnUrl { get; set; }
-
-        /// <summary>
-        /// The email serves as a username
-        /// </summary>
-        [Required]
-        [Display(ResourceType = typeof(AccountContent), Name = nameof(AccountContent.EmailText))]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Password
-        /// </summary>
-        [Required]
-        [Display(ResourceType = typeof(AccountContent), Name = nameof(AccountContent.PasswordText))]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Provider { get; set; }
     }
 }

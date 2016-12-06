@@ -23,6 +23,8 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -76,5 +78,37 @@ namespace DataAccess.Abstractions
         /// <returns>The task object representing the asynchronous operation containing the SignInResult
         ///     for the sign-in attempt.</returns>
         Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure);
+
+        /// <summary>
+        /// Signs in a user via a previously registered third party login, as an asynchronous
+        /// operation.
+        /// </summary>
+        /// <param name="loginProvider">The login provider to use.</param>
+        /// <param name="providerKey">The unique provider identifier for the user.</param>
+        /// <param name="isPersistent">Flag indicating whether the sign-in cookie should persist after the browser is closed.</param>
+        /// <returns></returns>
+        Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey, bool isPersistent);
+
+        /// <summary>
+        /// Gets a collection of Microsoft.AspNetCore.Http.Authentication.AuthenticationDescriptions
+        /// for the known external login providers.
+        /// </summary>
+        /// <returns>
+        ///  A collection of Microsoft.AspNetCore.Http.Authentication.AuthenticationDescriptions
+        ///  for the known external login providers.
+        /// </returns>
+        IEnumerable<AuthenticationDescription> GetExternalAuthenticationSchemes();
+
+        /// <summary>
+        /// Gets the external login information for the current login, as an asynchronous
+        /// operation.
+        /// </summary>
+        /// <param name="expectedXsrf">Flag indication whether a Cross Site Request Forgery token was expected in the
+        /// current request.</param>
+        /// <returns>
+        /// The task object representing the asynchronous operation containing the ExternalLoginInfo
+        /// for the sign-in attempt.
+        /// </returns>
+        Task<ExternalLoginInfo> GetExternalLoginInfoAsync(string expectedXsrf = null);
     }
 }
