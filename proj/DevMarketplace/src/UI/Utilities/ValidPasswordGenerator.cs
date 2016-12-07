@@ -35,22 +35,25 @@ namespace UI.Utilities
             if (addNumber)
             {
                 freeLength = GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => char.Parse(generator.Next(0,9).ToString())); //0-9
+                reserved--;
             }
 
             if (addUpperCase)
             {
 
                 freeLength = GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(65, 90))); //A-Z
+                reserved--;
             }
 
             if (addSymbol)
             {
                 freeLength = GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(33, 47))); //Special symbols
+                reserved--;
             }
 
-            GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(97, 122))); //a-z
+            GeneratePasswordCharacters(passwordArray, freeLength + reserved, ref arrIdx, () => Convert.ToChar(generator.Next(97, 122)), false); //a-z
 
-            return Convert.ToString(passwordArray);
+            return string.Concat(passwordArray);
         }
 
         private static int GeneratePasswordCharacters(char[] passwordArray, int allowedLength, ref int startPosition, Func<char> func, bool randomCount = true)
