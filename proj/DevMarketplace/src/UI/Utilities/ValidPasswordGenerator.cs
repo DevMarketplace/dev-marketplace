@@ -34,24 +34,23 @@ namespace UI.Utilities
 
             if (addNumber)
             {
-                freeLength = GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => char.Parse(generator.Next(0,9).ToString())); //0-9
+                freeLength = GeneratePasswordCharacters(passwordArray, ++freeLength, ref arrIdx, () => char.Parse(generator.Next(0,9).ToString())); //0-9
                 reserved--;
             }
 
             if (addUpperCase)
             {
-
-                freeLength = GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(65, 90))); //A-Z
+                freeLength = GeneratePasswordCharacters(passwordArray, ++freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(65, 90))); //A-Z
                 reserved--;
             }
 
             if (addSymbol)
             {
-                freeLength = GeneratePasswordCharacters(passwordArray, freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(33, 47))); //Special symbols
+                freeLength = GeneratePasswordCharacters(passwordArray, ++freeLength, ref arrIdx, () => Convert.ToChar(generator.Next(33, 47))); //Special symbols
                 reserved--;
             }
 
-            GeneratePasswordCharacters(passwordArray, freeLength + reserved, ref arrIdx, () => Convert.ToChar(generator.Next(97, 122)), false); //a-z
+            GeneratePasswordCharacters(passwordArray, ++freeLength + reserved, ref arrIdx, () => Convert.ToChar(generator.Next(97, 122)), false); //a-z
 
             return string.Concat(passwordArray);
         }
@@ -60,17 +59,13 @@ namespace UI.Utilities
         {
             var generator = new Random();
             int numberCount = randomCount ? generator.Next(1, allowedLength) : allowedLength;
-            int nextIndex = startPosition;
-            for (int i = startPosition; i < numberCount; i++)
+            for (int i = startPosition; i < startPosition + numberCount; i++)
             {
                 passwordArray[i] = func.Invoke();
-                nextIndex++;
+                allowedLength--;
+                startPosition++;
             }
 
-            passwordArray[startPosition] = func.Invoke();
-            nextIndex++;
-            allowedLength = allowedLength - nextIndex + 1;
-            startPosition = nextIndex;
             return allowedLength;
         }
     }

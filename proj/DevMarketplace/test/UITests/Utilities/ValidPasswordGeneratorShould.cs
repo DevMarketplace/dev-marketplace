@@ -26,5 +26,25 @@ namespace UITests.Utilities
                 Assert.IsTrue((byte)letter >= 97 && (byte)letter <= 122);
             }
         }
+
+        [Test]
+        public void DoGenerateUppercaseCharacters()
+        {
+            //Act
+            var result = _passwordGenerator.GeneratePassword(5, 10, true, false, false);
+
+            //Assert
+            bool hasUppercase = false;
+            foreach (char letter in result)
+            {
+                hasUppercase = (byte)letter >= 65 && (byte)letter <= 90;
+                if(hasUppercase)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsTrue(hasUppercase);
+        }
     }
 }
