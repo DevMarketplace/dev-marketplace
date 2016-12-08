@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean, copy-all' AfterBuild='sass, min:js, min:css' Clean='clean' />
+/// <binding AfterBuild='sass' Clean='clean' ProjectOpened='copy-all' />
 "use strict";
 
 var gulp = require("gulp"),

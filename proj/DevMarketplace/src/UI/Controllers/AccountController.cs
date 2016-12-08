@@ -213,24 +213,70 @@ namespace UI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult SignInExternal([FromForm] string provider, string returnUrl)
+        public IActionResult SignInExternal(SignInExternalViewModel model)
         {
-            if (string.IsNullOrWhiteSpace(provider))
+            if (string.IsNullOrWhiteSpace(model.Provider))
             {
                 return BadRequest();
             }
 
-            var scheme = _signInManager.GetExternalAuthenticationSchemes().FirstOrDefault(x => x.DisplayName.ToLower() == provider.ToLower());
+            var scheme = _signInManager.GetExternalAuthenticationSchemes().FirstOrDefault(x => x.DisplayName.ToLower() == model.Provider.ToLower());
             if (scheme == null)
             {
                 return BadRequest();
             }
-            return Challenge(new AuthenticationProperties { RedirectUri = $"Account/{nameof(SignInExternal)}?returnUrl={returnUrl}" }, scheme.DisplayName);
+            return Challenge(new AuthenticationProperties { RedirectUri = $"Account/{nameof(SignInExternal)}?returnUrl={model.ReturnUrl}&provider={model.Provider}" }, scheme.DisplayName);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterExternal(RegisterViewModel model, [FromQuery] string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
+                return View(model);
+            }
+
+            var newUser = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                CompanyId = model.CompanyId,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(newUser, model.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    _logger.LogError($"Registration error: {error.Code} - {error.Description}");
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> SignInExternal(string returnUrl)
+        public async Task<IActionResult> SignInExternal(string returnUrl, string provider)
         {
             var info = await _signInManager.GetExternalLoginInfoAsync();
             AuthenticateInfo loginInfo = await HttpContext.Authentication.GetAuthenticateInfoAsync("GitHub");
@@ -252,9 +298,11 @@ namespace UI.Controllers
                 return Redirect(returnUrl);
             }
             
-            return View(nameof(Register),new RegisterViewModel
+            return View(new RegisterViewModel
             {
+                Provider = provider,
                 FirstName = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+                LastName = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value,
                 Email = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value,
                 Companies = _companyManager.GetCompanies()
                 .Select(x => new SelectListItem

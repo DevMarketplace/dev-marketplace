@@ -54,6 +54,8 @@ namespace UI.Models
         [Compare(nameof(Password), ErrorMessageResourceName = nameof(AccountContent.PasswordDoesNotMatchError), ErrorMessageResourceType = typeof(AccountContent))]
         public string PasswordConfirm { get; set; }
 
+        public string Provider { get; set; }
+
         public List<SelectListItem> Companies { get; set; }
     }
 }

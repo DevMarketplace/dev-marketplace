@@ -3,56 +3,18 @@
 @using UI.Models
 @using UI.Utilities
 @inject IValidPasswordGenerator ValidPasswordGenerator
-@model SignInExternalViewModel
+@model RegisterViewModel
 
 @{
     string generatedPassword = ValidPasswordGenerator.GenerateValidPassword();
+    Model.Password = generatedPassword;
+    Model.PasswordConfirm = generatedPassword;
 }
 <div class="container">
     <div class="row paper mt20">
         <div class="col s12">
-            <form asp-controller="Account" asp-action="Register">
-                @Html.AntiForgeryToken()
-                <div class="row">
-                    <div class="col s12 m8 push-m2">
-                        <div class="col s12 page-title">@string.Format(AccountContent.ExternalLoginSuccess, Model.FirstName, Model.Provider)</div>
-                        <div class="input-field col s12 m6">
-                            <input asp-for="FirstName" />
-                            <label asp-for="FirstName"></label>
-                            <span asp-validation-for="FirstName" class="field-validation-error"></span>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <input asp-for="LastName" />
-                            <label asp-for="LastName"></label>
-                            <span asp-validation-for="LastName" class="field-validation-error"></span>
-                        </div>
-                        <div class="input-field col s12">
-                            <input asp-for="Email" />
-                            <label asp-for="Email"></label>
-                            <span asp-validation-for="Email" class="field-validation-error"></span>
-                        </div>
-                            
-                            <input asp-for="Password" type="hidden" value="@generatedPassword" />
-                            <input asp-for="PasswordConfirm" type="hidden" value="@generatedPassword" />
-
-                        <div class="input-field col s12">
-                            <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
-                            <label asp-for="CompanyId"></label>
-                        </div>
-
-                        <div class="input-field col s12">
-                            @if (!ViewData.ModelState.IsValid)
-                            {
-                                <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
-                            }
-                        </div>
-
-                        <div class="col s6 push-s6 right-align">
-                            <input type="submit" class="btn primary" value="@AccountContent.RegisterText" />
-                        </div>
-                    </div>
-                </div>
-            </form>
+            @string.Format(AccountContent.ExternalLoginSuccess, Model.FirstName, Model.Provider)
+            @Html.EditorForModel(new {Controller = "Account", Action = "RegisterExternal", HideTitle = true, HidePassword = true, ReadOnlyEmail = true})
         </div>
     </div>
 </div>

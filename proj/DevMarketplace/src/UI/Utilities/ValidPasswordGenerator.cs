@@ -50,16 +50,16 @@ namespace UI.Utilities
                 reserved--;
             }
 
-            GeneratePasswordCharacters(passwordArray, ++freeLength + reserved, ref arrIdx, () => Convert.ToChar(generator.Next(97, 122)), false); //a-z
+            GeneratePasswordCharacters(passwordArray, freeLength + reserved, ref arrIdx, () => Convert.ToChar(generator.Next(97, 122)), false); //a-z
 
-            return string.Concat(passwordArray);
+            return string.Concat(RandomizePositions(passwordArray));
         }
 
         private static int GeneratePasswordCharacters(char[] passwordArray, int allowedLength, ref int startPosition, Func<char> func, bool randomCount = true)
         {
             var generator = new Random();
-            int numberCount = randomCount ? generator.Next(1, allowedLength) : allowedLength;
-            for (int i = startPosition; i < startPosition + numberCount; i++)
+            int numberCount = randomCount ? generator.Next(1, allowedLength) + startPosition : allowedLength + startPosition;
+            for (int i = startPosition; i < numberCount; i++)
             {
                 passwordArray[i] = func.Invoke();
                 allowedLength--;
@@ -67,6 +67,24 @@ namespace UI.Utilities
             }
 
             return allowedLength;
+        }
+
+        private static char[] RandomizePositions(char[] input)
+        {
+            var generator = new Random();
+            int startPosition = generator.Next(0, input.Length - 1);
+            int cursor = startPosition;
+            do
+            {
+                int cursorSum = cursor + 1;
+                int nextId = cursorSum % (input.Length - 1);
+                char nextChar = input[nextId];
+                input[nextId] = input[cursor];
+                input[cursor] = nextChar;
+                cursor = cursorSum % (input.Length - 1);
+            } while (cursor != startPosition);
+
+            return input;
         }
     }
 }

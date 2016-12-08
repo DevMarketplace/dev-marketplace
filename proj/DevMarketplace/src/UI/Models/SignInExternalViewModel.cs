@@ -25,8 +25,10 @@
 #endregion
 namespace UI.Models
 {
-    public class SignInExternalViewModel : RegisterViewModel
+    public class SignInExternalViewModel
     {
+        public string ReturnUrl { get; set; }
+
         public string Provider { get; set; }
     }
 }
