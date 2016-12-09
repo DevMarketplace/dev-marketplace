@@ -149,7 +149,10 @@ namespace UI.Controllers
                 _logger.LogError(2, exp, "SMTP sender failed.");
             }
 
-            return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(model.Email)) });
+            return RedirectToAction(nameof(RegistrationComplete), new
+            {
+                protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(model.Email))
+            });
         }
 
         [HttpGet]
@@ -198,7 +201,10 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "The user account is not activated");
                 await SendActivationEmail(user, model.ReturnUrl);
 
-                return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(_urlEncoderWrapper.UrlEncode(model.Email)) });
+                return RedirectToAction(nameof(RegistrationComplete), new
+                {
+                    protectedSequence = _protector.Protect(_urlEncoderWrapper.UrlEncode(model.Email))
+                });
             }
 
             if (signInResult.IsLockedOut)
@@ -225,10 +231,14 @@ namespace UI.Controllers
             {
                 return BadRequest();
             }
-            return Challenge(new AuthenticationProperties { RedirectUri = $"Account/{nameof(SignInExternal)}?returnUrl={model.ReturnUrl}&provider={model.Provider}" }, scheme.DisplayName);
+            return Challenge(new AuthenticationProperties
+            {
+                RedirectUri = $"Account/{nameof(SignInExternal)}?returnUrl={model.ReturnUrl}&provider={model.Provider}"
+            }, scheme.DisplayName);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterExternal(RegisterViewModel model, [FromQuery] string returnUrl)
         {
@@ -268,9 +278,10 @@ namespace UI.Controllers
                     Text = x.Name
                 }).ToList();
 
-                return View(model);
+                return View(nameof(SignInExternal),model);
             }
 
+            await _signInManager.SignInAsync(newUser, new AuthenticationProperties());
             return RedirectToAction("Index", "Home");
         }
 
@@ -278,13 +289,12 @@ namespace UI.Controllers
         [HttpGet]
         public async Task<IActionResult> SignInExternal(string returnUrl, string provider)
         {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
             AuthenticateInfo loginInfo = await HttpContext.Authentication.GetAuthenticateInfoAsync("GitHub");
             if (loginInfo == null)
             {
                 return RedirectToAction(nameof(SignIn));
             }
-
+            var info = await _userManager.GetExternalLoginInfoAsync();
             var user = await _userManager.GetUserAsync(loginInfo.Principal);
             if (user != null)
             {
@@ -514,7 +524,10 @@ namespace UI.Controllers
         private async Task SendPasswordResetEmail(ApplicationUser user)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Id)), code = code }, protocol: HttpContext.Request.Scheme);
+            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new
+            {
+                protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Id)), code = code
+            }, protocol: HttpContext.Request.Scheme);
             var emailBody = _viewRenderer.Render("Account\\ForgottenPasswordEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = callbackUrl });
             await SendEmailAsync(user, AccountContent.ResetPasswordEmailSubjectText, emailBody);
         }
