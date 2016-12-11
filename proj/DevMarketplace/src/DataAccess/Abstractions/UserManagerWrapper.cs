@@ -23,6 +23,7 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -81,6 +82,11 @@ namespace DataAccess.Abstractions
         public Task<IdentityResult> UpdateAsync(TUser user)
         {
             return UserManager.UpdateAsync(user);
+        }
+
+        public Task<IdentityResult> AddLoginAsync(TUser user, UserLoginInfo login)
+        {
+            return UserManager.AddLoginAsync(user, login);
         }
     }
 }

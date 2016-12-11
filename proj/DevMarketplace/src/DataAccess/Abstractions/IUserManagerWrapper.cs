@@ -133,5 +133,18 @@ namespace DataAccess.Abstractions
         /// the Microsoft.AspNetCore.Identity.IdentityResult of the operation.
         /// </returns>
         Task<IdentityResult> UpdateAsync(TUser user);
+
+        /// <summary>
+        /// Adds an external Microsoft.AspNetCore.Identity.UserLoginInfo to the specified
+        /// user.
+        /// </summary>
+        /// <param name="user">The user to add the login to.</param>
+        /// <param name="login">The external Microsoft.AspNetCore.Identity.UserLoginInfo to add to the specified
+        /// user.</param>
+        /// <returns>
+        /// The System.Threading.Tasks.Task that represents the asynchronous operation, containing
+        /// the Microsoft.AspNetCore.Identity.IdentityResult of the operation.
+        /// </returns>
+        Task<IdentityResult> AddLoginAsync(TUser user, UserLoginInfo login);
     }
 }

@@ -110,5 +110,26 @@ namespace DataAccess.Abstractions
         /// for the sign-in attempt.
         /// </returns>
         Task<ExternalLoginInfo> GetExternalLoginInfoAsync(string expectedXsrf = null);
+
+        /// <summary>
+        /// Configures the redirect URL and user identifier for the specified external login
+        /// provider.
+        /// </summary>
+        /// <param name="provider">The provider to configure.</param>
+        /// <param name="redirectUrl">The external login URL users should be redirected to during the login flow.</param>
+        /// <param name="userId">The current user's identifier, which will be used to provide CSRF protection.</param>
+        /// <returns>A configured Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties.</returns>
+        AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl, string userId = null);
+
+        /// <summary>
+        /// Stores any authentication tokens found in the external authentication cookie
+        /// into the associated user.
+        /// </summary>
+        /// <param name="externalLogin">The information from the external login provider.</param>
+        /// <returns>
+        ///  The System.Threading.Tasks.Task that represents the asynchronous operation, containing
+        ///  the Microsoft.AspNetCore.Identity.IdentityResult of the operation. 
+        /// </returns>
+        Task<IdentityResult> UpdateExternalAuthenticationTokensAsync(ExternalLoginInfo externalLogin);
     }
 }

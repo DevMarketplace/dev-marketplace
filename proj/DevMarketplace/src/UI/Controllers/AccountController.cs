@@ -42,7 +42,6 @@ using BusinessLogic.Services;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Http.Authentication;
 
 namespace UI.Controllers
 {
@@ -218,26 +217,6 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        public IActionResult SignInExternal(SignInExternalViewModel model)
-        {
-            if (string.IsNullOrWhiteSpace(model.Provider))
-            {
-                return BadRequest();
-            }
-
-            var scheme = _signInManager.GetExternalAuthenticationSchemes().FirstOrDefault(x => x.DisplayName.ToLower() == model.Provider.ToLower());
-            if (scheme == null)
-            {
-                return BadRequest();
-            }
-            return Challenge(new AuthenticationProperties
-            {
-                RedirectUri = $"Account/{nameof(SignInExternal)}?returnUrl={model.ReturnUrl}&provider={model.Provider}"
-            }, scheme.DisplayName);
-        }
-
-        [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterExternal(RegisterViewModel model, [FromQuery] string returnUrl)
@@ -252,6 +231,12 @@ namespace UI.Controllers
                 return View(model);
             }
 
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return View("ExternalLoginFailure");
+            }
+
             var newUser = new ApplicationUser
             {
                 UserName = model.Email,
@@ -264,56 +249,103 @@ namespace UI.Controllers
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                foreach (var error in result.Errors)
+                result = await _userManager.AddLoginAsync(newUser, info);
+                if (result.Succeeded)
                 {
-                    _logger.LogError($"Registration error: {error.Code} - {error.Description}");
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+
+                    // Update any authentication tokens as well
+                    await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+
+                    if(!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    
+                    return RedirectToAction("Index", "Home");
                 }
-
-                model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.Name
-                }).ToList();
-
-                return View(nameof(SignInExternal),model);
             }
 
-            await _signInManager.SignInAsync(newUser, new AuthenticationProperties());
-            return RedirectToAction("Index", "Home");
+            foreach (var error in result.Errors)
+            {
+                _logger.LogError($"Registration error: {error.Code} - {error.Description}");
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            }).ToList();
+
+            return View(nameof(SignInExternal), model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult SignInExternal(SignInExternalViewModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Provider))
+            {
+                return BadRequest();
+            }
+
+            var scheme = _signInManager.GetExternalAuthenticationSchemes().FirstOrDefault(x => x.DisplayName.ToLower() == model.Provider.ToLower());
+            if (scheme == null)
+            {
+                return BadRequest();
+            }
+
+            var redirectUrl = Url.Action(nameof(SignInExternal), "Account", new { returnUrl = model.ReturnUrl, provider = model.Provider });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(model.Provider, redirectUrl);
+            return Challenge(properties, scheme.DisplayName);
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> SignInExternal(string returnUrl, string provider)
+        public async Task<IActionResult> SignInExternal(string returnUrl, string provider, string remoteError = null)
         {
-            AuthenticateInfo loginInfo = await HttpContext.Authentication.GetAuthenticateInfoAsync("GitHub");
-            if (loginInfo == null)
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View(nameof(SignIn), new SignInViewModel());
+            }
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
             {
                 return RedirectToAction(nameof(SignIn));
             }
-            var info = await _userManager.GetExternalLoginInfoAsync();
-            var user = await _userManager.GetUserAsync(loginInfo.Principal);
-            if (user != null)
-            {
-                await _signInManager.SignInAsync(user, new AuthenticationProperties());
 
-                if (string.IsNullOrEmpty(returnUrl))
+            // Sign in the user with this external login provider if the user already has a login.
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                // Update any authentication tokens if login succeeded
+                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+
+                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+                if(string.IsNullOrWhiteSpace(returnUrl))
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 return Redirect(returnUrl);
             }
-            
+
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+
             return View(new RegisterViewModel
             {
                 Provider = provider,
-                FirstName = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
-                LastName = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value,
-                Email = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value,
+                FirstName = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+                LastName = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value,
+                Email = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value,
                 Companies = _companyManager.GetCompanies()
                 .Select(x => new SelectListItem
                 {

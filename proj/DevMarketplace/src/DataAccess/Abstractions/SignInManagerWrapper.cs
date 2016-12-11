@@ -75,5 +75,15 @@ namespace DataAccess.Abstractions
         {
             return SignInManager.GetExternalLoginInfoAsync(expectedXsrf);
         }
+
+        public AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl, string userId = null)
+        {
+            return SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, userId);
+        }
+
+        public Task<IdentityResult> UpdateExternalAuthenticationTokensAsync(ExternalLoginInfo externalLogin)
+        {
+            return SignInManager.UpdateExternalAuthenticationTokensAsync(externalLogin);
+        }
     }
 }
