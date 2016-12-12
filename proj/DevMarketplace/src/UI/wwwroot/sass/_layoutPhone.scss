@@ -31,8 +31,9 @@ main {
 a {
     color: $primary-color;
     font-weight: 400;
+
     &:hover {
-        text-decoration:underline;
+        text-decoration: underline;
     }
 }
 
@@ -41,7 +42,7 @@ a.btn, input.btn, button.btn {
     letter-spacing: 2px;
 
     &:hover {
-        text-decoration:none;
+        text-decoration: none;
     }
 
     &.primary {
@@ -58,6 +59,37 @@ a.btn, input.btn, button.btn {
         &:hover {
             background-color: $secondary-color-hover;
         }
+    }
+}
+
+button.github-btn {
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    & div {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 10px;
     }
 }
 
@@ -105,6 +137,7 @@ h6 {
 .nav-wrapper a {
     font-family: 'Hacked';
     font-size: 25px;
+
     &:hover {
         text-decoration: none;
     }
@@ -247,18 +280,18 @@ footer {
 }
 
 
-input:not([type]).input-validation-error, 
-input[type=text].input-validation-error, 
-input[type=password].input-validation-error, 
-input[type=email].input-validation-error, 
-input[type=url].input-validation-error, 
-input[type=time].input-validation-error, 
-input[type=date].input-validation-error, 
-input[type=datetime].input-validation-error, 
-input[type=datetime-local].input-validation-error, 
-input[type=tel].input-validation-error, 
-input[type=number].input-validation-error, 
-input[type=search].input-validation-error, 
+input:not([type]).input-validation-error,
+input[type=text].input-validation-error,
+input[type=password].input-validation-error,
+input[type=email].input-validation-error,
+input[type=url].input-validation-error,
+input[type=time].input-validation-error,
+input[type=date].input-validation-error,
+input[type=datetime].input-validation-error,
+input[type=datetime-local].input-validation-error,
+input[type=tel].input-validation-error,
+input[type=number].input-validation-error,
+input[type=search].input-validation-error,
 textarea.materialize-textarea.input-validation-error {
     border-bottom: 1px solid #da291c;
     -moz-box-shadow: 0 1px 0 0 #da291c;
@@ -284,4 +317,13 @@ textarea.materialize-textarea.input-validation-error {
     font-size: 32px;
     font-family: 'Hacked';
     font-weight: 400;
+}
+
+.social-login {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $border-color;
 }

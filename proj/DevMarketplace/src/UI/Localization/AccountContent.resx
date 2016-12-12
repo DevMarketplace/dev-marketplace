@@ -208,7 +208,7 @@
     <value>Sign in</value>
   </data>
   <data name="SignInUsingGitHub" xml:space="preserve">
-    <value>Sign in using GitHub</value>
+    <value>with GitHub</value>
   </data>
   <data name="SignOutText" xml:space="preserve">
     <value>Sign out</value>
@@ -218,5 +218,8 @@
   </data>
   <data name="UserProfilePageTitle" xml:space="preserve">
     <value>Profile</value>
+  </data>
+  <data name="UseSignInDefault" xml:space="preserve">
+    <value>OR just sign in</value>
   </data>
 </root>

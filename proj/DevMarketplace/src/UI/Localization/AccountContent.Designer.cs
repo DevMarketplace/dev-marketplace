@@ -330,7 +330,7 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Sign in using GitHub.
+        ///    Looks up a localized string similar to with GitHub.
         /// </summary>
         public static string SignInUsingGitHub {
             get {
@@ -362,6 +362,15 @@ namespace UI.Localization {
         public static string UserProfilePageTitle {
             get {
                 return ResourceManager.GetString("UserProfilePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to OR just sign in.
+        /// </summary>
+        public static string UseSignInDefault {
+            get {
+                return ResourceManager.GetString("UseSignInDefault", resourceCulture);
             }
         }
     }
