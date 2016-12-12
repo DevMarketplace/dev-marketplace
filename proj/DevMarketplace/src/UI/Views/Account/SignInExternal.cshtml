@@ -1,0 +1,20 @@
+﻿@using System.Threading.Tasks
+@using UI.Localization
+@using UI.Models
+@using UI.Utilities
+@inject IValidPasswordGenerator ValidPasswordGenerator
+@model RegisterViewModel
+
+@{
+    string generatedPassword = ValidPasswordGenerator.GenerateValidPassword();
+    Model.Password = generatedPassword;
+    Model.PasswordConfirm = generatedPassword;
+}
+<div class="container">
+    <div class="row paper mt20">
+        <div class="col s12">
+            @string.Format(AccountContent.ExternalLoginSuccess, Model.FirstName, Model.Provider)
+            @Html.EditorForModel(new {Controller = "Account", Action = "RegisterExternal", HideTitle = true, HidePassword = true, ReadOnlyEmail = true})
+        </div>
+    </div>
+</div>

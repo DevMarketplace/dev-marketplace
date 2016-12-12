@@ -129,6 +129,9 @@
   <data name="AddressUserByNameText" xml:space="preserve">
     <value>Dear {0},</value>
   </data>
+  <data name="ChangePasswordText" xml:space="preserve">
+    <value>Change password</value>
+  </data>
   <data name="CompanyText" xml:space="preserve">
     <value>Company</value>
   </data>
@@ -144,11 +147,17 @@
   <data name="EmailText" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="ExternalLoginSuccess" xml:space="preserve">
+    <value>Congratulations {0}, you are now signed in with {1}. Please confirm that your info is correct and select a company,</value>
+  </data>
   <data name="FirstNameText" xml:space="preserve">
     <value>First Name</value>
   </data>
   <data name="ForgottenPasswordText" xml:space="preserve">
     <value>Forgotten password?</value>
+  </data>
+  <data name="InvalidLoginAttemptText" xml:space="preserve">
+    <value>Invalid login attempt</value>
   </data>
   <data name="InvalidUsernameErrorText" xml:space="preserve">
     <value>Invalid username/password combination</value>
@@ -193,12 +202,21 @@
     <value>Reset your DevMarketplace password</value>
   </data>
   <data name="ResetPasswordText" xml:space="preserve">
-    <value>Reset Password</value>
+    <value>Reset password</value>
   </data>
   <data name="SignInText" xml:space="preserve">
-    <value>Sign In</value>
+    <value>Sign in</value>
+  </data>
+  <data name="SignInUsingGitHub" xml:space="preserve">
+    <value>Sign in using GitHub</value>
+  </data>
+  <data name="SignOutText" xml:space="preserve">
+    <value>Sign out</value>
   </data>
   <data name="SuccessText" xml:space="preserve">
     <value>Success</value>
+  </data>
+  <data name="UserProfilePageTitle" xml:space="preserve">
+    <value>Profile</value>
   </data>
 </root>

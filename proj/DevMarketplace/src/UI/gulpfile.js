@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean' AfterBuild='sass, min:js, min:css' Clean='clean' />
+/// <binding AfterBuild='sass' Clean='clean' ProjectOpened='copy-all' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -10,7 +10,8 @@ var gulp = require("gulp"),
     sass = require("gulp-sass");
 
 var paths = {
-    webroot: "./wwwroot/"
+    webroot: "./wwwroot/",
+    nodeModules: "./node_modules/"
 };
 
 paths.js = paths.webroot + "js/**/*.js";
@@ -19,6 +20,7 @@ paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.packageLib = paths.webroot + "npm/";
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
@@ -56,3 +58,39 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min", ["min:js", "min:css"]);
+
+gulp.task("copy-systemjs", function () {
+    return gulp.src(paths.nodeModules + 'systemjs/dist/**/*.*', {
+        base: paths.nodeModules + 'systemjs/dist/'
+    }).pipe(gulp.dest(paths.packageLib + 'systemjs/'));
+});
+gulp.task("copy-angular2", function () {
+    return gulp.src([paths.nodeModules + '@angular/**/'])
+        .pipe(gulp.dest(paths.packageLib + '@angular/'));
+});
+gulp.task("copy-reflect-metadata", function () {
+    return gulp.src(paths.nodeModules + 'reflect-metadata/Reflect.js')
+        .pipe(gulp.dest(paths.packageLib + 'reflect-metadata/'));
+});
+gulp.task("copy-rxjs", function () {
+    return gulp.src([paths.nodeModules + 'rxjs/**/']).pipe(gulp.dest(paths.packageLib + 'rxjs/'));
+});
+gulp.task("copy-corejs", function () {
+    return gulp.src(paths.nodeModules + 'core-js/client/*.*', {
+        base: paths.nodeModules + 'core-js/client/'
+    }).pipe(gulp.dest(paths.packageLib + 'core-js/'));
+});
+
+gulp.task("copy-angular-in-memory-web-api", function() {
+    return gulp.src(paths.nodeModules + 'angular-in-memory-web-api/bundles/*.*', {
+        base: paths.nodeModules + 'angular-in-memory-web-api/bundles'
+    }).pipe(gulp.dest(paths.packageLib + 'angular-in-memory-web-api/'));
+});
+
+gulp.task("copy-zonejs", function () {
+    return gulp.src(paths.nodeModules + 'zone.js/dist/*.*', {
+        base: paths.nodeModules + 'zone.js/dist/'
+    }).pipe(gulp.dest(paths.packageLib + 'zone.js/'));
+});
+
+gulp.task("copy-all", ["copy-rxjs", 'copy-angular2', 'copy-systemjs', 'copy-reflect-metadata', 'copy-corejs', 'copy-angular-in-memory-web-api', 'copy-zonejs']);

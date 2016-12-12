@@ -1,4 +1,29 @@
-﻿using DataAccess;
+﻿#region License
+// The Developer Marketplace is a web application that allows individuals, 
+// teams and companies share KanBan stories, cards, tasks and items from 
+// their KanBan boards and Scrum boards. 
+// All shared stories become available on the Developer Marketplace website
+//  and software engineers from all over the world can work on these stories. 
+// 
+// Copyright (C) 2016 Tosho Toshev
+// 
+//     This program is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//     You should have received a copy of the GNU General Public License
+//     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// GitHub repository: https://github.com/cracker4o/dev-marketplace
+// e-mail: cracker4o@gmail.com
+#endregion
+using DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,10 +40,12 @@ using UI.Localization;
 using UI.Utilities;
 using BusinessLogic.Services;
 using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IUserManagerWrapper<ApplicationUser> _userManager;
@@ -29,6 +56,7 @@ namespace UI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IDataProtector _protector;
         private readonly ICompanyManager _companyManager;
+        private readonly IUrlUtilityWrapper _urlEncoderWrapper;
 
         public AccountController(IUserManagerWrapper<ApplicationUser> userManager,
             ISignInManagerWrapper<ApplicationUser> signInManager,
@@ -37,7 +65,8 @@ namespace UI.Controllers
             IDataProtectionProvider protectionProvider,
             IViewRenderer viewRenderer,
             IConfiguration configuration,
-            ICompanyManager companyManager)
+            ICompanyManager companyManager,
+            IUrlUtilityWrapper urlEncoderWrapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,6 +76,7 @@ namespace UI.Controllers
             _configuration = configuration;
             _protector = protectionProvider.CreateProtector(GetType().FullName);
             _companyManager = companyManager;
+            _urlEncoderWrapper = urlEncoderWrapper;
         }
 
         [HttpGet]
@@ -98,6 +128,7 @@ namespace UI.Controllers
                 foreach (var error in result.Errors)
                 {
                     _logger.LogError($"Registration error: {error.Code} - {error.Description}");
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
 
                 model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
@@ -117,10 +148,14 @@ namespace UI.Controllers
                 _logger.LogError(2, exp, "SMTP sender failed.");
             }
 
-            return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
+            return RedirectToAction(nameof(RegistrationComplete), new
+            {
+                protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(model.Email))
+            });
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult SignIn(string returnUrl = null)
         {
             var model = new SignInViewModel { ReturnUrl = returnUrl };
@@ -128,6 +163,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> SignIn(SignInViewModel model)
@@ -164,7 +200,10 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "The user account is not activated");
                 await SendActivationEmail(user, model.ReturnUrl);
 
-                return RedirectToAction(nameof(RegistrationComplete), new { protectedSequence = _protector.Protect(model.Email) });
+                return RedirectToAction(nameof(RegistrationComplete), new
+                {
+                    protectedSequence = _protector.Protect(_urlEncoderWrapper.UrlEncode(model.Email))
+                });
             }
 
             if (signInResult.IsLockedOut)
@@ -172,10 +211,182 @@ namespace UI.Controllers
                 _logger.LogWarning(2, "User account locked out.");
                 return View("Lockout");
             }
-
-
-            ModelState.AddModelError("LoginAttempt", "Invalid login attempt.");
+            
+            ModelState.AddModelError(string.Empty, AccountContent.InvalidLoginAttemptText);
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterExternal(RegisterViewModel model, [FromQuery] string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
+                return View(model);
+            }
+
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return View("ExternalLoginFailure");
+            }
+
+            var newUser = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                CompanyId = model.CompanyId,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(newUser, model.Password);
+
+            if (result.Succeeded)
+            {
+                result = await _userManager.AddLoginAsync(newUser, info);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+
+                    // Update any authentication tokens as well
+                    await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+
+                    if(!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            foreach (var error in result.Errors)
+            {
+                _logger.LogError($"Registration error: {error.Code} - {error.Description}");
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            }).ToList();
+
+            return View(nameof(SignInExternal), model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult SignInExternal(SignInExternalViewModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Provider))
+            {
+                return BadRequest();
+            }
+
+            var scheme = _signInManager.GetExternalAuthenticationSchemes().FirstOrDefault(x => x.DisplayName.ToLower() == model.Provider.ToLower());
+            if (scheme == null)
+            {
+                return BadRequest();
+            }
+
+            var redirectUrl = Url.Action(nameof(SignInExternal), "Account", new { returnUrl = model.ReturnUrl, provider = model.Provider });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(model.Provider, redirectUrl);
+            return Challenge(properties, scheme.DisplayName);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> SignInExternal(string returnUrl, string provider, string remoteError = null)
+        {
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View(nameof(SignIn), new SignInViewModel());
+            }
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction(nameof(SignIn));
+            }
+
+            // Sign in the user with this external login provider if the user already has a login.
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                // Update any authentication tokens if login succeeded
+                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+
+                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+                if(string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return Redirect(returnUrl);
+            }
+
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+
+            return View(new RegisterViewModel
+            {
+                Provider = provider,
+                FirstName = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+                LastName = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value,
+                Email = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value,
+                Companies = _companyManager.GetCompanies()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList()
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var model = new ProfileViewModel(user, _companyManager);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>Profile(ProfileViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(new ProfileViewModel(model, _companyManager));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            ProfileViewModel.SetUserProperties(model, user);
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    _logger.LogError($"Error while updating the user: {error.Code} - {error.Description}");
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(new ProfileViewModel(model, _companyManager));
+            }
+
+            return View(new ProfileViewModel(model, _companyManager));
         }
 
         [HttpGet]
@@ -188,6 +399,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> ConfirmEmail(string protectedSequence, string code, string returnUrl = null)
         {
@@ -198,12 +410,13 @@ namespace UI.Controllers
                     throw new ArgumentOutOfRangeException(nameof(protectedSequence));
                 }
 
+                protectedSequence = _urlEncoderWrapper.UrlDecode(protectedSequence);
                 var user = await _userManager.FindByEmailAsync(_protector.Unprotect(protectedSequence));
                 var identityResult = await _userManager.ConfirmEmailAsync(user, code);
 
                 if (identityResult.Succeeded)
                 {
-                    return RedirectToAction("SignIn", returnUrl);
+                    return RedirectToAction(nameof(SignIn), returnUrl);
                 }
 
                 return NotFound();
@@ -216,12 +429,13 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> RegistrationComplete(string protectedSequence)
         {
             try
             {
-                string email = _protector.Unprotect(protectedSequence);
+                string email = _protector.Unprotect(_urlEncoderWrapper.UrlDecode(protectedSequence));
                 var user = await _userManager.FindByEmailAsync(email);
 
                 if (user?.EmailConfirmed == false)
@@ -240,6 +454,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             var model = new ForgotPasswordViewModel();
@@ -269,6 +484,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ResetPassword(string protectedSequence, string code)
         {
             if (string.IsNullOrWhiteSpace(protectedSequence) || string.IsNullOrWhiteSpace(code))
@@ -276,6 +492,7 @@ namespace UI.Controllers
                 return NotFound();
             }
 
+            protectedSequence = _urlEncoderWrapper.UrlDecode(protectedSequence);
             var model = new ResetPasswordViewModel
             {
                 ProtectedId = protectedSequence,
@@ -286,6 +503,8 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -309,11 +528,38 @@ namespace UI.Controllers
             return NotFound();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var model = new AccountInfoViewModel();
+            if(!User.Identity.IsAuthenticated)
+            {
+                return Json(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if(user == null)
+            {
+                return Json(model);
+            }
+            
+            model.FirstName = user.FirstName;
+            model.Email = user.Email;
+            model.Authenticated = true;
+
+            return Json(model);
+        }
+
         [NonAction]
         private async Task SendPasswordResetEmail(ApplicationUser user)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { protectedSequence = _protector.Protect(user.Id), code = code }, protocol: HttpContext.Request.Scheme);
+            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new
+            {
+                protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Id)), code = code
+            }, protocol: HttpContext.Request.Scheme);
             var emailBody = _viewRenderer.Render("Account\\ForgottenPasswordEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = callbackUrl });
             await SendEmailAsync(user, AccountContent.ResetPasswordEmailSubjectText, emailBody);
         }
@@ -325,7 +571,7 @@ namespace UI.Controllers
             string activationUrl = Url.Action(nameof(ConfirmEmail), "Account",
                 new
                 {
-                    protectedSequence = _protector.Protect(user.Email),
+                    protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Email)),
                     code = confirmationToken,
                     returnUrl = returnUrl
                 },

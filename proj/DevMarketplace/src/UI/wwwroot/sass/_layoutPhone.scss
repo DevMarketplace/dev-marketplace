@@ -28,9 +28,21 @@ main {
     }
 }
 
+a {
+    color: $primary-color;
+    font-weight: 400;
+    &:hover {
+        text-decoration:underline;
+    }
+}
+
 a.btn, input.btn, button.btn {
     font-weight: 500;
     letter-spacing: 2px;
+
+    &:hover {
+        text-decoration:none;
+    }
 
     &.primary {
         background-color: $primary-color;
@@ -93,6 +105,9 @@ h6 {
 .nav-wrapper a {
     font-family: 'Hacked';
     font-size: 25px;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 a.brand-logo {
@@ -108,6 +123,16 @@ nav {
         height: 56px;
         line-height: 56px;
     }
+
+    .preloader-wrapper.small {
+        width: 25px;
+        height: 25px;
+        top: 7px;
+    }
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: black;
 }
 
 #sidenav-overlay {

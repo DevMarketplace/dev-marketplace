@@ -1,0 +1,73 @@
+﻿@using System.Threading.Tasks
+@using UI.Localization
+@model UI.Models.RegisterViewModel
+
+<form asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col s12 m8 push-m2">
+            @if (!ViewBag.HideTitle)
+            {
+                <div class="col s12 page-title">@ViewBag.FormTitle</div>
+            }
+            <div class="input-field col s12 m6">
+                <input asp-for="FirstName"/>
+                <label asp-for="FirstName"></label>
+                <span asp-validation-for="FirstName" class="field-validation-error"></span>
+            </div>
+            <div class="input-field col s12 m6">
+                <input asp-for="LastName"/>
+                <label asp-for="LastName"></label>
+                <span asp-validation-for="LastName" class="field-validation-error"></span>
+            </div>
+            @if (!ViewBag.ReadOnlyEmail)
+            {
+                <div class="input-field col s12">
+                    <input asp-for="Email"/>
+                    <label asp-for="Email"></label>
+                    <span asp-validation-for="Email" class="field-validation-error"></span>
+                </div>
+            }
+            else
+            {
+                <div class="input-field col s12">
+                    <span>@Model.Email</span>
+                    <input asp-for="Email" type="hidden"/>
+                </div>
+            }
+
+            @if (!ViewBag.HidePassword)
+            {
+                <div class="input-field col s12 m6">
+                    <input asp-for="Password"/>
+                    <label asp-for="Password"></label>
+                    <span asp-validation-for="Password" class="field-validation-error"></span>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input asp-for="PasswordConfirm"/>
+                    <label asp-for="PasswordConfirm"></label>
+                    <span asp-validation-for="PasswordConfirm" class="field-validation-error"></span>
+                </div>
+            }
+            else
+            {
+                <input asp-for="Password" type="hidden"/>
+                <input asp-for="PasswordConfirm" type="hidden"/>
+            }
+            <div class="input-field col s12">
+                <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
+                <label asp-for="CompanyId"></label>
+            </div>
+            <input asp-for="Provider" type="hidden"/>
+            <div class="input-field col s12">
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
+                }
+            </div>
+            <div class="col s6 push-s6 right-align">
+                <input type="submit" class="btn primary" value="@AccountContent.RegisterText"/>
+            </div>
+        </div>
+    </div>
+</form>

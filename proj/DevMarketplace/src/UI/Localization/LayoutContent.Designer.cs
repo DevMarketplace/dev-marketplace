@@ -69,6 +69,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to An unknown error occurred.
+        /// </summary>
+        public static string GenericErrorText {
+            get {
+                return ResourceManager.GetString("GenericErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Log In.
         /// </summary>
         public static string LogInMenuText {
@@ -78,11 +87,29 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Save changes.
+        /// </summary>
+        public static string SaveChangesText {
+            get {
+                return ResourceManager.GetString("SaveChangesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Search.
         /// </summary>
         public static string SearchButtonText {
             get {
                 return ResourceManager.GetString("SearchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string SignInMenuText {
+            get {
+                return ResourceManager.GetString("SignInMenuText", resourceCulture);
             }
         }
         

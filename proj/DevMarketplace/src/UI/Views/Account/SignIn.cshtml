@@ -9,6 +9,7 @@
         <div class="row">
             <div class="col s12">
                 <form asp-controller="Account" asp-action="SignIn">
+                    @Html.AntiForgeryToken()
                     <div class="row paper">
                         <div class="col s12 m8 push-m2">
                             <div class="col s12 page-title">@AccountContent.SignInText</div>
@@ -29,17 +30,26 @@
                             <div class="input-field col s12 m9">
                                 <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ForgottenPasswordText</a>
                             </div>
-                            <div class="col s6 push-s6 right-align">
-                                <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
-                            </div>
-                            <div class="col s12">
+                            <div class="input-field col s12">
                                 @if (!ViewData.ModelState.IsValid)
                                 {
                                     <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
                                 }
                             </div>
+                            <div class="col s6 push-s6 right-align">
+                                <input type="submit" class="btn primary" value="@AccountContent.SignInText"/>
+                            </div>
                         </div>
                     </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <form asp-controller="Account" asp-action="SignInExternal">
+                    <input type="hidden" name="Provider" value="GitHub" />
+                    <input asp-for="ReturnUrl" type="hidden" id="return-url" />
+                    <input type="submit" class="btn primary" value="@AccountContent.SignInUsingGitHub" />
                 </form>
             </div>
         </div>

@@ -1,9 +1,11 @@
 ﻿@using UI.Localization
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="~/content/favicon.ico">
     <title>@(ViewData["Title"] ?? LayoutContent.SiteTitleText)</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <environment names="Development">
@@ -15,94 +17,10 @@
 </head>
 <body>
     <header>
-        <div class="jumbotron">
-            <div class="code-snippets">
-                <pre>
-init : function() { 
-    var owner = this; 
-    this.promptElement = $("#lightbox"); 
-    $("#purgeAllButton").on("click", function(e) {
-        e.preventDefault(); 
-        owner.purgeAllBtnClick(); 
-    }); 
-    $("#purgeButton").on("click", function(e) { 
-        e.preventDefault();
-        owner.purgeBtnClick(); 
-    });
-}
-var ngAriaModule = angular.module('ngAria', ['ng']).
-                        provider('$aria', $AriaProvider);
-/**
-* Internal Utilities
-*/
-var nodeBlackList = ['BUTTON', 'A', 'INPUT', 'TEXTAREA', 'SELECT', 'DETAILS', 'SUMMARY'];
-var isNodeOneOf = function(elem, nodeTypeArray) {
-  if (nodeTypeArray.indexOf(elem[0].nodeName) !== -1) {
-    return true;
-  }
-};
-/**
- * #ngdoc provider
- * #name $ariaProvider
- *
- * #description
- *
- * Used for configuring the ARIA attributes injected and managed by ngAria.
- *
- * ```js
- * angular.module('myApp', ['ngAria'], function config($ariaProvider) {
- *   $ariaProvider.config({
- *     ariaValue: true,
- *     tabindex: false
- *   });
- * });
- *```
- *
- * ## Dependencies
- * Requires the {#link ngAria} module to be installed.
- *
- */
-function $AriaProvider() {
-  var config = {
-    ariaHidden: true,
-    ariaChecked: true,
-    ariaReadonly: true,
-    ariaDisabled: true,
-    ariaRequired: true,
-    ariaInvalid: true,
-    ariaValue: true,
-    tabindex: true,
-    bindKeypress: true,
-    bindRoleForClick: true
-  };
-  /**
-   * #gdoc method
-   * #name $ariaProvider#config
-   *
-   * #param {object} config object to enable/disable specific ARIA attributes
-   *
-   *  - **ariaHidden** – `{boolean}` – Enables/disables aria-hidden tags
-   *  - **ariaChecked** – `{boolean}` – Enables/disables aria-checked tags
-   *  - **ariaReadonly** – `{boolean}` – Enables/disables aria-readonly tags
-   *  - **ariaDisabled** – `{boolean}` – Enables/disables aria-disabled tags
-   *  - **ariaRequired** – `{boolean}` – Enables/disables aria-required tags
-   *  - **ariaInvalid** – `{boolean}` – Enables/disables aria-invalid tags
-   *  - **ariaValue** – `{boolean}` – Enables/disables aria-valuemin, aria-valuemax and aria-valuenow tags
-   *  - **tabindex** – `{boolean}` – Enables/disables tabindex tags
-   *  - **bindKeypress** – `{boolean}` – Enables/disables keypress event binding on `div` and
-   *    `li` elements with ng-click
-   *  - **bindRoleForClick** – `{boolean}` – Adds role=button to non-interactive elements like `div`
-   *    using ng-click, making them more accessible to users of assistive technologies
-   *
-   * #description
-   * Enables/disables various ARIA attributes
-   */
-  this.config = function(newConfig) {
-    config = angular.extend(config, newConfig);
-  };
-                    </pre>
-            </div>
-        </div>
+        @if (IsSectionDefined("JumbotronSection"))
+        {
+            @RenderSection("JumbotronSection", false)
+        }
 
         <div class="navigation-bar">
             <nav>
@@ -113,12 +31,13 @@ function $AriaProvider() {
                     </a>
                     <ul id="nav-desktop" class="right hide-on-med-and-down">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
-                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
+                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+                        <account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
-                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.LogInMenuText</a></li>
+                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
                     </ul>
                 </div>
@@ -148,9 +67,14 @@ function $AriaProvider() {
     </div>
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <script src="~/js/materialize.js"></script>
+        <script src="~/npm/core-js/shim.min.js"></script>
+        <script src="~/npm/zone.js/zone.js"></script>
+        <script src="~/npm/reflect-metadata/Reflect.js"></script>
+        <script src="~/npm/systemjs/system.src.js"></script>
+        <script src="~/systemjs.config.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -158,7 +82,6 @@ function $AriaProvider() {
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("scripts", required: false)

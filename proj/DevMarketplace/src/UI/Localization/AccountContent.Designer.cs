@@ -96,6 +96,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Change password.
+        /// </summary>
+        public static string ChangePasswordText {
+            get {
+                return ResourceManager.GetString("ChangePasswordText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Company.
         /// </summary>
         public static string CompanyText {
@@ -141,6 +150,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Congratulations {0}, you are now signed in with {1}. Please confirm that your info is correct and select a company,.
+        /// </summary>
+        public static string ExternalLoginSuccess {
+            get {
+                return ResourceManager.GetString("ExternalLoginSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstNameText {
@@ -155,6 +173,15 @@ namespace UI.Localization {
         public static string ForgottenPasswordText {
             get {
                 return ResourceManager.GetString("ForgottenPasswordText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Invalid login attempt.
+        /// </summary>
+        public static string InvalidLoginAttemptText {
+            get {
+                return ResourceManager.GetString("InvalidLoginAttemptText", resourceCulture);
             }
         }
         
@@ -285,7 +312,7 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Reset Password.
+        ///    Looks up a localized string similar to Reset password.
         /// </summary>
         public static string ResetPasswordText {
             get {
@@ -294,11 +321,29 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Sign In.
+        ///    Looks up a localized string similar to Sign in.
         /// </summary>
         public static string SignInText {
             get {
                 return ResourceManager.GetString("SignInText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Sign in using GitHub.
+        /// </summary>
+        public static string SignInUsingGitHub {
+            get {
+                return ResourceManager.GetString("SignInUsingGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Sign out.
+        /// </summary>
+        public static string SignOutText {
+            get {
+                return ResourceManager.GetString("SignOutText", resourceCulture);
             }
         }
         
@@ -308,6 +353,15 @@ namespace UI.Localization {
         public static string SuccessText {
             get {
                 return ResourceManager.GetString("SuccessText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string UserProfilePageTitle {
+            get {
+                return ResourceManager.GetString("UserProfilePageTitle", resourceCulture);
             }
         }
     }
