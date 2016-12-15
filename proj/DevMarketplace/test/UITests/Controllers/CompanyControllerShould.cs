@@ -28,6 +28,7 @@ using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System.Threading.Tasks;
 using UI.Controllers;
 
 namespace UITests.Controllers
@@ -42,16 +43,22 @@ namespace UITests.Controllers
         public void SetUp()
         {
             _companyRepositoryMock = Mock.Of<IGenericRepository<Company>>();
+            _controller = new CompanyController(_companyRepositoryMock);
         }
 
         [Test]
         public void DoGetTheCreateCompanyPage()
         {
+            //Arrange
+            string expectedView = "Create";
+
             //Act
-            IActionResult result = _controller.Create();
+            var result = _controller.Create();
 
             //Assert
-            
+            Assert.IsInstanceOf<ViewResult>(result);
+            Assert.AreEqual(expectedView, ((ViewResult)result).ViewName);
+            Assert.IsNotNull(((ViewResult)result).Model);
         }
     }
 }

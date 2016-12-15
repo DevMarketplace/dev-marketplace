@@ -23,14 +23,14 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System;
 using DataAccess.Entity;
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using UI.Models;
 
 namespace UI.Controllers
 {
-    public class CompanyController
+    public class CompanyController : Controller
     {
         private readonly IGenericRepository<Company> _companyRepository;
 
@@ -42,7 +42,8 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            throw new NotImplementedException();
+            var model = new CompanyViewModel();
+            return View(nameof(Create), model);
         }
     }
 }
