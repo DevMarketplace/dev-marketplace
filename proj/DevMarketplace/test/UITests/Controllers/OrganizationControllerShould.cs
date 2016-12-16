@@ -34,20 +34,20 @@ using UI.Controllers;
 namespace UITests.Controllers
 {
     [TestFixture]
-    public class CompanyControllerShould
+    public class OrganizationControllerShould
     {
-        private CompanyController _controller;
-        private IGenericRepository<Company> _companyRepositoryMock;
+        private OrganizationController _controller;
+        private IGenericRepository<Company> _organizationRepositoryMock;
 
         [SetUp]
         public void SetUp()
         {
-            _companyRepositoryMock = Mock.Of<IGenericRepository<Company>>();
-            _controller = new CompanyController(_companyRepositoryMock);
+            _organizationRepositoryMock = Mock.Of<IGenericRepository<Company>>();
+            _controller = new OrganizationController(_organizationRepositoryMock);
         }
 
         [Test]
-        public void DoGetTheCreateCompanyPage()
+        public void DoGetTheCreateOrganizationPage()
         {
             //Arrange
             string expectedView = "Create";

@@ -30,19 +30,19 @@ using UI.Models;
 
 namespace UI.Controllers
 {
-    public class CompanyController : Controller
+    public class OrganizationController : Controller
     {
-        private readonly IGenericRepository<Company> _companyRepository;
+        private readonly IGenericRepository<Company> _organizationRepository;
 
-        public CompanyController(IGenericRepository<Company> companyRepository)
+        public OrganizationController(IGenericRepository<Company> organizationRepository)
         {
-            _companyRepository = companyRepository;
+            _organizationRepository = organizationRepository;
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CompanyViewModel();
+            var model = new OrganizationViewModel();
             return View(nameof(Create), model);
         }
     }

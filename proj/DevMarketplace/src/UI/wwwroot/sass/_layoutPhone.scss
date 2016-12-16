@@ -1,4 +1,5 @@
 ﻿@import "_colors.scss";
+$font-family-hacked:"Hacked";
 
 body {
     margin: 0;
@@ -135,7 +136,7 @@ h6 {
 }
 
 .nav-wrapper a {
-    font-family: 'Hacked';
+    font-family: $font-family-hacked;
     font-size: 25px;
 
     &:hover {
@@ -144,7 +145,7 @@ h6 {
 }
 
 a.brand-logo {
-    font-family: 'Hacked';
+    font-family: $font-family-hacked;
     font-size: 32px;
 }
 
@@ -179,7 +180,7 @@ footer {
 }
 
 .sub-footer {
-    font-family: 'Hacked';
+    font-family: $font-family-hacked;
     padding-top: 12px;
     color: #FFFFFF;
     background-color: #57648C;
@@ -224,7 +225,7 @@ footer {
         width: 70%;
 
         #search {
-            font-family: 'Hacked';
+            font-family: $font-family-hacked;
             font-size: 4vw;
             color: #FFFFFF;
             margin-left: auto;
@@ -270,7 +271,7 @@ footer {
         width: 25%;
 
         #search-button {
-            font-family: 'Hacked';
+            font-family: $font-family-hacked;
             font-size: 3.5vw;
             display: block;
             padding-left: 1em;
@@ -315,7 +316,7 @@ textarea.materialize-textarea.input-validation-error {
 
 .page-title {
     font-size: 32px;
-    font-family: 'Hacked';
+    font-family: $font-family-hacked;
     font-weight: 400;
 }
 
@@ -326,4 +327,53 @@ textarea.materialize-textarea.input-validation-error {
     padding-top: 10px;
     padding-bottom: 20px;
     border-bottom: 1px solid $border-color;
+}
+
+.modal {
+    .modal-header {
+        padding: 20px 30px 10px 30px;
+        font-family: $font-family-hacked;
+        .close-modal {
+            position: absolute;
+            top: 6px;
+            right: 20px;
+            a {
+                color: $secondary-color;
+
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+            .icon-bar {
+                position: relative;
+                width: 20px;
+                height: 20px;
+                background-color: transparent;
+
+                &::before {
+                    width: 20px;
+                    height: 3px;
+                    background-color: silver;
+                    display: block;
+                    content: "";
+                    position: absolute;
+                    top: 20px;
+                    right: 0;
+                    transform: rotate3d(0,0,1,45deg);
+                }
+
+                &::after {
+                    width: 20px;
+                    height: 3px;
+                    background-color: silver;
+                    display: block;
+                    content: "";
+                    position: absolute;
+                    top: 20px;
+                    right: 0;
+                    transform: rotate3d(0,0,1,-45deg);
+                }
+            }
+        }
+    }
 }

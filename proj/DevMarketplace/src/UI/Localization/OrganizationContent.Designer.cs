@@ -22,13 +22,13 @@ namespace UI.Localization {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CompanyContent {
+    public class OrganizationContent {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal CompanyContent() {
+        internal OrganizationContent() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace UI.Localization {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UI.Localization.CompanyContent", typeof(CompanyContent).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UI.Localization.OrganizationContent", typeof(OrganizationContent).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -56,33 +56,6 @@ namespace UI.Localization {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Short Description.
-        /// </summary>
-        public static string CompanyDescription {
-            get {
-                return ResourceManager.GetString("CompanyDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Company/Team e-mail.
-        /// </summary>
-        public static string CompanyTeamEmailText {
-            get {
-                return ResourceManager.GetString("CompanyTeamEmailText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Company/Team.
-        /// </summary>
-        public static string CompanyTeamText {
-            get {
-                return ResourceManager.GetString("CompanyTeamText", resourceCulture);
             }
         }
         
@@ -105,11 +78,83 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Create.
+        /// </summary>
+        public static string CreateButtonText {
+            get {
+                return ResourceManager.GetString("CreateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Create organization.
+        /// </summary>
+        public static string CreateOrganizationTitle {
+            get {
+                return ResourceManager.GetString("CreateOrganizationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Location (City, State ...).
+        /// </summary>
+        public static string LocationText {
+            get {
+                return ResourceManager.GetString("LocationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Organization Bio.
+        /// </summary>
+        public static string OrganizationDescription {
+            get {
+                return ResourceManager.GetString("OrganizationDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Organization e-mail.
+        /// </summary>
+        public static string OrganizationEmailText {
+            get {
+                return ResourceManager.GetString("OrganizationEmailText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to OrganizationName.
+        /// </summary>
+        public static string OrganizationNameText {
+            get {
+                return ResourceManager.GetString("OrganizationNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Organization.
+        /// </summary>
+        public static string OrganizationText {
+            get {
+                return ResourceManager.GetString("OrganizationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Team.
         /// </summary>
         public static string TeamText {
             get {
                 return ResourceManager.GetString("TeamText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Web site.
+        /// </summary>
+        public static string WebSiteText {
+            get {
+                return ResourceManager.GetString("WebSiteText", resourceCulture);
             }
         }
     }

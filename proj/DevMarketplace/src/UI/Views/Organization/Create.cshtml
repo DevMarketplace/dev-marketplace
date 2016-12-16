@@ -1,0 +1,59 @@
+﻿@using System.Threading.Tasks
+@using UI.Localization
+@model UI.Models.OrganizationViewModel
+
+<form asp-controller="Organization" asp-action="Create">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col s12 m8 push-m2">
+            <div class="col s12 page-title">@OrganizationContent.CreateOrganizationTitle</div>
+           
+            <div class="input-field col s12 m6">
+                <input asp-for="Name" />
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="field-validation-error"></span>
+            </div>
+            <div class="input-field col s12 m6">
+                <input asp-for="Email" />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="field-validation-error"></span>
+            </div>
+            
+            <div class="input-field col s12">
+                <input asp-for="Url" />
+                <label asp-for="Url"></label>
+            </div>
+            
+            <div class="input-field col s12">
+                <input asp-for="Location" />
+                <label asp-for="Location"></label>
+            </div>
+            
+            <div class="input-field col s12">
+                <select asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
+                <label asp-for="IsoCountryCode"></label>
+            </div>
+
+            <div class="input-field col s12">
+                <input asp-for="Description" />
+                <label asp-for="Description"></label>
+                <span asp-validation-for="Description" class="field-validation-error"></span>
+            </div>
+
+            <div class="input-field col s12">
+                <select asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
+                <label asp-for="IsoCountryCode"></label>
+            </div>
+            
+            <div class="input-field col s12">
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
+                }
+            </div>
+            <div class="col s6 push-s6 right-align">
+                <input type="submit" class="btn primary" value="@OrganizationContent.CreateButtonText" />
+            </div>
+        </div>
+    </div>
+</form>

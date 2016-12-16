@@ -1,5 +1,6 @@
 ﻿@using System.Threading.Tasks
 @using UI.Localization
+@using UI.Models
 @model UI.Models.RegisterViewModel
 
 <form asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action">
@@ -54,9 +55,19 @@
                 <input asp-for="Password" type="hidden"/>
                 <input asp-for="PasswordConfirm" type="hidden"/>
             }
-            <div class="input-field col s12">
+            <div class="input-field col s8 m10">
                 <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
                 <label asp-for="CompanyId"></label>
+            </div>
+            <div class="input-field col s2 m1">
+                <a class="btn secondary" href="#create-organization-modal" id="create-organization" title="@OrganizationContent.CreateOrganizationTitle">
+                    <i class="material-icons">playlist_add</i>
+                </a>
+                @Html.Partial("ModalWindowPartial", new ModalWindowPartialViewModel
+                {
+                    Id = "create-organization-modal",
+                    Content = $"<iframe src=\"{Url.Action("Create", "Organization")}\"></iframe>"
+                })
             </div>
             <input asp-for="Provider" type="hidden"/>
             <div class="input-field col s12">
@@ -65,7 +76,7 @@
                     <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
                 }
             </div>
-            <div class="col s6 push-s6 right-align">
+            <div class="col s12 m6 push-m6 right-align">
                 <input type="submit" class="btn primary" value="@AccountContent.RegisterText"/>
             </div>
         </div>

@@ -1,0 +1,19 @@
+﻿@model UI.Models.ModalWindowPartialViewModel
+<div id="@Model.Id"class="modal @(string.Join(" ", Model.Classes))">
+    <div class="modal-header">
+        <span class="modal-title hide-on-small-and-down ng-binding">
+            @Model.Title
+        </span>
+        <div class="close-modal">
+            <a href="" class="close-button" target="_self">
+                <span class="icon-bar"></span>
+            </a>
+        </div>
+    </div>
+    <div class="modal-content">
+        @Model.Content
+    </div>
+    <div class="modal-footer">
+        @Model.FooterContent
+    </div>
+</div>

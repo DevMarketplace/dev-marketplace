@@ -117,22 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CompanyDescription" xml:space="preserve">
-    <value>Short Description</value>
-  </data>
-  <data name="CompanyTeamEmailText" xml:space="preserve">
-    <value>Company/Team e-mail</value>
-  </data>
-  <data name="CompanyTeamText" xml:space="preserve">
-    <value>Company/Team</value>
-  </data>
   <data name="CompanyText" xml:space="preserve">
     <value>Company</value>
   </data>
   <data name="CountryText" xml:space="preserve">
     <value>Country</value>
   </data>
+  <data name="CreateButtonText" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateOrganizationTitle" xml:space="preserve">
+    <value>Create organization</value>
+  </data>
+  <data name="LocationText" xml:space="preserve">
+    <value>Location (City, State ...)</value>
+  </data>
+  <data name="OrganizationDescription" xml:space="preserve">
+    <value>Organization Bio</value>
+  </data>
+  <data name="OrganizationEmailText" xml:space="preserve">
+    <value>Organization e-mail</value>
+  </data>
+  <data name="OrganizationNameText" xml:space="preserve">
+    <value>OrganizationName</value>
+  </data>
+  <data name="OrganizationText" xml:space="preserve">
+    <value>Organization</value>
+  </data>
   <data name="TeamText" xml:space="preserve">
     <value>Team</value>
+  </data>
+  <data name="WebSiteText" xml:space="preserve">
+    <value>Web site</value>
   </data>
 </root>

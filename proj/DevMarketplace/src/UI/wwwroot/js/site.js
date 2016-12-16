@@ -17,12 +17,12 @@
         },
 
         documentReadySetup: function () {
-            if ($.fn.sideNav !== 'undefined') {
+            if ($.fn.sideNav !== "undefined") {
                 $(".button-collapse").sideNav({ menuWidth: 320 });
             }
 
-            if ($.fn.material_select !== 'undefined') {
-                $('select').material_select();
+            if ($.fn.material_select !== "undefined") {
+                $("select").material_select();
             }
 
             $(window).on("resize orientationchange", function () {
