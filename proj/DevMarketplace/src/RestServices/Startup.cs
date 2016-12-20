@@ -35,6 +35,7 @@ using Microsoft.Extensions.Logging;
 using StructureMap;
 using DataAccess;
 using BusinessLogic;
+using Microsoft.EntityFrameworkCore;
 
 namespace RestServices
 {
@@ -65,6 +66,9 @@ namespace RestServices
         {
             var container = new Container();
 
+            var connection = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+            services.AddEntityFrameworkSqlServer().AddDbContext<DevMarketplaceDataContext>(options => options.UseSqlServer(connection), ServiceLifetime.Scoped);
+
             container.Configure(config =>
             {
                 // Register stuff in container, using the StructureMap APIs...
@@ -87,6 +91,15 @@ namespace RestServices
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, ElementRef, OnInit, AfterViewChecked } from "@angular/core";
+﻿import { Component, ElementRef, OnInit, AfterViewChecked } from "@angular/core";
 import { AccountService } from "../services/account.service";
 import { CurrentUser } from "../models/current-user.model";
 declare var $: any;
@@ -20,7 +20,7 @@ export class GetUserInfoComponent implements OnInit, AfterViewChecked {
             (error: any) => console.log(<any>error));
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewChecked(): void {
         $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     }
 }

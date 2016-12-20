@@ -23,26 +23,44 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-
-using System;
 using System.Collections.Generic;
-using BusinessLogic.BusinessObjects;
+using System.Net;
 
-namespace BusinessLogic.Managers
+namespace RestServices.Messages.Response
 {
-    public interface ICompanyManager
+    /// <summary>
+    /// A generic response message class used to serve as a common response message for API calls.
+    /// </summary>
+    /// <typeparam name="TBusinessObject"></typeparam>
+    public class GenericResponseMessage<TBusinessObject> where TBusinessObject : class
     {
-        /// <summary>
-        /// Lists all available organizations.
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<CompanyBo> GetCompanies();
+        public GenericResponseMessage()
+        {   
+        }
 
         /// <summary>
-        /// Gets an organization by its Id
+        /// Creates a new instance of the GenericResponseMessage with a data parameter
         /// </summary>
-        /// <param name="id">An organization ID Guid</param>
-        /// <returns></returns>
-        CompanyBo Get(Guid id);
+        /// <param name="data">A business object that contains the results</param>
+        public GenericResponseMessage(TBusinessObject data)
+        {
+            Data = data;
+        }
+
+        /// <summary>
+        /// A HTTP status code of the operation
+        /// </summary>
+        public HttpStatusCode StatusCode { get; set; }
+
+
+        /// <summary>
+        /// The data object that is returned to the client
+        /// </summary>
+        public TBusinessObject Data { get; set; }
+
+        /// <summary>
+        /// A list of error messages
+        /// </summary>
+        public IEnumerable<string> Errors { get; set; }
     }
 }

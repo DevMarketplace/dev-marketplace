@@ -66,7 +66,7 @@
                 @Html.Partial("ModalWindowPartial", new ModalWindowPartialViewModel
                 {
                     Id = "create-organization-modal",
-                    Content = $"<iframe src=\"{Url.Action("Create", "Organization")}\"></iframe>"
+                    Content = "<create-organization></create-organization>"
                 })
             </div>
             <input asp-for="Provider" type="hidden"/>

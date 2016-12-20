@@ -11,9 +11,12 @@
         </div>
     </div>
     <div class="modal-content">
-        @Model.Content
+        @Html.Raw(Model.Content)
     </div>
-    <div class="modal-footer">
-        @Model.FooterContent
-    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.FooterContent))
+    {
+        <div class="modal-footer">
+            @Html.Raw(Model.FooterContent)
+        </div>
+    }
 </div>

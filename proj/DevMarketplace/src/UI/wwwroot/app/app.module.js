@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var get_user_info_component_1 = require("./account/components/get-user-info.component");
+var create_organization_component_1 = require("./organization/components/create-organization.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -23,9 +24,10 @@ var AppModule = (function () {
                 http_1.JsonpModule
             ],
             declarations: [
-                get_user_info_component_1.GetUserInfoComponent
+                get_user_info_component_1.GetUserInfoComponent,
+                create_organization_component_1.CrateOrganizationComponent
             ],
-            bootstrap: [get_user_info_component_1.GetUserInfoComponent]
+            bootstrap: [get_user_info_component_1.GetUserInfoComponent, create_organization_component_1.CrateOrganizationComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

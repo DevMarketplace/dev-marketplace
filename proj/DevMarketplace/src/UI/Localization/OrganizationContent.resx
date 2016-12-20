@@ -133,13 +133,13 @@
     <value>Location (City, State ...)</value>
   </data>
   <data name="OrganizationDescription" xml:space="preserve">
-    <value>Organization Bio</value>
+    <value>Organization bio</value>
   </data>
   <data name="OrganizationEmailText" xml:space="preserve">
     <value>Organization e-mail</value>
   </data>
   <data name="OrganizationNameText" xml:space="preserve">
-    <value>OrganizationName</value>
+    <value>Organization name</value>
   </data>
   <data name="OrganizationText" xml:space="preserve">
     <value>Organization</value>

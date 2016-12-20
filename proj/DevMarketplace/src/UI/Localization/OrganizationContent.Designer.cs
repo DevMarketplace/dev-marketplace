@@ -105,7 +105,7 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Organization Bio.
+        ///    Looks up a localized string similar to Organization bio.
         /// </summary>
         public static string OrganizationDescription {
             get {
@@ -123,7 +123,7 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to OrganizationName.
+        ///    Looks up a localized string similar to Organization name.
         /// </summary>
         public static string OrganizationNameText {
             get {

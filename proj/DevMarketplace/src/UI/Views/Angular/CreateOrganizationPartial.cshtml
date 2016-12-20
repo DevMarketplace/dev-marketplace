@@ -1,2 +1,40 @@
 ﻿@using UI.Localization
-<a href="#" (click)="openCreateOrganizationModal()" class="btn secondary">@OrganizationContent.CreateOrganizationTitle</a>
+
+<div class="row">
+    <div class="organization-create-form" method="post" action="/Organization/Create">
+        <div class="input-field col s12 m6">
+            <input type="text" name="Name" id="OrganizationName" />
+            <label for="OrganizationName">@OrganizationContent.OrganizationNameText</label>
+            <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="input-field col s12 m6">
+            <input type="email" id="OrganizationEmail" name="Email" />
+            <label for="OrganizationEmail">@OrganizationContent.OrganizationEmailText</label>
+            <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationEmail" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="input-field col s12">
+            <input type="text" name="Url" id="OrganizationUrl" />
+            <label for="OrganizationUrl">@OrganizationContent.WebSiteText</label>
+        </div>
+
+        <div class="input-field col s12">
+            <input type="text" name="Location" id="OrganizationLocation" />
+            <label for="OrganizationLocation">@OrganizationContent.LocationText</label>
+        </div>
+        @*<div class="input-field col s12">
+                <input type="hidden" name="IsoCountryCode" id="IsoCountryCode"/>
+                <select asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
+                <label asp-for="IsoCountryCode"></label>
+            </div>
+
+            <div class="input-field col s12">
+                <input type="text" name="Description" id="Description" />
+                <label for="Description">@OrganizationContent.OrganizationDescription</label>
+                <span asp-validation-for="Description" class="field-validation-error"></span>
+            </div>*@
+        <div class="input-field col s12">
+            <a href="#" id="create-organization-submit" class="btn primary">@OrganizationContent.CreateButtonText</a>
+        </div>
+    </div>
+</div>

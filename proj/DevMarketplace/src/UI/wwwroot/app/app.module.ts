@@ -2,6 +2,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule, JsonpModule } from "@angular/http";
 import { GetUserInfoComponent } from "./account/components/get-user-info.component";
+import { CrateOrganizationComponent } from "./organization/components/create-organization.component"
 
 @NgModule({
     imports: [
@@ -10,8 +11,9 @@ import { GetUserInfoComponent } from "./account/components/get-user-info.compone
         JsonpModule
     ],
     declarations: [
-        GetUserInfoComponent
+        GetUserInfoComponent,
+        CrateOrganizationComponent
     ],
-    bootstrap: [GetUserInfoComponent ]
+    bootstrap: [GetUserInfoComponent, CrateOrganizationComponent ]
 })
 export class AppModule { }

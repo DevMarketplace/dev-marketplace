@@ -23,11 +23,14 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
+
+using System;
 using BusinessLogic.BusinessObjects;
 using DataAccess.Entity;
 using DataAccess.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLogic.Managers;
 
 namespace BusinessLogic.Services
 {
@@ -43,6 +46,11 @@ namespace BusinessLogic.Services
         public IEnumerable<CompanyBo> GetCompanies()
         {
             return _companyRepository.Get().Select(x => new CompanyBo(x));
+        }
+
+        public CompanyBo Get(Guid id)
+        {
+            return new CompanyBo(_companyRepository.GetByID(id));
         }
     }
 }
