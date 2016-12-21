@@ -3,38 +3,37 @@
 <div class="row">
     <div class="organization-create-form" method="post" action="/Organization/Create">
         <div class="input-field col s12 m6">
-            <input type="text" name="Name" id="OrganizationName" />
+            <input type="text" name="Name" id="OrganizationName" [(ngModel)]="organization.name" />
             <label for="OrganizationName">@OrganizationContent.OrganizationNameText</label>
             <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
         </div>
         <div class="input-field col s12 m6">
-            <input type="email" id="OrganizationEmail" name="Email" />
+            <input type="email" id="OrganizationEmail" name="Email" [(ngModel)]="organization.email" />
             <label for="OrganizationEmail">@OrganizationContent.OrganizationEmailText</label>
             <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationEmail" data-valmsg-replace="true"></span>
         </div>
 
         <div class="input-field col s12">
-            <input type="text" name="Url" id="OrganizationUrl" />
+            <input type="text" name="Url" id="OrganizationUrl" [(ngModel)]="organization.url" />
             <label for="OrganizationUrl">@OrganizationContent.WebSiteText</label>
         </div>
 
         <div class="input-field col s12">
-            <input type="text" name="Location" id="OrganizationLocation" />
+            <input type="text" name="Location" id="OrganizationLocation" [(ngModel)]="organization.location" />
             <label for="OrganizationLocation">@OrganizationContent.LocationText</label>
         </div>
         @*<div class="input-field col s12">
                 <input type="hidden" name="IsoCountryCode" id="IsoCountryCode"/>
                 <select asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
                 <label asp-for="IsoCountryCode"></label>
-            </div>
+            </div>*@
 
             <div class="input-field col s12">
-                <input type="text" name="Description" id="Description" />
+                <textarea rows="5" cols="50" name="Description" id="Description" [(ngModel)]="organization.description"></textarea>
                 <label for="Description">@OrganizationContent.OrganizationDescription</label>
-                <span asp-validation-for="Description" class="field-validation-error"></span>
-            </div>*@
+            </div>
         <div class="input-field col s12">
-            <a href="#" id="create-organization-submit" class="btn primary">@OrganizationContent.CreateButtonText</a>
+            <a href="#" id="create-organization-submit" (click)="createOrganization()" class="btn primary">@OrganizationContent.CreateButtonText</a>
         </div>
     </div>
 </div>

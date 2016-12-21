@@ -13,6 +13,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var get_user_info_component_1 = require("./account/components/get-user-info.component");
 var create_organization_component_1 = require("./organization/components/create-organization.component");
+var app_config_1 = require("./app.config");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,6 +23,10 @@ var AppModule = (function () {
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
                 http_1.JsonpModule
+            ],
+            providers: [
+                app_config_1.AppConfig,
+                { provide: core_1.APP_INITIALIZER, useFactory: function (config) { return function () { return config.load(); }; }, deps: [app_config_1.AppConfig], multi: true }
             ],
             declarations: [
                 get_user_info_component_1.GetUserInfoComponent,

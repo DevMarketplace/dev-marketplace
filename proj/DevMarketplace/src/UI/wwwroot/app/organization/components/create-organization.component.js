@@ -9,16 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-// import { CompanyService } from "../services/company.service";
+var company_service_1 = require("../services/company.service");
+var organization_model_1 = require("../models/organization.model");
 var CrateOrganizationComponent = (function () {
-    function CrateOrganizationComponent() {
+    function CrateOrganizationComponent(companyService) {
+        this.companyService = companyService;
+        this.organizationModel = new organization_model_1.Organization();
     }
+    CrateOrganizationComponent.prototype.createOrganization = function () {
+        this.companyService.createOrganization(this.organizationModel);
+    };
     CrateOrganizationComponent = __decorate([
         core_1.Component({
             selector: "create-organization",
-            templateUrl: "/angular/template?name=CreateOrganizationPartial"
+            templateUrl: "/angular/template?name=CreateOrganizationPartial",
+            providers: [company_service_1.CompanyService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [company_service_1.CompanyService])
     ], CrateOrganizationComponent);
     return CrateOrganizationComponent;
 }());
