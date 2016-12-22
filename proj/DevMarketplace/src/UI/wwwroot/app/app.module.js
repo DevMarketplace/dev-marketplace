@@ -14,6 +14,7 @@ var http_1 = require("@angular/http");
 var get_user_info_component_1 = require("./account/components/get-user-info.component");
 var create_organization_component_1 = require("./organization/components/create-organization.component");
 var app_config_1 = require("./app.config");
+var forms_1 = require('@angular/forms');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,7 +23,8 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
-                http_1.JsonpModule
+                http_1.JsonpModule,
+                forms_1.FormsModule
             ],
             providers: [
                 app_config_1.AppConfig,

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var Rx_1 = require('rxjs/Rx');
+var Observable_1 = require("rxjs/Observable");
 var AppConfig = (function () {
     function AppConfig(http) {
         this.http = http;
@@ -37,22 +37,22 @@ var AppConfig = (function () {
     AppConfig.prototype.load = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            _this.http.get('config/env.json').map(function (res) { return res.json(); }).catch(function (error) {
+            _this.http.get('/app/config/env.json').map(function (res) { return res.json(); }).catch(function (error) {
                 console.log('Configuration file "env.json" could not be read');
                 resolve(true);
-                return Rx_1.Observable.throw(error.json().error || 'Server error');
+                return Observable_1.Observable.throw(error.json().error || 'Server error');
             }).subscribe(function (envResponse) {
                 _this.env = envResponse;
                 var request = null;
                 switch (envResponse.env) {
                     case 'production':
                         {
-                            request = _this.http.get('config/config.' + envResponse.env + '.json');
+                            request = _this.http.get('/app/config/config.' + envResponse.env + '.json');
                         }
                         break;
                     case 'development':
                         {
-                            request = _this.http.get('config/config.' + envResponse.env + '.json');
+                            request = _this.http.get('/app/config/config.' + envResponse.env + '.json');
                         }
                         break;
                     case 'default':
@@ -68,7 +68,7 @@ var AppConfig = (function () {
                         .catch(function (error) {
                         console.error('Error reading ' + envResponse.env + ' configuration file');
                         resolve(error);
-                        return Rx_1.Observable.throw(error.json().error || 'Server error');
+                        return Observable_1.Observable.throw(error.json().error || 'Server error');
                     })
                         .subscribe(function (responseData) {
                         _this.config = responseData;

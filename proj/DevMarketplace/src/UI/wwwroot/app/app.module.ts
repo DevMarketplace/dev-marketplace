@@ -4,12 +4,14 @@ import { HttpModule, JsonpModule } from "@angular/http";
 import { GetUserInfoComponent } from "./account/components/get-user-info.component";
 import { CrateOrganizationComponent } from "./organization/components/create-organization.component";
 import { AppConfig } from "./app.config";
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
-        JsonpModule
+        JsonpModule,
+        FormsModule
     ],
     providers: [
         AppConfig,

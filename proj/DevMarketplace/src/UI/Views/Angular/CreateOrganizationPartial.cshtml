@@ -3,23 +3,23 @@
 <div class="row">
     <div class="organization-create-form" method="post" action="/Organization/Create">
         <div class="input-field col s12 m6">
-            <input type="text" name="Name" id="OrganizationName" [(ngModel)]="organization.name" />
+            <input type="text" name="Name" id="OrganizationName" [(ngModel)]="organizationModel.name" />
             <label for="OrganizationName">@OrganizationContent.OrganizationNameText</label>
             <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
         </div>
         <div class="input-field col s12 m6">
-            <input type="email" id="OrganizationEmail" name="Email" [(ngModel)]="organization.email" />
+            <input type="email" id="OrganizationEmail" name="Email" [(ngModel)]="organizationModel.email" />
             <label for="OrganizationEmail">@OrganizationContent.OrganizationEmailText</label>
             <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationEmail" data-valmsg-replace="true"></span>
         </div>
 
         <div class="input-field col s12">
-            <input type="text" name="Url" id="OrganizationUrl" [(ngModel)]="organization.url" />
+            <input type="text" name="Url" id="OrganizationUrl" [(ngModel)]="organizationModel.url" />
             <label for="OrganizationUrl">@OrganizationContent.WebSiteText</label>
         </div>
 
         <div class="input-field col s12">
-            <input type="text" name="Location" id="OrganizationLocation" [(ngModel)]="organization.location" />
+            <input type="text" name="Location" id="OrganizationLocation" [(ngModel)]="organizationModel.location" />
             <label for="OrganizationLocation">@OrganizationContent.LocationText</label>
         </div>
         @*<div class="input-field col s12">
@@ -29,7 +29,7 @@
             </div>*@
 
             <div class="input-field col s12">
-                <textarea rows="5" cols="50" name="Description" id="Description" [(ngModel)]="organization.description"></textarea>
+                <textarea rows="5" cols="50" name="Description" id="Description" class="materialize-textarea" [(ngModel)]="organizationModel.description"></textarea>
                 <label for="Description">@OrganizationContent.OrganizationDescription</label>
             </div>
         <div class="input-field col s12">
