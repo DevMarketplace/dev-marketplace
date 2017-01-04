@@ -23,49 +23,31 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Linq;
 using BusinessLogic.BusinessObjects;
-using BusinessLogic.Managers;
-using Microsoft.AspNetCore.Mvc;
-using RestServices.Messages.Response;
+using DataAccess.Entity;
+using DataAccess.Repository;
 
-namespace RestServices.Controllers
+namespace BusinessLogic.Managers
 {
-    [Route("api/v1/[controller]")]
-    public class OrganizationController : Controller
+    public class CountryManager : ICountryManager
     {
-        private readonly ICompanyManager _companyManager;
+        private IGenericRepository<Country> _countryRepository;
 
-        public OrganizationController(ICompanyManager companyManager)
+        public CountryManager(IGenericRepository<Country> countryRepository)
         {
-            _companyManager = companyManager;
+            _countryRepository = countryRepository;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        public CountryBo Get(string isoCountryCode)
         {
-            return new OkObjectResult(new GenericResponseMessage<IEnumerable<CompanyBo>>(_companyManager.GetCompanies()));
+            return new CountryBo(_countryRepository.Get(x => x.IsoCountryCode == isoCountryCode).First());
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public IEnumerable<CountryBo> GetCountries()
         {
-            try
-            {
-                var organization = _companyManager.Get(id);
-                return new OkObjectResult(new GenericResponseMessage<CompanyBo>(organization));
-            }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(new BadRequestObjectResult(
-                        new GenericResponseMessage<CompanyBo>
-                        {
-                            Errors = new List<string> {ex.Message},
-                            StatusCode = HttpStatusCode.BadRequest
-                        }));
-            }
+            return _countryRepository.Get().Select(country => new CountryBo(country));
         }
     }
 }

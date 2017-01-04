@@ -1,6 +1,10 @@
 ﻿(function ($) {
     var operations = {
-        init : function() {
+        init: function () {
+            if (System != null) {
+                System.import("registration").catch(function (err) { console.error(err); });
+            }
+
             $("#create-organization").on("click", function(e) {
                 e.preventDefault();
                 operations.openCreateOrganizationModal();

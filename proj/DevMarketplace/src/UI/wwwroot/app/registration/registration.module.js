@@ -11,13 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
-var get_user_info_component_1 = require("./account/components/get-user-info.component");
-var app_config_1 = require("./app.config");
+var create_organization_component_1 = require("./../organization/components/create-organization.component");
+var app_config_1 = require("./../app.config");
 var forms_1 = require('@angular/forms');
-var AppModule = (function () {
-    function AppModule() {
+var RegistrationModule = (function () {
+    function RegistrationModule() {
     }
-    AppModule = __decorate([
+    RegistrationModule = __decorate([
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
@@ -30,13 +30,13 @@ var AppModule = (function () {
                 { provide: core_1.APP_INITIALIZER, useFactory: function (config) { return function () { return config.load(); }; }, deps: [app_config_1.AppConfig], multi: true }
             ],
             declarations: [
-                get_user_info_component_1.GetUserInfoComponent
+                create_organization_component_1.CrateOrganizationComponent
             ],
-            bootstrap: [get_user_info_component_1.GetUserInfoComponent]
+            bootstrap: [create_organization_component_1.CrateOrganizationComponent]
         }), 
         __metadata('design:paramtypes', [])
-    ], AppModule);
-    return AppModule;
+    ], RegistrationModule);
+    return RegistrationModule;
 }());
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+exports.RegistrationModule = RegistrationModule;
+//# sourceMappingURL=registration.module.js.map

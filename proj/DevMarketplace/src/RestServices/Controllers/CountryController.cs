@@ -23,49 +23,29 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Net;
-using BusinessLogic.BusinessObjects;
 using BusinessLogic.Managers;
 using Microsoft.AspNetCore.Mvc;
-using RestServices.Messages.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RestServices.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class OrganizationController : Controller
+    public class CountryController : Controller
     {
-        private readonly ICompanyManager _companyManager;
+        private ICountryManager _countryManager;
 
-        public OrganizationController(ICompanyManager companyManager)
+        public CountryController(ICountryManager countryManager)
         {
-            _companyManager = companyManager;
+            _countryManager = countryManager;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{countryCode}")]
+        public async Task<IActionResult> Get(string countryCode)
         {
-            return new OkObjectResult(new GenericResponseMessage<IEnumerable<CompanyBo>>(_companyManager.GetCompanies()));
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
-        {
-            try
-            {
-                var organization = _companyManager.Get(id);
-                return new OkObjectResult(new GenericResponseMessage<CompanyBo>(organization));
-            }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(new BadRequestObjectResult(
-                        new GenericResponseMessage<CompanyBo>
-                        {
-                            Errors = new List<string> {ex.Message},
-                            StatusCode = HttpStatusCode.BadRequest
-                        }));
-            }
+            return await Task.Run<IActionResult>(() => { return new OkObjectResult(_countryManager.Get(countryCode)); });
         }
     }
 }
