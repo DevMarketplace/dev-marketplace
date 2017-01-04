@@ -45,6 +45,7 @@ namespace RestServices.Messages.Response
         public GenericResponseMessage(TBusinessObject data)
         {
             Data = data;
+            StatusCode = HttpStatusCode.OK;
         }
 
         /// <summary>

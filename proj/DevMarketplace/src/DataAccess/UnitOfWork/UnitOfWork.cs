@@ -68,6 +68,8 @@ namespace DataAccess.UnitOfWork
                         throw;
                     }
                 }
+
+                transaction.Commit();
             }
         }
 

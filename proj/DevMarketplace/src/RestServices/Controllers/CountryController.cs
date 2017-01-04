@@ -1,4 +1,5 @@
 ﻿#region License
+
 // The Developer Marketplace is a web application that allows individuals, 
 // teams and companies share KanBan stories, cards, tasks and items from 
 // their KanBan boards and Scrum boards. 
@@ -22,20 +23,24 @@
 // 
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
+
 #endregion
-using BusinessLogic.Managers;
-using Microsoft.AspNetCore.Mvc;
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using BusinessLogic.Managers;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using BusinessLogic.BusinessObjects;
+using RestServices.Messages.Response;
 
 namespace RestServices.Controllers
 {
     [Route("api/v1/[controller]")]
     public class CountryController : Controller
     {
-        private ICountryManager _countryManager;
+        private readonly ICountryManager _countryManager;
 
         public CountryController(ICountryManager countryManager)
         {
@@ -45,7 +50,23 @@ namespace RestServices.Controllers
         [HttpGet("{countryCode}")]
         public async Task<IActionResult> Get(string countryCode)
         {
-            return await Task.Run<IActionResult>(() => { return new OkObjectResult(_countryManager.Get(countryCode)); });
+            try
+            {
+                return await Task.Run<IActionResult>(() => new OkObjectResult(new GenericResponseMessage<CountryBo>(_countryManager.Get(countryCode))));
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(new BadRequestObjectResult(new GenericResponseMessage<CompanyBo>
+                    {
+                        Errors = new List<string> { ex.Message },
+                        StatusCode = HttpStatusCode.BadRequest
+                    }));
+            }
+        }
+
+        public async Task<IActionResult> Get()
+        {
+            return await Task.Run<IActionResult>(() => new OkObjectResult(new GenericResponseMessage<IEnumerable<CountryBo>>(_countryManager.GetCountries())));
         }
     }
 }
