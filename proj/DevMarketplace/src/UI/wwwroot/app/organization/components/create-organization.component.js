@@ -10,11 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var company_service_1 = require("../services/company.service");
+var country_service_1 = require("../services/country.service");
 var organization_model_1 = require("../models/organization.model");
 var CrateOrganizationComponent = (function () {
-    function CrateOrganizationComponent(companyService) {
+    function CrateOrganizationComponent(companyService, countryService) {
+        var _this = this;
         this.companyService = companyService;
+        this.countryService = countryService;
         this.organizationModel = new organization_model_1.Organization();
+        this.countryService.getCountries().subscribe(function (countriesResponse) { _this.countries = countriesResponse; }, function (error) { return console.log(error); });
     }
     CrateOrganizationComponent.prototype.createOrganization = function () {
         this.companyService.createOrganization(this.organizationModel);
@@ -25,7 +29,7 @@ var CrateOrganizationComponent = (function () {
             templateUrl: "/angular/template?name=CreateOrganizationPartial",
             providers: [company_service_1.CompanyService]
         }), 
-        __metadata('design:paramtypes', [company_service_1.CompanyService])
+        __metadata('design:paramtypes', [company_service_1.CompanyService, country_service_1.CountryService])
     ], CrateOrganizationComponent);
     return CrateOrganizationComponent;
 }());
