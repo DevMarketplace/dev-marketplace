@@ -58,6 +58,7 @@ namespace RestServices
         {
             // Add framework services.
             services.AddMvc().AddControllersAsServices();
+            services.AddCors();
 
             return ConfigureIoC(services);
         }
@@ -94,10 +95,18 @@ namespace RestServices
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(builder => builder.WithOrigins("http://localhost:6147", "https://localhost:44391")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseCors(builder => builder.WithOrigins("http://www.devmarketplace.com", "https://www.devmarketplace.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
             }
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

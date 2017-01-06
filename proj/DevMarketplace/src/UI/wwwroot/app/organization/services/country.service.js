@@ -21,7 +21,7 @@ var CountryService = (function () {
     CountryService.prototype.getCountries = function () {
         var headers = new http_1.Headers({ "Content-Type": "application/json" });
         var options = new http_1.RequestOptions({ headers: headers, withCredentials: true });
-        var apiAddress = this.config.getConfig("apiAddress");
+        var apiAddress = this.config.getConfig("apiAddress") + "/api/v1/country/";
         return this.http.get(apiAddress, options)
             .map(function (res) { return res.json(); })
             .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });

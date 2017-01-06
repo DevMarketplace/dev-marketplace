@@ -12,7 +12,7 @@ export class CountryService {
     public getCountries(): Observable<Country[]> {
         let headers: Headers = new Headers({ "Content-Type": "application/json" });
         let options: RequestOptions = new RequestOptions({ headers: headers, withCredentials: true });
-        let apiAddress: string = this.config.getConfig("apiAddress");
+        let apiAddress: string = this.config.getConfig("apiAddress") + "/api/v1/country/";
 
         return this.http.get(apiAddress, options)
             .map((res: Response) => res.json())

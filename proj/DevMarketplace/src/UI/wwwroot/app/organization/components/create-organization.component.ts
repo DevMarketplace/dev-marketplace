@@ -6,8 +6,8 @@ import { Country } from "../models/country.model";
 
 @Component({
     selector: "create-organization"
-    ,templateUrl: "/angular/template?name=CreateOrganizationPartial"
-    ,providers: [CompanyService]
+    , templateUrl: "/angular/template?name=CreateOrganizationPartial"
+    , providers: [CompanyService, CountryService]
 })
 
 export class CrateOrganizationComponent {
@@ -15,7 +15,10 @@ export class CrateOrganizationComponent {
     private countries: Country[];
     constructor(private companyService: CompanyService, private countryService: CountryService) {
         this.countryService.getCountries().subscribe(
-            (countriesResponse: Country[]) => { this.countries = countriesResponse; },
+            (countriesResponse: Country[]) =>
+            {
+                this.countries = countriesResponse;
+            },
             (error: any) => console.log(<any>error));
     }
 

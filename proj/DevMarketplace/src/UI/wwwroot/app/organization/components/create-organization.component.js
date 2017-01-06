@@ -18,7 +18,9 @@ var CrateOrganizationComponent = (function () {
         this.companyService = companyService;
         this.countryService = countryService;
         this.organizationModel = new organization_model_1.Organization();
-        this.countryService.getCountries().subscribe(function (countriesResponse) { _this.countries = countriesResponse; }, function (error) { return console.log(error); });
+        this.countryService.getCountries().subscribe(function (countriesResponse) {
+            _this.countries = countriesResponse.data;
+        }, function (error) { return console.log(error); });
     }
     CrateOrganizationComponent.prototype.createOrganization = function () {
         this.companyService.createOrganization(this.organizationModel);
@@ -27,7 +29,7 @@ var CrateOrganizationComponent = (function () {
         core_1.Component({
             selector: "create-organization",
             templateUrl: "/angular/template?name=CreateOrganizationPartial",
-            providers: [company_service_1.CompanyService]
+            providers: [company_service_1.CompanyService, country_service_1.CountryService]
         }), 
         __metadata('design:paramtypes', [company_service_1.CompanyService, country_service_1.CountryService])
     ], CrateOrganizationComponent);
