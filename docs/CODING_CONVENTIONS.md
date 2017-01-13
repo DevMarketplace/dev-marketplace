@@ -8,8 +8,8 @@ in order to maintain project integrity and keep it consistent.
 ## JavaScript style guide
 The project follows the AirBnb coding conventions posted [here](https://github.com/airbnb/javascript).
 
-## Angular 2 style guide
-Since the project uses Angular 2, it is recommended to follow the Angular 2 style guidelines [here](https://angular.io/styleguide).
+## Aurelia style guide
+Aurelia doesn't have style guidelines and we recommend following the Angular 2 style guidelines [here](https://angular.io/styleguide).
 
 ## SASS style guide
 The SASS guidelines that the project follows are described [here](https://sass-guidelin.es/).
