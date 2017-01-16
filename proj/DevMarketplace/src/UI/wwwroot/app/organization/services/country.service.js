@@ -28,9 +28,10 @@ var CountryService = (function () {
     };
     CountryService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, app_config_1.AppConfig])
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, app_config_1.AppConfig])
     ], CountryService);
     return CountryService;
+    var _a;
 }());
 exports.CountryService = CountryService;
 //# sourceMappingURL=country.service.js.map

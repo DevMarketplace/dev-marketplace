@@ -25,9 +25,10 @@ var CompanyService = (function () {
     };
     CompanyService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
     ], CompanyService);
     return CompanyService;
+    var _a;
 }());
 exports.CompanyService = CompanyService;
 //# sourceMappingURL=company.service.js.map

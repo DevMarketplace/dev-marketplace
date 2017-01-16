@@ -1,4 +1,4 @@
-/// <binding AfterBuild='sass' Clean='clean' ProjectOpened='copy-all' />
+/// <binding AfterBuild="sass" Clean="clean" ProjectOpened="copy-all" />
 "use strict";
 
 var gulp = require("gulp"),
@@ -32,14 +32,14 @@ gulp.task("clean:css", function (cb) {
 
 gulp.task("clean", ["clean:js", "clean:css"]);
 
-gulp.task('sass', function () {
-    return gulp.src(paths.webroot + 'sass/**/*.scss')
-      .pipe(sass().on('error', sass.logError))
-      .pipe(gulp.dest(paths.webroot + 'css'));
+gulp.task("sass", function () {
+    return gulp.src(paths.webroot + "sass/**/*.scss")
+      .pipe(sass().on("error", sass.logError))
+      .pipe(gulp.dest(paths.webroot + "css"));
 });
 
-gulp.task('sass:watch', function () {
-    gulp.watch(paths.webroot + 'sass/**/*.scss', ['sass']);
+gulp.task("sass:watch", function () {
+    gulp.watch(paths.webroot + "sass/**/*.scss", ["sass"]);
 });
 
 
@@ -60,37 +60,21 @@ gulp.task("min:css", function () {
 gulp.task("min", ["min:js", "min:css"]);
 
 gulp.task("copy-systemjs", function () {
-    return gulp.src(paths.nodeModules + 'systemjs/dist/**/*.*', {
-        base: paths.nodeModules + 'systemjs/dist/'
-    }).pipe(gulp.dest(paths.packageLib + 'systemjs/'));
+    return gulp.src(paths.nodeModules + "systemjs/dist/**/*.*", {
+        base: paths.nodeModules + "systemjs/dist/"
+    }).pipe(gulp.dest(paths.packageLib + "systemjs/"));
 });
-gulp.task("copy-angular2", function () {
-    return gulp.src([paths.nodeModules + '@angular/**/'])
-        .pipe(gulp.dest(paths.packageLib + '@angular/'));
-});
-gulp.task("copy-reflect-metadata", function () {
-    return gulp.src(paths.nodeModules + 'reflect-metadata/Reflect.js')
-        .pipe(gulp.dest(paths.packageLib + 'reflect-metadata/'));
-});
+
 gulp.task("copy-rxjs", function () {
-    return gulp.src([paths.nodeModules + 'rxjs/**/']).pipe(gulp.dest(paths.packageLib + 'rxjs/'));
-});
-gulp.task("copy-corejs", function () {
-    return gulp.src(paths.nodeModules + 'core-js/client/*.*', {
-        base: paths.nodeModules + 'core-js/client/'
-    }).pipe(gulp.dest(paths.packageLib + 'core-js/'));
+    return gulp.src([paths.nodeModules + "rxjs/**/"]).pipe(gulp.dest(paths.packageLib + "rxjs/"));
 });
 
-gulp.task("copy-angular-in-memory-web-api", function() {
-    return gulp.src(paths.nodeModules + 'angular-in-memory-web-api/bundles/*.*', {
-        base: paths.nodeModules + 'angular-in-memory-web-api/bundles'
-    }).pipe(gulp.dest(paths.packageLib + 'angular-in-memory-web-api/'));
+gulp.task("copy-vue", function () {
+    return gulp.src([paths.nodeModules + "vue/**/*"]).pipe(gulp.dest(paths.packageLib + "vue/"));
 });
 
-gulp.task("copy-zonejs", function () {
-    return gulp.src(paths.nodeModules + 'zone.js/dist/*.*', {
-        base: paths.nodeModules + 'zone.js/dist/'
-    }).pipe(gulp.dest(paths.packageLib + 'zone.js/'));
+gulp.task("copy-vue-rx", function () {
+    return gulp.src([paths.nodeModules + "vue-rx/**/*"]).pipe(gulp.dest(paths.packageLib + "vue-rx/"));
 });
 
-gulp.task("copy-all", ["copy-rxjs", 'copy-angular2', 'copy-systemjs', 'copy-reflect-metadata', 'copy-corejs', 'copy-angular-in-memory-web-api', 'copy-zonejs']);
+gulp.task("copy-all", ["copy-systemjs", "copy-rxjs", "copy-vue", "copy-vue-rx"]);

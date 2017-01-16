@@ -19,7 +19,7 @@ var CrateOrganizationComponent = (function () {
         this.countryService = countryService;
         this.organizationModel = new organization_model_1.Organization();
         this.countryService.getCountries().subscribe(function (countriesResponse) {
-            _this.countries = countriesResponse.data;
+            _this.countries = countriesResponse;
         }, function (error) { return console.log(error); });
     }
     CrateOrganizationComponent.prototype.createOrganization = function () {

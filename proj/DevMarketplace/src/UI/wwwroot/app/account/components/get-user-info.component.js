@@ -30,9 +30,10 @@ var GetUserInfoComponent = (function () {
             templateUrl: "/angular/template?name=UserAccountMenuPartial",
             providers: [account_service_1.AccountService]
         }), 
-        __metadata('design:paramtypes', [account_service_1.AccountService, core_1.ElementRef])
+        __metadata('design:paramtypes', [account_service_1.AccountService, (typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
     ], GetUserInfoComponent);
     return GetUserInfoComponent;
+    var _a;
 }());
 exports.GetUserInfoComponent = GetUserInfoComponent;
 //# sourceMappingURL=get-user-info.component.js.map
