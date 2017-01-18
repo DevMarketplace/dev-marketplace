@@ -9,7 +9,7 @@
 
     module: {
         loaders: [
-            { test: /\.vue$/, loader: 'vue-loader' },
+            { test: /\.vue$/, loader: 'vue' },
             { test: /\.ts$/, loader: 'vue-ts' }
         ],
     },
