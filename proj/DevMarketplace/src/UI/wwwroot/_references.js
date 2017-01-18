@@ -14,6 +14,7 @@
 /// <reference path="app/registration/registration.main.js" />
 /// <reference path="app/registration/registration.module.js" />
 /// <reference path="app/rxjs-operators.js" />
+/// <reference path="js/main.js" />
 /// <reference path="js/materialize.js" />
 /// <reference path="js/register-user.js" />
 /// <reference path="js/site.js" />
