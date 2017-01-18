@@ -1,9 +1,9 @@
 "use strict";
 var Vue = require('vue');
-var App = require('./app.vue').default;
+var app = require('./app.vue').default;
 new Vue({
     el: '#app',
-    components: { App: App },
+    components: { app: app },
     render: function (h) { return h('app'); }
 });
 //# sourceMappingURL=main.js.map

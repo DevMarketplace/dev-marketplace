@@ -1,10 +1,10 @@
-﻿declare var require: any
+﻿declare var require: any;
 
 import Vue = require('vue')
-var App = require('./app.vue').default
+var app = require('./app.vue').default;
 
 new Vue({
     el: '#app',
-    components: { App },
+    components: { app },
     render: h => h('app')
 })

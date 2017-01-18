@@ -7,7 +7,9 @@ var gulp = require("gulp"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
     fs = require("fs"),
-    sass = require("gulp-sass");
+    sass = require("gulp-sass"),
+    watchify = require('watchify'),
+    browserify = require('browserify');
 
 var paths = {
     webroot: "./wwwroot/",
@@ -20,7 +22,7 @@ paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
-paths.packageLib = paths.webroot + "npm/";
+
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
@@ -58,23 +60,3 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min", ["min:js", "min:css"]);
-
-gulp.task("copy-systemjs", function () {
-    return gulp.src(paths.nodeModules + "systemjs/dist/**/*.*", {
-        base: paths.nodeModules + "systemjs/dist/"
-    }).pipe(gulp.dest(paths.packageLib + "systemjs/"));
-});
-
-gulp.task("copy-rxjs", function () {
-    return gulp.src([paths.nodeModules + "rxjs/**/"]).pipe(gulp.dest(paths.packageLib + "rxjs/"));
-});
-
-gulp.task("copy-vue", function () {
-    return gulp.src([paths.nodeModules + "vue/**/*"]).pipe(gulp.dest(paths.packageLib + "vue/"));
-});
-
-gulp.task("copy-vue-rx", function () {
-    return gulp.src([paths.nodeModules + "vue-rx/**/*"]).pipe(gulp.dest(paths.packageLib + "vue-rx/"));
-});
-
-gulp.task("copy-all", ["copy-systemjs", "copy-rxjs", "copy-vue", "copy-vue-rx"]);
