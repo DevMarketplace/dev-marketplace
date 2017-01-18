@@ -1,6 +1,10 @@
-﻿import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+﻿declare var require: any
 
-import { AppModule } from "./app.module";
+import Vue = require('vue')
+var App = require('./app.vue').default
 
-const platform : any = platformBrowserDynamic();
-platform.bootstrapModule(AppModule);
+new Vue({
+    el: '#app',
+    components: { App },
+    render: h => h('app')
+})

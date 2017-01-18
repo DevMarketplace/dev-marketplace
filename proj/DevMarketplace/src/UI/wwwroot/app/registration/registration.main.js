@@ -1,6 +1,5 @@
-"use strict";
-var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
-var registration_module_1 = require("./registration.module");
-var platform = platform_browser_dynamic_1.platformBrowserDynamic();
-platform.bootstrapModule(registration_module_1.RegistrationModule);
+//import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+//import { RegistrationModule } from "./registration.module";
+//const platform: any = platformBrowserDynamic();
+//platform.bootstrapModule(RegistrationModule); 
 //# sourceMappingURL=registration.main.js.map

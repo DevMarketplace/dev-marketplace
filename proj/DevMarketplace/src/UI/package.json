@@ -15,24 +15,29 @@
     "tsc:w": "tsc -w"
   },
   "dependencies": {
+    "css-loader": "^0.26.1",
     "rxjs": "^5.0.3",
-    "systemjs": "0.19.39",
-    "vue": "^2.1.8",
-    "vue-rx": "^2.3.0"
+    "vue": "^2.1.10",
+    "vue-html-loader": "^1.2.3",
+    "vue-loader": "^10.0.2",
+    "vue-rx": "^2.3.0",
+    "vue-template-compiler": "^2.1.10",
+    "webpack": "^1.14.0"
   },
   "devDependencies": {
+    "@types/core-js": "^0.9.34",
+    "@types/node": "^6.0.45",
+    "concurrently": "^3.0.0",
     "del": "2.2.1",
     "gulp": "3.8.11",
     "gulp-concat": "2.6.0",
     "gulp-cssmin": "0.1.7",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "1.2.0",
-    "rimraf": "2.3.2",
-    "merge-stream": "1.0.0",
-    "@types/core-js": "^0.9.34",
-    "@types/node": "^6.0.45",
-    "concurrently": "^3.0.0",
     "lite-server": "^2.2.2",
-    "typescript": "^2.0.3"
+    "merge-stream": "1.0.0",
+    "rimraf": "2.3.2",
+    "typescript": "^2.0.3",
+    "vue-ts-loader": "0.0.3"
   }
 }

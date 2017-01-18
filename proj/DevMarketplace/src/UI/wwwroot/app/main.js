@@ -1,6 +1,9 @@
 "use strict";
-var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
-var app_module_1 = require("./app.module");
-var platform = platform_browser_dynamic_1.platformBrowserDynamic();
-platform.bootstrapModule(app_module_1.AppModule);
+var Vue = require('vue');
+var App = require('./app.vue').default;
+new Vue({
+    el: '#app',
+    components: { App: App },
+    render: function (h) { return h('app'); }
+});
 //# sourceMappingURL=main.js.map

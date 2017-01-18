@@ -1,42 +1,24 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var http_1 = require("@angular/http");
-var create_organization_component_1 = require("./../organization/components/create-organization.component");
-var app_config_1 = require("./../app.config");
-var forms_1 = require('@angular/forms');
-var RegistrationModule = (function () {
-    function RegistrationModule() {
-    }
-    RegistrationModule = __decorate([
-        core_1.NgModule({
-            imports: [
-                platform_browser_1.BrowserModule,
-                http_1.HttpModule,
-                http_1.JsonpModule,
-                forms_1.FormsModule
-            ],
-            providers: [
-                app_config_1.AppConfig,
-                { provide: core_1.APP_INITIALIZER, useFactory: function (config) { return function () { return config.load(); }; }, deps: [app_config_1.AppConfig], multi: true }
-            ],
-            declarations: [
-                create_organization_component_1.CrateOrganizationComponent
-            ],
-            bootstrap: [create_organization_component_1.CrateOrganizationComponent]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], RegistrationModule);
-    return RegistrationModule;
-}());
-exports.RegistrationModule = RegistrationModule;
+//import { NgModule, APP_INITIALIZER } from "@angular/core";
+//import { BrowserModule } from "@angular/platform-browser";
+//import { HttpModule, JsonpModule } from "@angular/http";
+//import { CrateOrganizationComponent } from "./../organization/components/create-organization.component";
+//import { AppConfig } from "./../app.config";
+//import { FormsModule } from '@angular/forms';
+//@NgModule({
+//    imports: [
+//        BrowserModule,
+//        HttpModule,
+//        JsonpModule,
+//        FormsModule
+//    ],
+//    providers: [
+//        AppConfig,
+//        { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true }
+//    ],
+//    declarations: [
+//        CrateOrganizationComponent
+//    ],
+//    bootstrap: [CrateOrganizationComponent]
+//})
+//export class RegistrationModule { } 
 //# sourceMappingURL=registration.module.js.map
