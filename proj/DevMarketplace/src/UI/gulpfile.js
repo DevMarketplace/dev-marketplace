@@ -2,7 +2,7 @@
 "use strict";
 
 var gulp = require("gulp"),
-    gutil = require('gulp-util'),
+    gutil = require("gulp-util"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
@@ -12,6 +12,9 @@ var gulp = require("gulp"),
     sass = require("gulp-sass"),
     watchify = require("watchify"),
     aliasify = require("aliasify"),
+    source = require("vinyl-source-stream"),
+    sourcemaps = require("gulp-sourcemaps"),
+    buffer = require("vinyl-buffer"),
     browserify = require("browserify");
 
 var paths = {
@@ -24,7 +27,7 @@ var aliasifyConfig = {
         "vue$": "vue/dist/vue.js"
     },
     verbose: true
-}
+};
 
 paths.js = paths.webroot + "js/**/*.js";
 paths.minJs = paths.webroot + "js/**/*.min.js";
@@ -32,9 +35,10 @@ paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.packageLib = paths.webroot + "npm/";
 
 var jsPaths = [
-    process.env.INIT_CWD + "\\App\\shared",
+    process.env.INIT_CWD + "\\App\\shared"
 ];
 
 function getFolders(dir) {
@@ -141,3 +145,17 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min", ["min:js", "min:css"]);
+
+
+gulp.task("copy-systemjs", function () {
+    return gulp.src(paths.nodeModules + "systemjs/dist/**/*.*", {
+        base: paths.nodeModules + "systemjs/dist/"
+    }).pipe(gulp.dest(paths.packageLib + "systemjs/"));
+});
+
+gulp.task("copy-app", function() {
+    return gulp.src(["./app/**/*.js"]).pipe(gulp.dest(paths.webroot + "app/"));
+});
+
+gulp.task("copy-all", ["copy-systemjs", "copy-app"]);
+
