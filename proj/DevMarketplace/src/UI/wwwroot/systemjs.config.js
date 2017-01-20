@@ -5,7 +5,7 @@
         emitDecoratorMetadata: true
     },
     paths: {
-      "npm:": "./../node_modules/"
+      "npm:": "/npm/"
     },
     map: {
         accountMenu: "/app/shared",

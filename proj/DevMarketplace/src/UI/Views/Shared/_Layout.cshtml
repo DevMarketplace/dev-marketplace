@@ -33,7 +33,8 @@
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        <account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>
+                        @Html.Partial("../Angular/LoaderPartial")
+                        @*<account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>*@
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
@@ -71,6 +72,7 @@
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <script src="~/js/materialize.js"></script>
         <script src="~/npm/systemjs/system.src.js"></script>
+        <script src="~/systemjs.config.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
