@@ -34,7 +34,12 @@
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
                         @Html.Partial("../Angular/LoaderPartial")
-                        @*<account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>*@
+                        <account-menu id="app">
+                            <account-user-info id="account-menu">
+                                {{}}
+                                @*<li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li>*@
+                            </account-user-info>
+                        </account-menu>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>

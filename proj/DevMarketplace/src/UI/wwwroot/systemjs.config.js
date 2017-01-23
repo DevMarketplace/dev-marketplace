@@ -8,14 +8,14 @@
       "npm:": "/npm/"
     },
     map: {
-        accountMenu: "/app/shared",
+        app: "/app/shared",
         "vue": "npm:vue/dist/vue.min.js",
-        "av-ts": "npm:av-ts/dist/index.js",
+        "vue-class-component": "npm:vue-class-component/dist/vue-class-component.js",
         'rxjs': 'npm:rxjs'
     },
     packages: {
-        accountMenu: {
-            main: "./accountMenu.js",
+        app: {
+            main: "./app.js",
             defaultExtension: "js"
         }
     }
