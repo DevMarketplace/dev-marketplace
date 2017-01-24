@@ -2,6 +2,5 @@
 import AccountMenu from "./account-menu"
 
 new Vue({
-    el: "#app",
-    render: h => h(AccountMenu, {})
+    el: "#app"
 });

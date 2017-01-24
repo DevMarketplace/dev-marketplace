@@ -25,7 +25,10 @@ var AccountMenu = (function (_super) {
     };
     AccountMenu = __decorate([
         vue_class_component_1.default({
-            el: "#account-menu"
+            template: "#account-menu",
+            props: {
+                message: String
+            }
         }), 
         __metadata('design:paramtypes', [])
     ], AccountMenu);

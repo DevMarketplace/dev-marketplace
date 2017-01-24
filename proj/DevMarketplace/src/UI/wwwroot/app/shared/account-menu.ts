@@ -3,7 +3,10 @@ import Component from "vue-class-component";
 import {CurrentUser} from "./models/current-user.model";
 
 @Component({
-    el: "#account-menu"
+    template: "#account-menu",
+    props: {
+        message: String
+    }
 })
 export default class AccountMenu extends Vue {
     public userAccount: CurrentUser;
