@@ -1,6 +1,11 @@
 ﻿import Vue = require("vue");
-import AccountMenu from "./account-menu"
+import AccountMenu from "./account-menu";
 
 new Vue({
-    el: "#app"
+    el: "main"
+});
+
+new Vue({
+    el: "nav",
+    components: { AccountMenu }
 });

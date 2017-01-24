@@ -2,7 +2,7 @@
     var operations = {
         init: function () {
             if (System != null) {
-                System.import("accountMenu").catch(function (err) { console.error(err); });
+                System.import("app").catch(function (err) { console.error(err); });
             }
 
             operations.setAccountMenu();

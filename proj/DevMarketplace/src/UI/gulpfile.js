@@ -10,8 +10,6 @@ var gulp = require("gulp"),
     fs = require("fs"),
     path = require("path"),
     sass = require("gulp-sass"),
-    //watchify = require("watchify"),
-    aliasify = require("aliasify"),
     source = require("vinyl-source-stream"),
     sourcemaps = require("gulp-sourcemaps"),
     buffer = require("vinyl-buffer"),
@@ -20,13 +18,6 @@ var gulp = require("gulp"),
 var paths = {
     webroot: "./wwwroot/",
     nodeModules: "./node_modules/"
-};
-
-var aliasifyConfig = {
-    aliases: {
-        "vue$": "vue/dist/vue.js"
-    },
-    verbose: true
 };
 
 paths.js = paths.webroot + "js/**/*.js";
@@ -40,74 +31,6 @@ paths.packageLib = paths.webroot + "npm/";
 var jsPaths = [
     process.env.INIT_CWD + "\\App\\shared"
 ];
-
-function getFolders(dir) {
-    return fs.readdirSync(dir)
-      .filter(function (file) {
-          return fs.statSync(path.join(dir, file)).isDirectory();
-      });
-}
-
-function compileJS(input, output) {
-    // set up the browserify instance on a task basis
-    var b = browserify({
-        debug: true,
-        entries: [input],
-        basedir: process.env.INIT_CWD,
-        paths: jsPaths
-    });
-
-    return b.transform(aliasify, aliasifyConfig)
-        .bundle()
-      .pipe(source("bundle.js"))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({ loadMaps: true }))
-          .on("error", gutil.log)
-      .pipe(gulp.dest(output));
-}
-
-//function watchFolder(input, output) {
-//    var b = browserify({
-//        entries: [input],
-//        cache: {},
-//        packageCache: {},
-//        plugin: [watchify],
-//        basedir: process.env.INIT_CWD,
-//        paths: jsPaths
-//    });
-
-//    function bundle() {
-//        b.transform(aliasify, aliasifyConfig)
-//            .bundle()
-//            .pipe(source("bundle.js"))
-//            .pipe(buffer())
-//            .pipe(sourcemaps.init({ loadMaps: true }))
-//            .on("error", gutil.log)
-//            .pipe(sourcemaps.write("./"))
-//            .pipe(gulp.dest(output));
-
-//        gutil.log("Bundle rebuilt!");
-//    }
-//    b.on("update", bundle);
-//    bundle();
-//}
-
-gulp.task("build-vue:js", function () {
-    var folders = getFolders("App");
-    gutil.log(folders);
-    folders.map(function (folder) {
-        compileJS("App//" + folder + "//main.js", "Scripts//app//" + folder);
-    });
-});
-
-//gulp.task("default", function () {
-//    var folders = getFolders("App");
-//    gutil.log(folders);
-//    folders.map(function (folder) {
-//        watchFolder("App//" + folder + "//main.js", "Scripts//app//" + folder);
-//    });
-
-//});
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);

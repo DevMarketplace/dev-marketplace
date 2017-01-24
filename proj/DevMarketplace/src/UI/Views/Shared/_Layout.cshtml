@@ -24,7 +24,7 @@
 
         <div class="navigation-bar">
             <nav>
-                <div id="app" class="nav-wrapper">
+                <div class="nav-wrapper">
                     <a href="/" class="brand-logo">_Dev_Marketplace</a>
                     <a href="#" data-activates="nav-mobile" class="button-collapse">
                         <i class="material-icons">menu</i>
@@ -33,19 +33,13 @@
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        @*@Html.Partial("../Angular/LoaderPartial")*@
-                        @*<li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li>*@
-                        <account-menu></account-menu>
+                        <li>@(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))</li>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
                     </ul>
-
-                    <template id="account-menu">
-                        <li>{{message}}</li>
-                    </template>
                 </div>
             </nav>
         </div>
@@ -57,10 +51,18 @@
             @RenderSection("PromoSection", false)
         </div>
     }
-    <main>
-        @RenderBody()
-    </main>
-    <footer></footer>
+<main>
+    
+    
+    <account-menu></account-menu>
+
+    @RenderBody()
+</main>
+    
+    <template id="account-menu">
+        <li>{{message}}</li>
+    </template>
+<footer></footer>
     <div class="sub-footer">
         <div class="container row">
             <div class="col s12">
