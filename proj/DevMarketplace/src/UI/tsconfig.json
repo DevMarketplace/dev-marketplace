@@ -16,8 +16,8 @@
   "compileOnSave": true,
   "exclude": [
     "node_modules",
+    "wwwroot/npm",
     "**/*-aot.ts",
-    "**/*.spec.ts",
-    "node_modules/av-ts/**/*.*"
+    "**/*.spec.ts"
   ]
 }
