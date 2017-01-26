@@ -84,13 +84,13 @@ gulp.task("copy-rxjs", function () {
     return gulp.src(["!" + paths.nodeModules + "rxjs/src/**/*.*", paths.nodeModules + "rxjs/**/*.*"]).pipe(gulp.dest(paths.packageLib + "rxjs/"));
 });
 
-gulp.task("copy-rx-http-request", function () {
-    return gulp.src([paths.nodeModules + "rx-http-request/**/*.*"]).pipe(gulp.dest(paths.packageLib + "rx-http-request/"));
+gulp.task("copy-axios", function () {
+    return gulp.src([paths.nodeModules + "axios/**/*.*"]).pipe(gulp.dest(paths.packageLib + "axios/"));
 });
 
 gulp.task("copy-vue", function() {
     return gulp.src([paths.nodeModules + "vue/**/*.js"]).pipe(gulp.dest(paths.packageLib + "vue/"));
 });
 
-gulp.task("copy-all", ["copy-rxjs", "copy-rx-http-request", "copy-systemjs", "copy-vue-class-component", "copy-vue"]);
+gulp.task("copy-all", ["copy-rxjs", "copy-axios", "copy-systemjs", "copy-vue-class-component", "copy-vue"]);
 

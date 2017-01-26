@@ -1,6 +1,8 @@
 ﻿import Vue = require("vue");
 import Component from "vue-class-component";
-import {CurrentUser} from "./models/current-user.model";
+import {CurrentUser} from "../models/current-user.model";
+import { AccountService } from "../services/account.service";
+declare var $: any;
 
 @Component({
     template: "#account-menu",
@@ -9,11 +11,19 @@ import {CurrentUser} from "./models/current-user.model";
     }
 })
 export default class AccountMenu extends Vue {
-    public userAccount: CurrentUser;
+    public user: CurrentUser;
 
-    public message: string;
+    private accountService: AccountService;
+
+    created(): void {
+        let subscription = this.accountService.getCurrentUser().subscribe(
+            (userResponse: CurrentUser) => { this.user = userResponse; },
+            (error: any) => console.log(<any>error));
+
+        subscription.unsubscribe();
+    }
 
     mounted(): void {
-        this.message = "Hello World";
+        $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     }
 }

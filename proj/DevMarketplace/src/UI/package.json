@@ -18,7 +18,7 @@
     "av-ts": "^0.6.2",
     "es6-shim": "^0.35.2",
     "rxjs": "^5.0.3",
-    "rx-http-request": "1.2.0", 
+    "axios": "0.15.3",
     "systemjs": "0.19.42",
     "vue": "^2.1.10",
     "vue-class-component": "4.4.0",
