@@ -1,22 +1,28 @@
-﻿import Vue = require("vue");
-import Component from "vue-class-component";
-import {CurrentUser} from "../models/current-user.model";
+﻿import { Subscription } from "rxjs/Subscription
+import { CurrentUser } from "../models/current-user.model";
 import { AccountService } from "../services/account.service";
+import { inject } from "inversify";
+import "reflect-metadata";
+import Component from "vue-class-component";
+import * as Vue from "vue";
 declare var $: any;
 
 @Component({
     template: "#account-menu",
-    props: {
-        message: String
-    }
+    // props: {
+    //     //user: CurrentUser
+    // }
 })
-export default class AccountMenu extends Vue {
-    public user: CurrentUser = new CurrentUser();
 
+export default class AccountMenu extends Vue {
+    //@inject(CurrentUser)
+    public user: CurrentUser;
+
+    //@inject(AccountService)
     private accountService: AccountService;
 
     created(): void {
-        let subscription = this.accountService.getCurrentUser().subscribe(
+        const subscription : Subscription = this.accountService.getCurrentUser().subscribe(
             (userResponse: CurrentUser) => { this.user = userResponse; },
             (error: any) => console.log(<any>error));
 

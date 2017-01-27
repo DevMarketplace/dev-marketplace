@@ -12,7 +12,9 @@
         "vue": "npm:vue/dist/vue.min.js",
         "vue-class-component": "npm:vue-class-component/dist/vue-class-component.js",
         "rxjs": "npm:rxjs",
-        "axios": "npm:axios"
+        "axios": "npm:axios/dist/axios",
+        "inversify": "npm:inversify/lib/inversify",
+        "reflect-metadata": "npm:reflect-metadata/Reflect"
     },
     packages: {
         app: {

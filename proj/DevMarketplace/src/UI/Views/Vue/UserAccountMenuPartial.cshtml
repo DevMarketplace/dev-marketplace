@@ -1,8 +1,7 @@
 ﻿@using UI.Localization
 <template id="account-menu">
-    <li v-if="user != null && user.authenticated">
+    <li>
         <a class="dropdown-button" href="#!" data-activates="account-dropdown">
-            {{user.email}}
             <i class="material-icons right">arrow_drop_down</i>
         </a>
         <ul id="account-dropdown" class="dropdown-content">

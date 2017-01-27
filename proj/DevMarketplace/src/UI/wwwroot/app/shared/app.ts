@@ -1,11 +1,19 @@
-﻿import Vue = require("vue");
+﻿import * as Vue from "vue"
+import { Vue } from "vue"
 import AccountMenu from "./account-menu";
+import { Container } from "inversify";
+import { ICurrentUser, CurrentUser } from "../models/current-user.model";
+import { IAccountService, AccountService } from "../services/account.service";
 
-//new Vue({
-//    el: "main"
-//});
+let container : Container = new Container();
+container.bind<ICurrentUser>("ICurrentUser").to(CurrentUser);
+container.bind<IAccountService>("ICurrentUser").to(AccountService);
 
-new Vue({
+// new Vue({
+//     el: "main"
+// });
+
+new Vue : Vue({
     el: "nav",
     components: { AccountMenu }
 });

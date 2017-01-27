@@ -89,8 +89,21 @@ gulp.task("copy-axios", function () {
 });
 
 gulp.task("copy-vue", function() {
-    return gulp.src([paths.nodeModules + "vue/**/*.js"]).pipe(gulp.dest(paths.packageLib + "vue/"));
+    return gulp.src([paths.nodeModules + "vue/**/*.*"]).pipe(gulp.dest(paths.packageLib + "vue/"));
 });
 
-gulp.task("copy-all", ["copy-rxjs", "copy-axios", "copy-systemjs", "copy-vue-class-component", "copy-vue"]);
+gulp.task("copy-inversify", function () {
+    return gulp.src([paths.nodeModules + "inversify/**/*.*"]).pipe(gulp.dest(paths.packageLib + "inversify/"));
+});
+
+gulp.task("copy-reflect-metadata", function() {
+    return gulp.src([paths.nodeModules + "reflect-metadata/**/*.*"]).pipe(gulp.dest(paths.packageLib + "reflect-metadata/"));
+});
+
+gulp.task("copy-inversify-inject-decorators", function () {
+    return gulp.src([paths.nodeModules + "inversify-inject-decorators/**/*.*"]).pipe(gulp.dest(paths.packageLib + "inversify-inject-decorators/"));
+});
+
+
+gulp.task("copy-all", ["copy-rxjs", "copy-axios", "copy-systemjs", "copy-vue-class-component", "copy-vue", "copy-inversify", "copy-inversify-inject-decorators", "copy-reflect-metadata"]);
 

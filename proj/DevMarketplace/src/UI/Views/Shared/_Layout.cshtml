@@ -21,6 +21,15 @@
         {
             @RenderSection("JumbotronSection", false)
         }
+        
+        <div id="app">
+            <account-menu>
+                @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
+            </account-menu>
+  
+        </div>
+        
+        @(await Html.PartialAsync("../Vue/UserAccountMenuPartial"));
 
         <div class="navigation-bar">
             <nav id="nav">
@@ -33,16 +42,12 @@
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        <account-menu>
-                            @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
-                        </account-menu>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
                     </ul>
-                    @(await Html.PartialAsync("../Vue/UserAccountMenuPartial"));
                 </div>
             </nav>
         </div>
