@@ -1,15 +1,17 @@
 ﻿@using UI.Localization
-<li *ngIf="user != null && user.authenticated">
-    <a class="dropdown-button" href="#!" data-activates="account-dropdown">
-        {{user.email}}
-        <i class="material-icons right">arrow_drop_down</i>
-    </a>
-    <ul id="account-dropdown" class="dropdown-content">
-        <li>
-            <a asp-controller="Account" asp-action="Profile" >@AccountContent.UserProfilePageTitle</a>
-        </li>
-        <li>
-            <a asp-controller="Account" asp-action="SignOut">@AccountContent.SignOutText</a>
-        </li>
-    </ul>
-</li>
+<template id="account-menu">
+    <li v-if="user != null && user.authenticated">
+        <a class="dropdown-button" href="#!" data-activates="account-dropdown">
+            {{user.email}}
+            <i class="material-icons right">arrow_drop_down</i>
+        </a>
+        <ul id="account-dropdown" class="dropdown-content">
+            <li>
+                <a asp-controller="Account" asp-action="Profile">@AccountContent.UserProfilePageTitle</a>
+            </li>
+            <li>
+                <a asp-controller="Account" asp-action="SignOut">@AccountContent.SignOutText</a>
+            </li>
+        </ul>
+    </li>
+</template>

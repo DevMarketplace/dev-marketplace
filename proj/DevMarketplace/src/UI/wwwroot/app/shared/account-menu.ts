@@ -11,7 +11,7 @@ declare var $: any;
     }
 })
 export default class AccountMenu extends Vue {
-    public user: CurrentUser;
+    public user: CurrentUser = new CurrentUser();
 
     private accountService: AccountService;
 

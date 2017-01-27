@@ -23,7 +23,7 @@
         }
 
         <div class="navigation-bar">
-            <nav>
+            <nav id="nav">
                 <div class="nav-wrapper">
                     <a href="/" class="brand-logo">_Dev_Marketplace</a>
                     <a href="#" data-activates="nav-mobile" class="button-collapse">
@@ -33,13 +33,16 @@
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        <li>@(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))</li>
+                        <account-menu>
+                            @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
+                        </account-menu>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
                     </ul>
+                    @(await Html.PartialAsync("../Vue/UserAccountMenuPartial"));
                 </div>
             </nav>
         </div>
@@ -52,16 +55,9 @@
         </div>
     }
 <main>
-    
-    
-    <account-menu></account-menu>
-
     @RenderBody()
 </main>
     
-    <template id="account-menu">
-        <li>{{message}}</li>
-    </template>
 <footer></footer>
     <div class="sub-footer">
         <div class="container row">
