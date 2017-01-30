@@ -1,4 +1,4 @@
-﻿import { Subscription } from "rxjs/Subscription
+﻿import { Subscription } from "rxjs/Subscription";
 import { CurrentUser } from "../models/current-user.model";
 import { AccountService } from "../services/account.service";
 import { inject } from "inversify";
@@ -15,10 +15,10 @@ declare var $: any;
 })
 
 export default class AccountMenu extends Vue {
-    //@inject(CurrentUser)
+    @inject(CurrentUser)
     public user: CurrentUser;
 
-    //@inject(AccountService)
+    @inject(AccountService)
     private accountService: AccountService;
 
     created(): void {

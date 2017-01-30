@@ -23,16 +23,15 @@
         }
         
         <div id="app">
-            <account-menu>
-                @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
-            </account-menu>
-  
+            <account-menu></account-menu>
         </div>
+        
+        @*@(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))*@
         
         @(await Html.PartialAsync("../Vue/UserAccountMenuPartial"));
 
         <div class="navigation-bar">
-            <nav id="nav">
+            <nav>
                 <div class="nav-wrapper">
                     <a href="/" class="brand-logo">_Dev_Marketplace</a>
                     <a href="#" data-activates="nav-mobile" class="button-collapse">

@@ -1,18 +1,14 @@
 // import 'rxjs/Rx'; // adds ALL RxJS statics & operators to Observable
-System.register(['rxjs/add/observable/throw', 'rxjs/add/operator/catch', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/map', 'rxjs/add/operator/switchMap', 'rxjs/add/operator/toPromise'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    return {
-        setters:[
-            function (_1) {},
-            function (_2) {},
-            function (_3) {},
-            function (_4) {},
-            function (_5) {},
-            function (_6) {},
-            function (_7) {}],
-        execute: function() {
-        }
-    }
-});
+"use strict";
+// See node_module/rxjs/Rxjs.js
+// Import just the rxjs statics and operators needed for THIS app.
+// Statics
+require('rxjs/add/observable/throw');
+// Operators
+require('rxjs/add/operator/catch');
+require('rxjs/add/operator/debounceTime');
+require('rxjs/add/operator/distinctUntilChanged');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/switchMap');
+require('rxjs/add/operator/toPromise');
 //# sourceMappingURL=rxjs-operators.js.map

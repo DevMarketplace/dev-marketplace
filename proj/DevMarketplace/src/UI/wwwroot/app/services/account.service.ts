@@ -9,7 +9,7 @@ export interface IAccountService {
     getCurrentUser(): Observable<ICurrentUser>;
 }
 
-//@injectable()
+@injectable()
 export class AccountService {
     private currentUserUrl: string = "/account/getcurrentuser";             
     constructor(private http: axios.AxiosStatic) { }

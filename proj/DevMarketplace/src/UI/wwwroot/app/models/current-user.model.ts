@@ -1,6 +1,6 @@
 ﻿import getDecorators from "inversify-inject-decorators";
 import { injectable } from "inversify";
-
+import "reflect-metadata";
 
 export interface ICurrentUser {
     email: string,
@@ -8,7 +8,7 @@ export interface ICurrentUser {
     authenticated: boolean;
 }
 
-//@injectable()
+@injectable()
 export class CurrentUser implements ICurrentUser {
     email: string;
     firstName: string;

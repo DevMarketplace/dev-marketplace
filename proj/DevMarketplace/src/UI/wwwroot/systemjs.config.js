@@ -9,7 +9,7 @@
     },
     map: {
         app: "/app/shared",
-        "vue": "npm:vue/dist/vue.min.js",
+        "vue": "npm:vue/dist/vue.js",
         "vue-class-component": "npm:vue-class-component/dist/vue-class-component.js",
         "rxjs": "npm:rxjs",
         "axios": "npm:axios/dist/axios",
