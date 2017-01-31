@@ -10,7 +10,7 @@ export interface IAccountService {
 }
 
 @injectable()
-export class AccountService {
+export class AccountService implements IAccountService {
     private currentUserUrl: string = "/account/getcurrentuser";             
     constructor(private http: axios.AxiosStatic) { }
 

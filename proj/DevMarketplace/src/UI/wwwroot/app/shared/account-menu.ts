@@ -1,10 +1,15 @@
 ﻿import { Subscription } from "rxjs/Subscription";
-import { CurrentUser } from "../models/current-user.model";
-import { AccountService } from "../services/account.service";
+import { CurrentUser, ICurrentUser } from "../models/current-user.model";
+import { AccountService, IAccountService } from "../services/account.service";
 import { inject } from "inversify";
 import "reflect-metadata";
 import Component from "vue-class-component";
-import * as Vue from "vue";
+import Vue = require("vue");
+
+import {
+    ComponentOptions
+} from "vue";
+
 declare var $: any;
 
 @Component({
@@ -14,16 +19,17 @@ declare var $: any;
     // }
 })
 
-export default class AccountMenu extends Vue {
-    @inject(CurrentUser)
-    public user: CurrentUser;
+export default class AccountMenu extends Vue {    
 
-    @inject(AccountService)
-    private accountService: AccountService;
+    @inject("ICurrentUser")
+    private _user: ICurrentUser;
+
+    @inject("IAccountService")
+    private _accountService: IAccountService;
 
     created(): void {
-        const subscription : Subscription = this.accountService.getCurrentUser().subscribe(
-            (userResponse: CurrentUser) => { this.user = userResponse; },
+        const subscription : Subscription = this._accountService.getCurrentUser().subscribe(
+            (userResponse: CurrentUser) => { this._user = userResponse; },
             (error: any) => console.log(<any>error));
 
         subscription.unsubscribe();

@@ -13,8 +13,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var current_user_model_1 = require("../models/current-user.model");
-var account_service_1 = require("../services/account.service");
 var inversify_1 = require("inversify");
 require("reflect-metadata");
 var vue_class_component_1 = require("vue-class-component");
@@ -26,20 +24,20 @@ var AccountMenu = (function (_super) {
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
-        var subscription = this.accountService.getCurrentUser().subscribe(function (userResponse) { _this.user = userResponse; }, function (error) { return console.log(error); });
+        var subscription = this._accountService.getCurrentUser().subscribe(function (userResponse) { _this._user = userResponse; }, function (error) { return console.log(error); });
         subscription.unsubscribe();
     };
     AccountMenu.prototype.mounted = function () {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     };
     __decorate([
-        inversify_1.inject(current_user_model_1.CurrentUser), 
-        __metadata('design:type', current_user_model_1.CurrentUser)
-    ], AccountMenu.prototype, "user", void 0);
+        inversify_1.inject("ICurrentUser"), 
+        __metadata('design:type', Object)
+    ], AccountMenu.prototype, "_user", void 0);
     __decorate([
-        inversify_1.inject(account_service_1.AccountService), 
-        __metadata('design:type', account_service_1.AccountService)
-    ], AccountMenu.prototype, "accountService", void 0);
+        inversify_1.inject("IAccountService"), 
+        __metadata('design:type', Object)
+    ], AccountMenu.prototype, "_accountService", void 0);
     AccountMenu = __decorate([
         vue_class_component_1.default({
             template: "#account-menu",
