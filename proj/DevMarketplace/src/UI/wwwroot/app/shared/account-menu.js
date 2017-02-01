@@ -16,6 +16,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var inversify_1 = require("inversify");
 require("reflect-metadata");
 var vue_class_component_1 = require("vue-class-component");
+var ioc_identifiers_1 = require("../config/ioc.identifiers");
 var Vue = require("vue");
 var AccountMenu = (function (_super) {
     __extends(AccountMenu, _super);
@@ -24,20 +25,20 @@ var AccountMenu = (function (_super) {
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
-        var subscription = this._accountService.getCurrentUser().subscribe(function (userResponse) { _this._user = userResponse; }, function (error) { return console.log(error); });
+        var subscription = this.accountService.getCurrentUser().subscribe(function (userResponse) { _this.user = userResponse; }, function (error) { return console.log(error); });
         subscription.unsubscribe();
     };
     AccountMenu.prototype.mounted = function () {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     };
     __decorate([
-        inversify_1.inject("ICurrentUser"), 
+        inversify_1.inject(ioc_identifiers_1.default.ICurrentUser), 
         __metadata('design:type', Object)
-    ], AccountMenu.prototype, "_user", void 0);
+    ], AccountMenu.prototype, "user", void 0);
     __decorate([
-        inversify_1.inject("IAccountService"), 
+        inversify_1.inject(ioc_identifiers_1.default.IAccountService), 
         __metadata('design:type', Object)
-    ], AccountMenu.prototype, "_accountService", void 0);
+    ], AccountMenu.prototype, "accountService", void 0);
     AccountMenu = __decorate([
         vue_class_component_1.default({
             template: "#account-menu",
@@ -46,6 +47,5 @@ var AccountMenu = (function (_super) {
     ], AccountMenu);
     return AccountMenu;
 }(Vue));
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = AccountMenu;
+exports.AccountMenu = AccountMenu;
 //# sourceMappingURL=account-menu.js.map

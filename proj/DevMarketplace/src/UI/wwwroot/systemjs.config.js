@@ -14,6 +14,7 @@
         "rxjs": "npm:rxjs",
         "axios": "npm:axios/dist/axios",
         "inversify": "npm:inversify/lib/inversify",
+        "inversify-inject-decorators": "npm:inversify-inject-decorators",
         "reflect-metadata": "npm:reflect-metadata/Reflect"
     },
     packages: {

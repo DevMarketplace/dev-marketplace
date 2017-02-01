@@ -3,7 +3,7 @@ import * as Rx from "rxjs/Rx";
 import { ICurrentUser } from "../models/current-user.model";
 import * as axios from "axios";
 import "reflect-metadata";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 
 export interface IAccountService {
     getCurrentUser(): Observable<ICurrentUser>;
@@ -12,7 +12,7 @@ export interface IAccountService {
 @injectable()
 export class AccountService implements IAccountService {
     private currentUserUrl: string = "/account/getcurrentuser";             
-    constructor(private http: axios.AxiosStatic) { }
+    private http : axios.AxiosStatic;
 
     public getCurrentUser(): Observable<ICurrentUser> {
         let options: axios.AxiosRequestConfig = {

@@ -9,12 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var Observable_1 = require("rxjs/Observable");
-var axios = require("axios");
 require("reflect-metadata");
 var inversify_1 = require("inversify");
 var AccountService = (function () {
-    function AccountService(http) {
-        this.http = http;
+    function AccountService() {
         this.currentUserUrl = "/account/getcurrentuser";
     }
     AccountService.prototype.getCurrentUser = function () {
@@ -31,7 +29,7 @@ var AccountService = (function () {
     };
     AccountService = __decorate([
         inversify_1.injectable(), 
-        __metadata('design:paramtypes', [Function])
+        __metadata('design:paramtypes', [])
     ], AccountService);
     return AccountService;
 }());
