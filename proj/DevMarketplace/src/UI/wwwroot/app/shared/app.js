@@ -6,7 +6,7 @@ var account_menu_1 = require("./account-menu");
 //     el: "main"
 // });
 var app = new Vue({
-    el: "#app",
+    el: "#main-menu",
     components: { AccountMenu: account_menu_1.AccountMenu }
 });
 //# sourceMappingURL=app.js.map

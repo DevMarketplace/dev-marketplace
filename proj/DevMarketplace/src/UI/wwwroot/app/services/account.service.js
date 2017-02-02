@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var Observable_1 = require("rxjs/Observable");
+require("../rxjs-operators");
 var axios_1 = require("axios");
 require("reflect-metadata");
 var inversify_1 = require("inversify");
@@ -24,8 +25,7 @@ var AccountService = (function () {
             headers: { "Content-Type": "application/json" },
             withCredentials: true
         };
-        return Observable_1.Observable
-            .fromPromise(axios_1.default(options))
+        return Observable_1.Observable.from(axios_1.default(options))
             .map(function (res) { return res.data; })
             .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
     };

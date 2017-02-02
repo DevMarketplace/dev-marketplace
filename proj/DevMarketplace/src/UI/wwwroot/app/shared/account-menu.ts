@@ -10,9 +10,9 @@ declare var $: any;
 
 @Component({
     template: "#account-menu",
-    // props: {
-    //     //user: CurrentUser
-    // }
+    props: {
+        user : Object
+    }
 })
 
 export class AccountMenu extends Vue {
@@ -25,7 +25,9 @@ export class AccountMenu extends Vue {
 
     created(): void {
         const subscription : Subscription = this.accountService.getCurrentUser().subscribe(
-            (userResponse: ICurrentUser) => { this.user = userResponse; },
+            (userResponse: ICurrentUser) => {
+                 this.user = userResponse;
+            },
             (error: any) => console.log(<any>error));
 
         subscription.unsubscribe();

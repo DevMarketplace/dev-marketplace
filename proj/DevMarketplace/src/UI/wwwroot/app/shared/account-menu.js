@@ -25,7 +25,9 @@ var AccountMenu = (function (_super) {
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
-        var subscription = this.accountService.getCurrentUser().subscribe(function (userResponse) { _this.user = userResponse; }, function (error) { return console.log(error); });
+        var subscription = this.accountService.getCurrentUser().subscribe(function (userResponse) {
+            _this.user = userResponse;
+        }, function (error) { return console.log(error); });
         subscription.unsubscribe();
     };
     AccountMenu.prototype.mounted = function () {
@@ -42,6 +44,9 @@ var AccountMenu = (function (_super) {
     AccountMenu = __decorate([
         vue_class_component_1.default({
             template: "#account-menu",
+            props: {
+                user: Object
+            }
         }), 
         __metadata('design:paramtypes', [])
     ], AccountMenu);

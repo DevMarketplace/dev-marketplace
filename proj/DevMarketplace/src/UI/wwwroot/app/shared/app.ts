@@ -7,6 +7,6 @@ import { AccountMenu } from "./account-menu";
 // });
 
 var app : Vue = new Vue ({
-    el: "#app",
+    el: "#main-menu",
     components: { AccountMenu }
 });
