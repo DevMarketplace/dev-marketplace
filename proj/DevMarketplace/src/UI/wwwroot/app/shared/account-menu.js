@@ -13,11 +13,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var inversify_1 = require("inversify");
 require("reflect-metadata");
 var vue_class_component_1 = require("vue-class-component");
 var ioc_identifiers_1 = require("../config/ioc.identifiers");
 var Vue = require("vue");
+var container_1 = require("../config/container");
 var AccountMenu = (function (_super) {
     __extends(AccountMenu, _super);
     function AccountMenu() {
@@ -32,11 +32,11 @@ var AccountMenu = (function (_super) {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
     };
     __decorate([
-        inversify_1.inject(ioc_identifiers_1.default.ICurrentUser), 
+        container_1.injectLazy(ioc_identifiers_1.default.ICurrentUser), 
         __metadata('design:type', Object)
     ], AccountMenu.prototype, "user", void 0);
     __decorate([
-        inversify_1.inject(ioc_identifiers_1.default.IAccountService), 
+        container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
         __metadata('design:type', Object)
     ], AccountMenu.prototype, "accountService", void 0);
     AccountMenu = __decorate([

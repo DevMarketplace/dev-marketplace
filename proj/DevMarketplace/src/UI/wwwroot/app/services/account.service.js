@@ -9,11 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var Observable_1 = require("rxjs/Observable");
+var axios_1 = require("axios");
 require("reflect-metadata");
 var inversify_1 = require("inversify");
 var AccountService = (function () {
     function AccountService() {
         this.currentUserUrl = "/account/getcurrentuser";
+        this.http = axios_1.default.create();
     }
     AccountService.prototype.getCurrentUser = function () {
         var options = {
@@ -23,7 +25,7 @@ var AccountService = (function () {
             withCredentials: true
         };
         return Observable_1.Observable
-            .from(this.http(options))
+            .fromPromise(axios_1.default(options))
             .map(function (res) { return res.data; })
             .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
     };

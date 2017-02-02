@@ -1,9 +1,20 @@
 ﻿import { Observable } from "rxjs/Observable";
 import * as Rx from "rxjs/Rx";
 import { ICurrentUser } from "../models/current-user.model";
-import * as axios from "axios";
+import axios, {
+    AxiosRequestConfig,
+    AxiosResponse,
+    AxiosError,
+    AxiosInstance,
+    AxiosAdapter,
+    Cancel,
+    CancelToken,
+    CancelTokenSource,
+    Canceler
+} from "axios";
+
 import "reflect-metadata";
-import { injectable, inject } from "inversify";
+import { injectable } from "inversify";
 
 export interface IAccountService {
     getCurrentUser(): Observable<ICurrentUser>;
@@ -11,21 +22,23 @@ export interface IAccountService {
 
 @injectable()
 export class AccountService implements IAccountService {
-    private currentUserUrl: string = "/account/getcurrentuser";             
-    private http : axios.AxiosStatic;
+    private currentUserUrl: string = "/account/getcurrentuser";
+    private http: AxiosInstance;
+
+    constructor() {  this.http = axios.create() }
 
     public getCurrentUser(): Observable<ICurrentUser> {
-        let options: axios.AxiosRequestConfig = {
+        
+        let options : AxiosRequestConfig = {
             url: this.currentUserUrl,
             method: "POST",
             headers: { "Content-Type": "application/json" },
             withCredentials: true
-        } as axios.AxiosRequestConfig;
-
+        } as AxiosRequestConfig;
 
         return Observable
-            .from(this.http(options))
-            .map((res: axios.AxiosResponse) => res.data)
+            .fromPromise(axios(options))
+            .map((res: AxiosResponse) => res.data)
             .catch((error: any) => Observable.throw(error || "Server error"));
     }
 }
