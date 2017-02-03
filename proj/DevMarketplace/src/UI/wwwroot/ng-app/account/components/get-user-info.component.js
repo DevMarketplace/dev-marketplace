@@ -19,4 +19,3 @@
 //        $(this.elementRef.nativeElement).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
 //    }
 //} 
-//# sourceMappingURL=get-user-info.component.js.map

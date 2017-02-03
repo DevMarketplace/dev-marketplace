@@ -1,6 +1,6 @@
 ﻿import Vue = require("vue");
 import "reflect-metadata";
-import { AccountMenu } from "./account-menu";
+import AccountMenu from "./account-menu";
 
 // new Vue({
 //     el: "main"

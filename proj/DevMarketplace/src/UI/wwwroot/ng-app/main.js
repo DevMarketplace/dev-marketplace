@@ -6,4 +6,3 @@ new Vue({
     components: { app: app },
     render: function (h) { return h('app'); }
 });
-//# sourceMappingURL=main.js.map

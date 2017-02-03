@@ -12,4 +12,3 @@ container.bind(ioc_identifiers_1.default.IAccountService).to(account_service_1.A
 var decorators = inversify_inject_decorators_1.default(container);
 var injectLazy = decorators.lazyInject;
 exports.injectLazy = injectLazy;
-//# sourceMappingURL=container.js.map

@@ -2,4 +2,3 @@
 //import { RegistrationModule } from "./registration.module";
 //const platform: any = platformBrowserDynamic();
 //platform.bootstrapModule(RegistrationModule); 
-//# sourceMappingURL=registration.main.js.map

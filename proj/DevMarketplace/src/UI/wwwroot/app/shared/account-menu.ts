@@ -9,33 +9,23 @@ import { injectLazy } from "../config/container";
 declare var $: any;
 
 @Component({
-    template: "#account-menu",
-    data: {
-        email: String
-    }
+    template: "#account-menu"
 })
 
-export class AccountMenu extends Vue {
+export default class AccountMenu extends Vue {
 
     @injectLazy(serviceIdentifier.ICurrentUser)
-    public user: ICurrentUser;
+    private user: ICurrentUser;
 
     @injectLazy(serviceIdentifier.IAccountService)
-    public accountService: IAccountService;
-
-    public email: string;
-
-    public authenticated: boolean;
+    private accountService: IAccountService;
 
     private accountSub: Subscription;
 
     created(): void {
-        this.authenticated = false;
         this.accountSub = this.accountService.getCurrentUser().subscribe(
             (userResponse: ICurrentUser) => {
                 this.user = userResponse;
-                this.email = userResponse.email;
-                this.authenticated = userResponse.authenticated;
             },
             (error: any) => console.log(<any>error));
     }
@@ -46,5 +36,13 @@ export class AccountMenu extends Vue {
 
     beforeDestroy(): void {
         this.accountSub.unsubscribe();
+    }
+
+    public get userEmail() : string {
+        return this.user.email;
+    }
+
+    public userAuthenticated() : boolean {
+        return this.user.authenticated;
     }
 }

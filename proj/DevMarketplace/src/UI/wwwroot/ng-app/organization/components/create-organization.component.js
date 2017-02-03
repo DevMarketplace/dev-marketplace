@@ -23,4 +23,3 @@
 //        this.companyService.createOrganization(this.organizationModel);
 //    }
 //} 
-//# sourceMappingURL=create-organization.component.js.map

@@ -25,11 +25,8 @@ var AccountMenu = (function (_super) {
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
-        this.authenticated = false;
         this.accountSub = this.accountService.getCurrentUser().subscribe(function (userResponse) {
             _this.user = userResponse;
-            _this.email = userResponse.email;
-            _this.authenticated = userResponse.authenticated;
         }, function (error) { return console.log(error); });
     };
     AccountMenu.prototype.mounted = function () {
@@ -37,6 +34,16 @@ var AccountMenu = (function (_super) {
     };
     AccountMenu.prototype.beforeDestroy = function () {
         this.accountSub.unsubscribe();
+    };
+    Object.defineProperty(AccountMenu.prototype, "userEmail", {
+        get: function () {
+            return this.user.email;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AccountMenu.prototype.userAuthenticated = function () {
+        return this.user.authenticated;
     };
     __decorate([
         container_1.injectLazy(ioc_identifiers_1.default.ICurrentUser), 
@@ -48,14 +55,11 @@ var AccountMenu = (function (_super) {
     ], AccountMenu.prototype, "accountService", void 0);
     AccountMenu = __decorate([
         vue_class_component_1.default({
-            template: "#account-menu",
-            data: {
-                email: String
-            }
+            template: "#account-menu"
         }), 
         __metadata('design:paramtypes', [])
     ], AccountMenu);
     return AccountMenu;
 }(Vue));
-exports.AccountMenu = AccountMenu;
-//# sourceMappingURL=account-menu.js.map
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = AccountMenu;

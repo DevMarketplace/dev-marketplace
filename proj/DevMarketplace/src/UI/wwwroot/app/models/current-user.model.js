@@ -20,4 +20,3 @@ var CurrentUser = (function () {
     return CurrentUser;
 }());
 exports.CurrentUser = CurrentUser;
-//# sourceMappingURL=current-user.model.js.map
