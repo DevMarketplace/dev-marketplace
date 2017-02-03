@@ -10,8 +10,8 @@ declare var $: any;
 
 @Component({
     template: "#account-menu",
-    props: {
-        user : Object
+    data: {
+        email: String
     }
 })
 
@@ -23,17 +23,28 @@ export class AccountMenu extends Vue {
     @injectLazy(serviceIdentifier.IAccountService)
     public accountService: IAccountService;
 
+    public email: string;
+
+    public authenticated: boolean;
+
+    private accountSub: Subscription;
+
     created(): void {
-        const subscription : Subscription = this.accountService.getCurrentUser().subscribe(
+        this.authenticated = false;
+        this.accountSub = this.accountService.getCurrentUser().subscribe(
             (userResponse: ICurrentUser) => {
-                 this.user = userResponse;
+                this.user = userResponse;
+                this.email = userResponse.email;
+                this.authenticated = userResponse.authenticated;
             },
             (error: any) => console.log(<any>error));
-
-        subscription.unsubscribe();
     }
 
     mounted(): void {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
+    }
+
+    beforeDestroy(): void {
+        this.accountSub.unsubscribe();
     }
 }

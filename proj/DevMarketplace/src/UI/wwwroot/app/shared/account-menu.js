@@ -25,13 +25,18 @@ var AccountMenu = (function (_super) {
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
-        var subscription = this.accountService.getCurrentUser().subscribe(function (userResponse) {
+        this.authenticated = false;
+        this.accountSub = this.accountService.getCurrentUser().subscribe(function (userResponse) {
             _this.user = userResponse;
+            _this.email = userResponse.email;
+            _this.authenticated = userResponse.authenticated;
         }, function (error) { return console.log(error); });
-        subscription.unsubscribe();
     };
     AccountMenu.prototype.mounted = function () {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
+    };
+    AccountMenu.prototype.beforeDestroy = function () {
+        this.accountSub.unsubscribe();
     };
     __decorate([
         container_1.injectLazy(ioc_identifiers_1.default.ICurrentUser), 
@@ -44,8 +49,8 @@ var AccountMenu = (function (_super) {
     AccountMenu = __decorate([
         vue_class_component_1.default({
             template: "#account-menu",
-            props: {
-                user: Object
+            data: {
+                email: String
             }
         }), 
         __metadata('design:paramtypes', [])
