@@ -9,3 +9,4 @@ var app = new Vue({
     el: "#main-menu",
     components: { AccountMenu: account_menu_1.default }
 });
+//# sourceMappingURL=app.js.map

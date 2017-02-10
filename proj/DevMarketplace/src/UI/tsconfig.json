@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": false,
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [ "es2015", "dom", "es5" ],
@@ -16,7 +16,8 @@
   "compileOnSave": true,
   "exclude": [
     "node_modules",
-    "wwwroot/npm",
+    "wwwroot/npm/**",
+    "typings",
     "**/*-aot.ts",
     "**/*.spec.ts"
   ]

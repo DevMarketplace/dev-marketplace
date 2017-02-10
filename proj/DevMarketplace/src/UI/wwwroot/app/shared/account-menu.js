@@ -21,7 +21,7 @@ var container_1 = require("../config/container");
 var AccountMenu = (function (_super) {
     __extends(AccountMenu, _super);
     function AccountMenu() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
@@ -35,31 +35,27 @@ var AccountMenu = (function (_super) {
     AccountMenu.prototype.beforeDestroy = function () {
         this.accountSub.unsubscribe();
     };
-    Object.defineProperty(AccountMenu.prototype, "userEmail", {
-        get: function () {
-            return this.user.email;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    AccountMenu.prototype.userEmail = function () {
+        return this.user.email;
+    };
     AccountMenu.prototype.userAuthenticated = function () {
         return this.user.authenticated;
     };
-    __decorate([
-        container_1.injectLazy(ioc_identifiers_1.default.ICurrentUser), 
-        __metadata('design:type', Object)
-    ], AccountMenu.prototype, "user", void 0);
-    __decorate([
-        container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
-        __metadata('design:type', Object)
-    ], AccountMenu.prototype, "accountService", void 0);
-    AccountMenu = __decorate([
-        vue_class_component_1.default({
-            template: "#account-menu"
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AccountMenu);
     return AccountMenu;
 }(Vue));
+__decorate([
+    container_1.injectLazy(ioc_identifiers_1.default.ICurrentUser),
+    __metadata("design:type", Object)
+], AccountMenu.prototype, "user", void 0);
+__decorate([
+    container_1.injectLazy(ioc_identifiers_1.default.IAccountService),
+    __metadata("design:type", Object)
+], AccountMenu.prototype, "accountService", void 0);
+AccountMenu = __decorate([
+    vue_class_component_1.default({
+        template: "#account-menu"
+    })
+], AccountMenu);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AccountMenu;
+//# sourceMappingURL=account-menu.js.map

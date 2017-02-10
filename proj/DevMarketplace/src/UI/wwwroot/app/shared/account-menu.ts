@@ -38,7 +38,7 @@ export default class AccountMenu extends Vue {
         this.accountSub.unsubscribe();
     }
 
-    public get userEmail() : string {
+    public userEmail() : string {
         return this.user.email;
     }
 

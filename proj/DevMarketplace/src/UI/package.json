@@ -15,7 +15,6 @@
     "tsc:w": "tsc -w"
   },
   "dependencies": {
-    "@types/reflect-metadata": "0.0.5",
     "av-ts": "^0.6.2",
     "axios": "0.15.3",
     "es6-shim": "^0.35.2",

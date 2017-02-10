@@ -16,3 +16,4 @@
 //        //    .catch((error: any) => Observable.throw(error || "Server error"));
 //    }
 //} 
+//# sourceMappingURL=company.service.js.map

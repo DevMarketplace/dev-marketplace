@@ -105,5 +105,5 @@ gulp.task("copy-inversify-inject-decorators", function () {
 });
 
 
-gulp.task("copy-all", ["copy-rxjs", "copy-axios", "copy-systemjs", "copy-vue-class-component", "copy-vue", "copy-inversify", "copy-inversify-inject-decorators"]);
+gulp.task("copy-all", ["copy-rxjs", "copy-axios", "copy-systemjs", "copy-vue-class-component", "copy-vue", "copy-inversify", "copy-inversify-inject-decorators", "copy-reflect-metadata"]);
 

@@ -21,3 +21,4 @@
 //    bootstrap: [CrateOrganizationComponent]
 //})
 //export class RegistrationModule { } 
+//# sourceMappingURL=registration.module.js.map

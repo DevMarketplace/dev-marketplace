@@ -5,3 +5,4 @@ var Organization = (function () {
     return Organization;
 }());
 exports.Organization = Organization;
+//# sourceMappingURL=organization.model.js.map
