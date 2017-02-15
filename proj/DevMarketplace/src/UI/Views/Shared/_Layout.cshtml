@@ -32,9 +32,9 @@
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        <account-menu>
+                        @*<account-menu>
                             @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
-                        </account-menu>
+                        </account-menu>*@
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>

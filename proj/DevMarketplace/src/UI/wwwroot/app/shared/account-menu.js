@@ -21,41 +21,41 @@ var container_1 = require("../config/container");
 var AccountMenu = (function (_super) {
     __extends(AccountMenu, _super);
     function AccountMenu() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        _super.apply(this, arguments);
+        this.authenticated = false;
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
-        this.accountSub = this.accountService.getCurrentUser().subscribe(function (userResponse) {
-            _this.user = userResponse;
+        this.accountSub = this.accountService.getCurrentUser()
+            .subscribe(function (userResponse) {
+            _this.email = userResponse.email;
+            _this.authenticated = userResponse.authenticated;
         }, function (error) { return console.log(error); });
     };
-    AccountMenu.prototype.mounted = function () {
+    AccountMenu.prototype.updated = function () {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
+    };
+    AccountMenu.prototype.data = function () {
+        return {
+            email: this.email,
+            authenticated: this.authenticated
+        };
     };
     AccountMenu.prototype.beforeDestroy = function () {
         this.accountSub.unsubscribe();
     };
-    AccountMenu.prototype.userEmail = function () {
-        return this.user.email;
-    };
-    AccountMenu.prototype.userAuthenticated = function () {
-        return this.user.authenticated;
-    };
+    __decorate([
+        container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
+        __metadata('design:type', Object)
+    ], AccountMenu.prototype, "accountService", void 0);
+    AccountMenu = __decorate([
+        vue_class_component_1.default({
+            template: "#account-menu"
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AccountMenu);
     return AccountMenu;
 }(Vue));
-__decorate([
-    container_1.injectLazy(ioc_identifiers_1.default.ICurrentUser),
-    __metadata("design:type", Object)
-], AccountMenu.prototype, "user", void 0);
-__decorate([
-    container_1.injectLazy(ioc_identifiers_1.default.IAccountService),
-    __metadata("design:type", Object)
-], AccountMenu.prototype, "accountService", void 0);
-AccountMenu = __decorate([
-    vue_class_component_1.default({
-        template: "#account-menu"
-    })
-], AccountMenu);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AccountMenu;
 //# sourceMappingURL=account-menu.js.map

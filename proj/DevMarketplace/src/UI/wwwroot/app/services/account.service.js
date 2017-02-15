@@ -29,11 +29,11 @@ var AccountService = (function () {
             .map(function (res) { return res.data; })
             .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
     };
+    AccountService = __decorate([
+        inversify_1.injectable(), 
+        __metadata('design:paramtypes', [])
+    ], AccountService);
     return AccountService;
 }());
-AccountService = __decorate([
-    inversify_1.injectable(),
-    __metadata("design:paramtypes", [])
-], AccountService);
 exports.AccountService = AccountService;
 //# sourceMappingURL=account.service.js.map

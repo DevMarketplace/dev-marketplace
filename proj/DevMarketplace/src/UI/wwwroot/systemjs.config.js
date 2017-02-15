@@ -15,7 +15,8 @@
         "axios": "npm:axios/dist/axios",
         "inversify": "npm:inversify/lib/inversify",
         "inversify-inject-decorators": "npm:inversify-inject-decorators/lib/index.js",
-        "reflect-metadata": "npm:reflect-metadata/Reflect"
+        "reflect-metadata": "npm:reflect-metadata/Reflect",
+        "vue-property-decorator": "npm:vue-property-decorator/lib/vue-property-decorator"
     },
     packages: {
         app: {

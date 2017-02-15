@@ -80,6 +80,10 @@ gulp.task("copy-vue-class-component", function() {
     return gulp.src([paths.nodeModules + "vue-class-component/**/*.*"]).pipe(gulp.dest(paths.packageLib + "vue-class-component/"));
 });
 
+gulp.task("copy-vue-property-decorator", function () {
+    return gulp.src([paths.nodeModules + "vue-property-decorator/**/*.*"]).pipe(gulp.dest(paths.packageLib + "vue-property-decorator/"));
+});
+
 gulp.task("copy-rxjs", function () {
     return gulp.src(["!" + paths.nodeModules + "rxjs/src/**/*.*", paths.nodeModules + "rxjs/**/*.*"]).pipe(gulp.dest(paths.packageLib + "rxjs/"));
 });
@@ -105,5 +109,14 @@ gulp.task("copy-inversify-inject-decorators", function () {
 });
 
 
-gulp.task("copy-all", ["copy-rxjs", "copy-axios", "copy-systemjs", "copy-vue-class-component", "copy-vue", "copy-inversify", "copy-inversify-inject-decorators", "copy-reflect-metadata"]);
+gulp.task("copy-all", ["copy-rxjs",
+    "copy-axios",
+    "copy-systemjs",
+    "copy-vue-class-component",
+    "copy-vue",
+    "copy-inversify",
+    "copy-inversify-inject-decorators",
+    "copy-reflect-metadata",
+    "copy-vue-property-decorator"
+]);
 

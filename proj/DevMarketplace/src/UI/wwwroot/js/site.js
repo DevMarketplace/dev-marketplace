@@ -10,9 +10,9 @@
 
         setAccountMenu: function() {
             if ($(".hide-on-med-and-down").is(":visible")) {
-                $("#nav-desktop").append($("account-user-info"));
+                $("#nav-desktop").append($("account-menu"));
             } else {
-                $("#nav-mobile").append($("account-user-info"));
+                $("#nav-mobile").append($("account-menu"));
             }
         },
 
