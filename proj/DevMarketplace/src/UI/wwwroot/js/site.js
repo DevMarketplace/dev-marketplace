@@ -10,9 +10,17 @@
 
         setAccountMenu: function() {
             if ($(".hide-on-med-and-down").is(":visible")) {
-                $("#nav-desktop").append($("account-menu"));
+                if ($("account-menu").length > 0) {
+                    $("#nav-desktop").append($("account-menu"));
+                    return;
+                }
+                $("#nav-desktop").append($("#account-menu-item"));
             } else {
-                $("#nav-mobile").append($("account-menu"));
+                if ($("account-menu").length > 0) {
+                    $("#nav-mobile").append($("account-menu"));
+                    return;
+                }
+                $("#nav-mobile").append($("#account-menu-item"));
             }
         },
 

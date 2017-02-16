@@ -3,7 +3,6 @@ import { ICurrentUser } from "../models/current-user.model";
 import { IAccountService } from "../services/account.service";
 import "reflect-metadata";
 import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
 import serviceIdentifier from "../config/ioc.identifiers";
 import Vue = require("vue");
 import { injectLazy } from "../config/container";
@@ -41,7 +40,7 @@ export default class AccountMenu extends Vue {
         return {
             email: this.email,
             authenticated: this.authenticated
-        }
+        };
     }
 
     beforeDestroy(): void {

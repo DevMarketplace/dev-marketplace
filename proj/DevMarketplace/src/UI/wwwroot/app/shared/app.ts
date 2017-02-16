@@ -2,11 +2,7 @@
 import "reflect-metadata";
 import AccountMenu from "./account-menu";
 
-// new Vue({
-//     el: "main"
-// });
-
 var app : Vue = new Vue ({
-    el: "#main-menu",
+    el: "#nav-desktop",
     components: { AccountMenu }
 });
