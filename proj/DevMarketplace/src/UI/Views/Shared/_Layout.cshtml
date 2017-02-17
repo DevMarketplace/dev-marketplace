@@ -40,6 +40,9 @@
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+                        <account-menu>
+                            @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
+                        </account-menu>
                     </ul>
                 </div>
             </nav>

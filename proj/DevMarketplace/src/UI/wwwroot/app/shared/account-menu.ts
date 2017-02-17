@@ -1,7 +1,7 @@
-﻿import { Subscription } from "rxjs/Subscription";
+﻿import "reflect-metadata";
+import { Subscription } from "rxjs/Subscription";
 import { ICurrentUser } from "../models/current-user.model";
 import { IAccountService } from "../services/account.service";
-import "reflect-metadata";
 import Component from "vue-class-component";
 import serviceIdentifier from "../config/ioc.identifiers";
 import Vue = require("vue");
@@ -34,6 +34,8 @@ export default class AccountMenu extends Vue {
 
     updated(): any {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
+        $(".button-collapse").sideNav("destroy");
+        $(".button-collapse").sideNav({ menuWidth: 320 });
     }
 
     data(): any {

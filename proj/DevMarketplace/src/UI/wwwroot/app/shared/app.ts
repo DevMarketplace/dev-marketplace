@@ -1,8 +1,8 @@
 ﻿import Vue = require("vue");
-import "reflect-metadata";
 import AccountMenu from "./account-menu";
 
-var app : Vue = new Vue ({
-    el: "#nav-desktop",
+var app : Vue = new Vue({
+    el: "#main-menu",
     components: { AccountMenu }
 });
+export default app;

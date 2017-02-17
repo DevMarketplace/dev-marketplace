@@ -34,6 +34,8 @@ var AccountMenu = (function (_super) {
     };
     AccountMenu.prototype.updated = function () {
         $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
+        $(".button-collapse").sideNav("destroy");
+        $(".button-collapse").sideNav({ menuWidth: 320 });
     };
     AccountMenu.prototype.data = function () {
         return {

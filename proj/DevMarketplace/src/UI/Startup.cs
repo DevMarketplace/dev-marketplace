@@ -24,6 +24,7 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
+using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -152,9 +153,10 @@ namespace UI
 
             app.UseStaticFiles();
             app.UseIdentity();
-            app.UseGitHubAuthentication(options => {
-                options.ClientId = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientId"];
-                options.ClientSecret = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientSecret"];
+            app.UseGitHubAuthentication(new GitHubAuthenticationOptions {
+                ClientId = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientId"],
+                ClientSecret = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientSecret"],
+                Scope = { "user:email" }
             });
 
             app.UseMvc(routes =>
