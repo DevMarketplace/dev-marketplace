@@ -326,7 +326,18 @@ textarea.materialize-textarea.input-validation-error {
     padding-top: 10px;
     padding-top: 10px;
     padding-bottom: 20px;
+}
+
+.need-an-account {
+    line-height: .1em;
     border-bottom: 1px solid $border-color;
+    width: 100%;
+    text-align: center;
+    margin: 30px 0 30px;
+    span{
+        padding: 0 10px;
+        background: #fff;
+    }
 }
 
 .modal {

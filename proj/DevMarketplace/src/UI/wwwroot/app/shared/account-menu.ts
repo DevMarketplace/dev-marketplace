@@ -6,6 +6,7 @@ import Component from "vue-class-component";
 import serviceIdentifier from "../config/ioc.identifiers";
 import Vue = require("vue");
 import { injectLazy } from "../config/container";
+import { Guid } from "../helpers/guid.helper"
 declare var $: any;
 
 @Component({
@@ -33,9 +34,12 @@ export default class AccountMenu extends Vue {
     }
 
     updated(): any {
-        $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
         $(".button-collapse").sideNav("destroy");
         $(".button-collapse").sideNav({ menuWidth: 320 });
+        let uniqueId : string = Guid.newGuid();
+        $(this.$el).find(".dropdown-button").attr("data-activates", uniqueId);
+        $(this.$el).find(".dropdown-content").attr("id", uniqueId);
+        $(this.$el).find(".dropdown-button").dropdown({ hover: true, belowOrigin: true });
     }
 
     data(): any {

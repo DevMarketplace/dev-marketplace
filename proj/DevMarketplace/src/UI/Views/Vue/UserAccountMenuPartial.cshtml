@@ -1,11 +1,12 @@
 ﻿@using UI.Localization
 <template id="account-menu">
-    <li id="account-menu-item" v-if="authenticated">
+    <li v-if="!authenticated"><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
+    <li id="account-menu-item" v-else>
         <a class="dropdown-button" href="#!" data-activates="account-dropdown">
             {{ email }}
             <i class="material-icons right">arrow_drop_down</i>
         </a>
-        <ul id="account-dropdown" class="dropdown-content">
+        <ul class="dropdown-content">
             <li>
                 <a asp-controller="Account" asp-action="Profile">@AccountContent.UserProfilePageTitle</a>
             </li>

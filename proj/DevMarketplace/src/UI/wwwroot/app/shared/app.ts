@@ -5,4 +5,5 @@ var app : Vue = new Vue({
     el: "#main-menu",
     components: { AccountMenu }
 });
+
 export default app;

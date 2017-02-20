@@ -18,6 +18,7 @@ var vue_class_component_1 = require("vue-class-component");
 var ioc_identifiers_1 = require("../config/ioc.identifiers");
 var Vue = require("vue");
 var container_1 = require("../config/container");
+var guid_helper_1 = require("../helpers/guid.helper");
 var AccountMenu = (function (_super) {
     __extends(AccountMenu, _super);
     function AccountMenu() {
@@ -33,9 +34,12 @@ var AccountMenu = (function (_super) {
         }, function (error) { return console.log(error); });
     };
     AccountMenu.prototype.updated = function () {
-        $(this.$el).find(".dropdown-button").dropdown({ hover: false, belowOrigin: true });
         $(".button-collapse").sideNav("destroy");
         $(".button-collapse").sideNav({ menuWidth: 320 });
+        var uniqueId = guid_helper_1.Guid.newGuid();
+        $(this.$el).find(".dropdown-button").attr("data-activates", uniqueId);
+        $(this.$el).find(".dropdown-content").attr("id", uniqueId);
+        $(this.$el).find(".dropdown-button").dropdown({ hover: true, belowOrigin: true });
     };
     AccountMenu.prototype.data = function () {
         return {
