@@ -1,64 +1,90 @@
-//export class AppConfig {
-//    private config: Object = null;
-//    private env: Object = null;
-//    constructor(private http: Http) {
-//    }
-//    /**
-//     * Use to get the data found in the second file (config file)
-//     */
-//    public getConfig(key: any) {
-//        return this.config[key];
-//    }
-//    /**
-//     * Use to get the data found in the first file (env file)
-//     */
-//    public getEnv(key: any) {
-//        return this.env[key];
-//    }
-//    /**
-//     * This method:
-//     *   a) Loads "env.json" to get the current working environment (e.g.: 'production', 'development')
-//     *   b) Loads "config.[env].json" to get all env's variables (e.g.: 'config.development.json')
-//     */
-//    public load() {
-//        return new Promise((resolve, reject) => {
-//            this.http.get('/app/config/env.json').map(res => res.json()).catch((error: any): any => {
-//                console.log('Configuration file "env.json" could not be read');
-//                resolve(true);
-//                return Observable.throw(error.json().error || 'Server error');
-//            }).subscribe((envResponse: any) => {
-//                this.env = envResponse;
-//                let request: any = null;
-//                switch (envResponse.env) {
-//                    case 'production': {
-//                        request = this.http.get('/app/config/config.' + envResponse.env + '.json');
-//                    } break;
-//                    case 'development': {
-//                        request = this.http.get('/app/config/config.' + envResponse.env + '.json');
-//                    } break;
-//                    case 'default': {
-//                        console.error('Environment file is not set or invalid');
-//                        resolve(true);
-//                    } break;
-//                }
-//                if (request) {
-//                    request
-//                        .map((res: any) => res.json())
-//                        .catch((error: any) => {
-//                            console.error('Error reading ' + envResponse.env + ' configuration file');
-//                            resolve(error);
-//                            return Observable.throw(error.json().error || 'Server error');
-//                        })
-//                        .subscribe((responseData : any) => {
-//                            this.config = responseData;
-//                            resolve(true);
-//                        });
-//                } else {
-//                    console.error('Env config file "env.json" is not valid');
-//                    resolve(true);
-//                }
-//            });
-//        });
-//    }
-//} 
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+require("./rxjs-operators");
+require("rxjs/add/operator/take");
+require("reflect-metadata");
+require("rxjs/add/observable/concat");
+require("rxjs/add/observable/of");
+var Observable_1 = require("rxjs/Observable");
+var inversify_1 = require("inversify");
+var axios_1 = require("axios");
+var AppConfig = (function () {
+    function AppConfig() {
+        this.config = null;
+        this.env = null;
+        this.http = axios_1.default.create();
+    }
+    /**
+     * Use to get the data found in the second file (config file)
+     */
+    AppConfig.prototype.getConfig = function (key) {
+        return this.config[key];
+    };
+    /**
+     * Use to get the data found in the first file (env file)
+     */
+    AppConfig.prototype.getEnv = function (key) {
+        return this.env[key];
+    };
+    /**
+     * This method:
+     *   a) Loads "env.json" to get the current working environment (e.g.: "production", "development")
+     *   b) Loads "config.[env].json" to get all env"s variables (e.g.: "config.development.json")
+     */
+    AppConfig.prototype.load = function () {
+        var _this = this;
+        var request = null;
+        return Observable_1.Observable
+            .from(this.http.get("/app/config/env.json"))
+            .catch(function (error) {
+            console.log("Configuration file \"env.json\" could not be read");
+            return Observable_1.Observable.throw(error.message || "Server error");
+        })
+            .flatMap(function (envResponse) {
+            _this.env = envResponse.data;
+            switch (envResponse.data.env) {
+                case "production":
+                    {
+                        request = Observable_1.Observable.from(_this.http.get("/app/config/config." + envResponse.data.env + ".json"));
+                    }
+                    break;
+                case "development":
+                    {
+                        request = Observable_1.Observable.from(_this.http.get("/app/config/config." + envResponse.data.env + ".json"));
+                    }
+                    break;
+                case "default":
+                    {
+                        console.error("Environment file is not set or invalid");
+                    }
+                    break;
+            }
+            if (request) {
+                return request;
+            }
+            return Observable_1.Observable.throw("Error reading " + envResponse.data.env + ".json");
+        })
+            .catch(function (error) {
+            return Observable_1.Observable.throw(error.message || "Server error");
+        })
+            .flatMap(function (envResponse) {
+            _this.config = envResponse.data;
+            return Observable_1.Observable.of(true);
+        });
+    };
+    AppConfig = __decorate([
+        inversify_1.injectable(), 
+        __metadata('design:paramtypes', [])
+    ], AppConfig);
+    return AppConfig;
+}());
+exports.AppConfig = AppConfig;
 //# sourceMappingURL=app.config.js.map

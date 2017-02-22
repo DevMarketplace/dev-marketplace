@@ -1,8 +1,20 @@
-﻿@using System.Threading.Tasks
+﻿@using System.IO
+@using System.Text.Encodings.Web
+@using System.Threading.Tasks
 @using UI.Localization
 @using UI.Models
 @model UI.Models.RegisterViewModel
+@{
+    string createOrgPartial = string.Empty;
 
+    using (var writer = new StringWriter())
+    {
+        Html.PartialAsync("../Vue/CreateOrganizationPartial").Result.WriteTo(writer, HtmlEncoder.Default);
+        createOrgPartial = writer.ToString();
+    }
+
+
+}
 <form asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action">
     @Html.AntiForgeryToken()
     <div class="row">
@@ -63,12 +75,13 @@
                 <a class="btn secondary" href="#create-organization-modal" id="create-organization" title="@OrganizationContent.CreateOrganizationTitle">
                     <i class="material-icons">playlist_add</i>
                 </a>
-                @Html.Partial("ModalWindowPartial", new ModalWindowPartialViewModel
-                {
-                    Id = "create-organization-modal",
-                    Content = "<create-organization></create-organization>"
-                })
             </div>
+            @Html.Partial("ModalWindowPartial", new ModalWindowPartialViewModel
+                   {
+                       Id = "create-organization-modal",
+                       Title = OrganizationContent.CreateOrganizationTitle,
+                       Content = "<div id=\"create-organization-app\"><create-organization></create-organization>" + createOrgPartial + "</div>"
+                   })
             <input asp-for="Provider" type="hidden"/>
             <div class="input-field col s12">
                 @if (!ViewData.ModelState.IsValid)

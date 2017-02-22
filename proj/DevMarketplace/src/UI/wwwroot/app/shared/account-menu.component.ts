@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
     template: "#account-menu"
 })
-export default class AccountMenu extends Vue {
+export class AccountMenu extends Vue {
 
     @injectLazy(serviceIdentifier.IAccountService)
     private accountService: IAccountService;

@@ -62,6 +62,5 @@ var AccountMenu = (function (_super) {
     ], AccountMenu);
     return AccountMenu;
 }(Vue));
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = AccountMenu;
-//# sourceMappingURL=account-menu.js.map
+exports.AccountMenu = AccountMenu;
+//# sourceMappingURL=account-menu.component.js.map

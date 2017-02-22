@@ -32,6 +32,11 @@ namespace UI.Models
 {
     public class OrganizationViewModel
     {
+        public OrganizationViewModel()
+        {
+            
+        }
+
         [Required, MinLength(1), MaxLength(300), Display(ResourceType = typeof(OrganizationContent), Name = nameof(OrganizationContent.OrganizationNameText))]
         public string Name { get; set; }
 

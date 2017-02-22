@@ -1,7 +1,7 @@
-﻿(function ($) {
+(function ($) {
     var operations = {
         init: function () {
-            $("#create-organization").on("click", function(e) {
+            $("#create-organization").on("click", function (e) {
                 e.preventDefault();
                 operations.openCreateOrganizationModal();
             });
@@ -21,7 +21,7 @@
             });
         },
 
-        openCreateOrganizationModal : function() {
+        openCreateOrganizationModal: function () {
             $("#create-organization-modal").modal("open");
         }
     }
