@@ -63,4 +63,3 @@ var AccountMenu = (function (_super) {
     return AccountMenu;
 }(Vue));
 exports.AccountMenu = AccountMenu;
-//# sourceMappingURL=account-menu.component.js.map

@@ -18,4 +18,3 @@ container.bind(ioc_identifiers_1.default.ICountryService).to(country_service_1.C
 var decorators = inversify_inject_decorators_1.default(container);
 var injectLazy = decorators.lazyInject;
 exports.injectLazy = injectLazy;
-//# sourceMappingURL=container.js.map

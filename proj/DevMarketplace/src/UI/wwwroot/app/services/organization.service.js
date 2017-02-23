@@ -30,4 +30,3 @@ var OrganizationService = (function () {
     return OrganizationService;
 }());
 exports.OrganizationService = OrganizationService;
-//# sourceMappingURL=organization.service.js.map

@@ -20,13 +20,9 @@ export class CreateOrganization extends Vue {
     @injectLazy(serviceIdentifier.ICountryService)
     private countryService: ICountryService;
 
-    private countries: Country[];
+    countries: Country[] = [];
 
     created(): void {
-        this.countries = [];
-    }
-
-    mounted(): void {
         let countrySubscription = this.countryService.getCountries()
             .map((res: any) => res.data)
             .subscribe((res: Country[]) => {
@@ -36,15 +32,8 @@ export class CreateOrganization extends Vue {
     }
 
     updated(): any {
-    }
-
-    data(): any {
-        return {
-            countries: this.countries ? this.countries : []
+        if ($.fn.material_select !== "undefined") {
+            $("select").material_select();
         }
-    }
-
-    beforeDestroy(): void {
-        
     }
 }

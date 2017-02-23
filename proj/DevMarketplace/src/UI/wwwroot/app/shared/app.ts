@@ -10,6 +10,9 @@ var app : Vue = new Vue({
 if (document.querySelector("#create-organization-app") != null) {
     var createOrganizationApp: Vue = new Vue({
         el: "#create-organization-app",
+        data: {
+            countries: [{name: "Bulgaria", isoCountryCode: "BG"}]
+        },
         components: { CreateOrganization }
     });
 }

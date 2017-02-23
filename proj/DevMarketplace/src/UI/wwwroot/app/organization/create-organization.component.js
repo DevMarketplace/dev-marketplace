@@ -22,11 +22,9 @@ var CreateOrganization = (function (_super) {
     __extends(CreateOrganization, _super);
     function CreateOrganization() {
         _super.apply(this, arguments);
+        this.countries = [];
     }
     CreateOrganization.prototype.created = function () {
-        this.countries = [];
-    };
-    CreateOrganization.prototype.mounted = function () {
         var _this = this;
         var countrySubscription = this.countryService.getCountries()
             .map(function (res) { return res.data; })
@@ -36,13 +34,9 @@ var CreateOrganization = (function (_super) {
         });
     };
     CreateOrganization.prototype.updated = function () {
-    };
-    CreateOrganization.prototype.data = function () {
-        return {
-            countries: this.countries ? this.countries : []
-        };
-    };
-    CreateOrganization.prototype.beforeDestroy = function () {
+        if ($.fn.material_select !== "undefined") {
+            $("select").material_select();
+        }
     };
     __decorate([
         container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
@@ -61,4 +55,3 @@ var CreateOrganization = (function (_super) {
     return CreateOrganization;
 }(Vue));
 exports.CreateOrganization = CreateOrganization;
-//# sourceMappingURL=create-organization.component.js.map
