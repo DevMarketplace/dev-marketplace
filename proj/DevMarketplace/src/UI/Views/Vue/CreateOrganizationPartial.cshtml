@@ -1,5 +1,5 @@
 ﻿@using UI.Localization
-<template id="create-organization">
+<template id="create-organization-component">
     <div class="row">
         <div class="organization-create-form" method="post" action="/Organization/Create">
             <div class="input-field col s12 m6">
@@ -23,7 +23,6 @@
                 <label for="OrganizationLocation">@OrganizationContent.LocationText</label>
             </div>
             <div class="input-field col s12">
-                <input type="hidden" name="IsoCountryCode" id="IsoCountryCode"/>
                 <select id="ISOCountryCode" name="ISOCountryCode">
                     <option v-for="country in countries" v-bind:value="country.isoCountryCode">
                         {{ country.name}}

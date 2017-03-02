@@ -33,11 +33,23 @@ var CreateOrganization = (function (_super) {
             countrySubscription.unsubscribe();
         });
     };
+    ;
+    CreateOrganization.prototype.data = function () {
+        return {
+            countries: this.countries
+        };
+    };
+    ;
+    CreateOrganization.prototype.createOrganization = function () {
+        this.organizationService.createOrganization();
+    };
+    ;
     CreateOrganization.prototype.updated = function () {
         if ($.fn.material_select !== "undefined") {
             $("select").material_select();
         }
     };
+    ;
     __decorate([
         container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
         __metadata('design:type', Object)
@@ -48,7 +60,7 @@ var CreateOrganization = (function (_super) {
     ], CreateOrganization.prototype, "countryService", void 0);
     CreateOrganization = __decorate([
         vue_class_component_1.default({
-            template: "#create-organization"
+            template: "#create-organization-component"
         }), 
         __metadata('design:paramtypes', [])
     ], CreateOrganization);

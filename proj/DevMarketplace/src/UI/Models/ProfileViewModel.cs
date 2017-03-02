@@ -23,7 +23,7 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using BusinessLogic.Services;
+
 using DataAccess;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;

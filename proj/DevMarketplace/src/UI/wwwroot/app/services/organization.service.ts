@@ -10,7 +10,7 @@ import axios, {
 } from "axios";
 
 export interface IOrganizationService {
-    createOrganization(): boolean;
+    createOrganization(): Observable<boolean>;
 }
 
 @injectable()
@@ -18,15 +18,18 @@ export class OrganizationService implements IOrganizationService {
     private createOrganizationUrl: string;
     private http: AxiosInstance;
     private apiAddress: string;
+    private configurationAwait: Observable<boolean>;
 
     constructor(private appConfig: IAppConfig) {
         this.http = axios.create();
-        appConfig.load();
-        this.apiAddress = appConfig.getConfig("apiAddress");
-        this.createOrganizationUrl = this.apiAddress + "";
+        this.configurationAwait = appConfig.load();
+        this.configurationAwait.subscribe((result: boolean) => {
+            this.apiAddress = appConfig.getConfig("apiAddress");
+            this.createOrganizationUrl = this.apiAddress + "";
+        });
     }
 
-    createOrganization(): boolean {
+    createOrganization(): Observable<boolean> {
         throw new Error("Not implemented");
     }
 }

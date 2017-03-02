@@ -7,7 +7,7 @@
             });
 
             $("#create-organization-modal").modal({
-                dismissible: true,
+                dismissible: false,
                 opacity: .5,
                 in_duration: 200,
                 out_duration: 150,

@@ -38,7 +38,6 @@ using Microsoft.Extensions.Configuration;
 using MimeKit.Text;
 using UI.Localization;
 using UI.Utilities;
-using BusinessLogic.Services;
 using System.Linq;
 using System.Security.Claims;
 using BusinessLogic.Managers;

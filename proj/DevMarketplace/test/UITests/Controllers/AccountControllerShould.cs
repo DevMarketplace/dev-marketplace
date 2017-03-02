@@ -23,7 +23,7 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System;
+
 using System.Threading.Tasks;
 using BusinessLogic.Managers;
 using BusinessLogic.Utilities;
@@ -38,7 +38,6 @@ using NUnit.Framework;
 using UI.Controllers;
 using UI.Models;
 using UI.Utilities;
-using BusinessLogic.Services;
 
 namespace UITests.Controllers
 {

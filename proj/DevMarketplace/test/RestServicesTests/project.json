@@ -10,7 +10,8 @@
       "type": "platform"
     },
     "Microsoft.DotNet.InternalAbstractions": "1.0.500-preview2-1-003177",
-    "NUnit": "3.6.0"
+    "NUnit": "3.6.0",
+    "BusinessLogic": "1.0.0-*"
   },
 
   "testRunner": "nunit",

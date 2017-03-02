@@ -1,5 +1,6 @@
 ﻿import "../rxjs-operators";
 import serviceIdentifier from "../config/ioc.identifiers";
+import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
 import { IAppConfig } from "../app.config";
 import { Country } from "../models/country.model";
@@ -13,7 +14,7 @@ import "reflect-metadata";
 import { injectable, inject } from "inversify";
 
 export interface ICountryService {
-    getCountries(): Observable<Country[]>
+    getCountries(): Observable<Country[]>;
 }
 
 @injectable()
@@ -28,9 +29,9 @@ export class CountryService implements ICountryService {
         this.appConfig = appConfig;
         this.http = axios.create();
         this.configurationAwait = appConfig.load();
-        let configSubscription = this.configurationAwait.subscribe((result: boolean) => {
+        let configSubscription : Subscription = this.configurationAwait.subscribe((result: boolean) => {
             this.apiAddress = appConfig.getConfig("apiAddress");
-            this.getCountriesUrl = this.apiAddress + "/api/v1/country"; 
+            this.getCountriesUrl = this.apiAddress + "/api/v1/country";
             configSubscription.unsubscribe();
         });
     }

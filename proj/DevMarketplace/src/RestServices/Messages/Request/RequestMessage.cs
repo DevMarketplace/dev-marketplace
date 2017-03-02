@@ -23,47 +23,18 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BusinessLogic.BusinessObjects;
-using DataAccess.Entity;
-using DataAccess.Repository;
+using BusinessLogic.Utilities;
 
-namespace BusinessLogic.Managers
+namespace RestServices.Messages.Request
 {
-    public class CompanyManager : ICompanyManager
+    public class RequestMessage
     {
-        private readonly IGenericRepository<Company> _companyRepository;
-
-        public CompanyManager(IGenericRepository<Company> companyRepository)
+        public TOut ToBusinessObject<TOut>() where TOut : BaseBo, new()
         {
-            _companyRepository = companyRepository;
-        }
-
-        public IEnumerable<CompanyBo> GetCompanies()
-        {
-            return _companyRepository.Get().Select(x => new CompanyBo(x));
-        }
-
-        public CompanyBo Get(Guid id)
-        {
-            return new CompanyBo(_companyRepository.GetByID(id));
-        }
-
-        public CompanyBo GetByName(string companyName)
-        {
-            var company = _companyRepository.Get(x => x.Name == companyName).FirstOrDefault();
-            return company != null ? new CompanyBo(company) : null;
-        }
-
-        public Guid Create(CompanyBo company)
-        {
-            var entity = company.ToEntity<Company>();
-            _companyRepository.Insert(entity);
-            _companyRepository.SubmitChanges();
-            return entity.Id;
+            var boResult = new TOut();
+            SimplePropertyMapper.Map(this, boResult);
+            return boResult;
         }
     }
 }

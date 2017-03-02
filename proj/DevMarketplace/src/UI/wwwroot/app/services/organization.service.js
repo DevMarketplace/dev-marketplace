@@ -14,11 +14,14 @@ var inversify_1 = require("inversify");
 var axios_1 = require("axios");
 var OrganizationService = (function () {
     function OrganizationService(appConfig) {
+        var _this = this;
         this.appConfig = appConfig;
         this.http = axios_1.default.create();
-        appConfig.load();
-        this.apiAddress = appConfig.getConfig("apiAddress");
-        this.createOrganizationUrl = this.apiAddress + "";
+        this.configurationAwait = appConfig.load();
+        this.configurationAwait.subscribe(function (result) {
+            _this.apiAddress = appConfig.getConfig("apiAddress");
+            _this.createOrganizationUrl = _this.apiAddress + "";
+        });
     }
     OrganizationService.prototype.createOrganization = function () {
         throw new Error("Not implemented");

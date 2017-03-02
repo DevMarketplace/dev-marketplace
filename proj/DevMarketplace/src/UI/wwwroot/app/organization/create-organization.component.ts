@@ -10,7 +10,7 @@ import { Country } from "../models/country.model";
 declare var $: any;
 
 @Component({
-    template: "#create-organization"
+    template: "#create-organization-component"
 })
 export class CreateOrganization extends Vue {
 
@@ -29,11 +29,21 @@ export class CreateOrganization extends Vue {
                 this.countries = res;
                 countrySubscription.unsubscribe();
             });
-    }
+    };
+
+    data(): any {
+        return {
+            countries: this.countries
+        }
+    };
+
+    createOrganization(): void {
+        this.organizationService.createOrganization();
+    };
 
     updated(): any {
         if ($.fn.material_select !== "undefined") {
             $("select").material_select();
         }
-    }
+    };
 }

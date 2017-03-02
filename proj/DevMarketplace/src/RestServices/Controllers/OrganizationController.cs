@@ -1,4 +1,5 @@
 ﻿#region License
+
 // The Developer Marketplace is a web application that allows individuals, 
 // teams and companies share KanBan stories, cards, tasks and items from 
 // their KanBan boards and Scrum boards. 
@@ -22,13 +23,17 @@
 // 
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
+
 #endregion
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using BusinessLogic.BusinessObjects;
 using BusinessLogic.Managers;
 using Microsoft.AspNetCore.Mvc;
+using RestServices.Messages.Request;
 using RestServices.Messages.Response;
 
 namespace RestServices.Controllers
@@ -59,13 +64,52 @@ namespace RestServices.Controllers
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new BadRequestObjectResult(
-                        new GenericResponseMessage<CompanyBo>
-                        {
-                            Errors = new List<string> {ex.Message},
-                            StatusCode = HttpStatusCode.BadRequest
-                        }));
+                return new BadRequestObjectResult(
+                    new GenericResponseMessage<CompanyBo>
+                    {
+                        Errors = new List<string> {ex.Message},
+                        StatusCode = HttpStatusCode.BadRequest
+                    });
             }
+        }
+
+        [HttpPost]
+        public IActionResult Post(OrganizationRequestMessage organization)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = new List<string>();
+                foreach (var key in ModelState.Keys)
+                {
+                    if (ModelState[key].Errors.Any())
+                    {
+                        errors.Add($"{key}: {string.Join(",", ModelState[key].Errors)}");
+                    }
+                }
+                return new BadRequestObjectResult(new GenericResponseMessage<CompanyBo> {Errors = errors});
+            }
+
+            var company = _companyManager.GetByName(organization.Name);
+            if (company != null)
+            {
+                return new BadRequestObjectResult(new GenericResponseMessage<CompanyBo>
+                    {
+                        Errors = new[] {"The company already exists"}
+                    });
+            }
+
+            Guid companyId;
+            try
+            {
+                company = organization.ToBusinessObject<CompanyBo>();
+                companyId = _companyManager.Create(company);
+            }
+            catch (Exception)
+            {
+                return StatusCode((int) HttpStatusCode.InternalServerError);
+            }
+
+            return new OkObjectResult(companyId);
         }
     }
 }

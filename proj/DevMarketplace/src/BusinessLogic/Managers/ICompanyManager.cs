@@ -44,5 +44,19 @@ namespace BusinessLogic.Managers
         /// <param name="id">An organization ID Guid</param>
         /// <returns></returns>
         CompanyBo Get(Guid id);
+
+        /// <summary>
+        /// Gets a company by name
+        /// </summary>
+        /// <param name="companyName"></param>
+        /// <returns></returns>
+        CompanyBo GetByName(string companyName);
+
+        /// <summary>
+        /// Creates a new company
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns></returns>
+        Guid Create(CompanyBo company);
     }
 }

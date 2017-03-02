@@ -28,7 +28,7 @@ using System;
 
 namespace BusinessLogic.BusinessObjects
 {
-    public class CompanyBo
+    public class CompanyBo : BaseBo
     {
         public CompanyBo()
         {
