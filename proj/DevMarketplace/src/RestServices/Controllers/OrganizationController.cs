@@ -74,7 +74,7 @@ namespace RestServices.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(OrganizationRequestMessage organization)
+        public IActionResult Post([FromBody] OrganizationRequestMessage organization)
         {
             if (!ModelState.IsValid)
             {
@@ -83,10 +83,14 @@ namespace RestServices.Controllers
                 {
                     if (ModelState[key].Errors.Any())
                     {
-                        errors.Add($"{key}: {string.Join(",", ModelState[key].Errors)}");
+                        errors.Add($"{key}: {string.Join(",", ModelState[key].Errors.Select(x => x.ErrorMessage))}");
                     }
                 }
-                return new BadRequestObjectResult(new GenericResponseMessage<CompanyBo> {Errors = errors});
+                return new BadRequestObjectResult(new GenericResponseMessage<CompanyBo>
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = errors
+                });
             }
 
             var company = _companyManager.GetByName(organization.Name);
@@ -94,6 +98,7 @@ namespace RestServices.Controllers
             {
                 return new BadRequestObjectResult(new GenericResponseMessage<CompanyBo>
                     {
+                        StatusCode = HttpStatusCode.BadRequest,
                         Errors = new[] {"The company already exists"}
                     });
             }

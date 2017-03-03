@@ -32,7 +32,7 @@ namespace DataAccess.Entity
     public class Company : IHasIdentityEntity
     {
         [Key, Column(Order=1)]
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Column(Order=2), Required, MinLength(1), MaxLength(300)]
         public string Name { get; set; }

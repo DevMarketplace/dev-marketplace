@@ -12,3 +12,4 @@ if (document.querySelector("#create-organization-app") != null) {
         components: { CreateOrganization: create_organization_component_1.CreateOrganization }
     });
 }
+//# sourceMappingURL=app.js.map

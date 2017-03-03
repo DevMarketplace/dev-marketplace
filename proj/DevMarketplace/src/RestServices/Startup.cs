@@ -24,9 +24,6 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +33,7 @@ using StructureMap;
 using DataAccess;
 using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace RestServices
 {
@@ -57,7 +55,8 @@ namespace RestServices
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc().AddControllersAsServices();
+            services.AddMvc()
+                .AddControllersAsServices();
             services.AddCors();
 
             return ConfigureIoC(services);

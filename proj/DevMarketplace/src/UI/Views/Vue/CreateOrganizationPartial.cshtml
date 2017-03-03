@@ -1,29 +1,29 @@
 ﻿@using UI.Localization
 <template id="create-organization-component">
     <div class="row">
-        <div class="organization-create-form" method="post" action="/Organization/Create">
+        <form class="organization-create-form" method="post" action="/Organization/Create">
             <div class="input-field col s12 m6">
-                <input type="text" name="Name" id="OrganizationName" />
+                <input type="text" name="Name" id="OrganizationName" data-val-required="Name required" v-model="organization.name" />
                 <label for="OrganizationName">@OrganizationContent.OrganizationNameText</label>
                 <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
             </div>
             <div class="input-field col s12 m6">
-                <input type="email" id="OrganizationEmail" name="Email" />
+                <input type="email" id="OrganizationEmail" data-val-required="Email required" name="Email" v-model="organization.email" />
                 <label for="OrganizationEmail">@OrganizationContent.OrganizationEmailText</label>
                 <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationEmail" data-valmsg-replace="true"></span>
             </div>
 
             <div class="input-field col s12">
-                <input type="text" name="Url" id="OrganizationUrl" />
+                <input type="text" name="Url" id="OrganizationUrl" v-model="organization.url" />
                 <label for="OrganizationUrl">@OrganizationContent.WebSiteText</label>
             </div>
 
             <div class="input-field col s12">
-                <input type="text" name="Location" id="OrganizationLocation" />
+                <input type="text" name="Location" id="OrganizationLocation" v-model="organization.location" />
                 <label for="OrganizationLocation">@OrganizationContent.LocationText</label>
             </div>
             <div class="input-field col s12">
-                <select id="ISOCountryCode" name="ISOCountryCode">
+                <select id="ISOCountryCode" name="ISOCountryCode" v-model="organization.isoCountryCode">
                     <option v-for="country in countries" v-bind:value="country.isoCountryCode">
                         {{ country.name}}
                     </option>
@@ -32,12 +32,12 @@
             </div>
 
             <div class="input-field col s12">
-                <textarea rows="5" cols="50" name="Description" id="Description" class="materialize-textarea"></textarea>
+                <textarea rows="5" cols="50" name="Description" id="Description" class="materialize-textarea" v-model="organization.description"></textarea>
                 <label for="Description">@OrganizationContent.OrganizationDescription</label>
             </div>
             <div class="input-field col s12">
-                <a href="#" id="create-organization-submit" class="btn primary">@OrganizationContent.CreateButtonText</a>
+                <a href="#" id="create-organization-submit" v-on:click="createOrganization" class="btn primary">@OrganizationContent.CreateButtonText</a>
             </div>
-        </div>
+        </form>
     </div>
 </template>

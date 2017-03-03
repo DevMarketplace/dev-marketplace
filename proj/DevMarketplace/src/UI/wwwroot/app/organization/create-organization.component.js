@@ -17,6 +17,7 @@ require("reflect-metadata");
 var Vue = require("vue");
 var vue_class_component_1 = require("vue-class-component");
 var ioc_identifiers_1 = require("../config/ioc.identifiers");
+var organization_model_1 = require("../models/organization.model");
 var container_1 = require("../config/container");
 var CreateOrganization = (function (_super) {
     __extends(CreateOrganization, _super);
@@ -26,6 +27,7 @@ var CreateOrganization = (function (_super) {
     }
     CreateOrganization.prototype.created = function () {
         var _this = this;
+        this.organization = new organization_model_1.Organization();
         var countrySubscription = this.countryService.getCountries()
             .map(function (res) { return res.data; })
             .subscribe(function (res) {
@@ -36,12 +38,24 @@ var CreateOrganization = (function (_super) {
     ;
     CreateOrganization.prototype.data = function () {
         return {
-            countries: this.countries
+            countries: this.countries,
+            organization: this.organization
         };
     };
     ;
     CreateOrganization.prototype.createOrganization = function () {
-        this.organizationService.createOrganization();
+        $(this.$el).find("form").validate();
+        var org = this.organization;
+        //let organizationSubscription = this.organizationService
+        //    .createOrganization(this.organization)
+        //    .map((res: any) => res.data)
+        //    .subscribe((orgId: string) =>
+        //    {
+        //        if (orgId === "") {
+        //            console.log(orgId);
+        //        }
+        //        organizationSubscription.unsubscribe();
+        //    });
     };
     ;
     CreateOrganization.prototype.updated = function () {
@@ -67,3 +81,4 @@ var CreateOrganization = (function (_super) {
     return CreateOrganization;
 }(Vue));
 exports.CreateOrganization = CreateOrganization;
+//# sourceMappingURL=create-organization.component.js.map

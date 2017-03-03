@@ -11,3 +11,4 @@ var Guid = (function () {
     return Guid;
 }());
 exports.Guid = Guid;
+//# sourceMappingURL=guid.helper.js.map

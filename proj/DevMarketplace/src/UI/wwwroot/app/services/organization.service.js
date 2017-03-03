@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 require("../rxjs-operators");
 require("reflect-metadata");
+var Observable_1 = require("rxjs/Observable");
 var inversify_1 = require("inversify");
 var axios_1 = require("axios");
 var OrganizationService = (function () {
@@ -20,11 +21,22 @@ var OrganizationService = (function () {
         this.configurationAwait = appConfig.load();
         this.configurationAwait.subscribe(function (result) {
             _this.apiAddress = appConfig.getConfig("apiAddress");
-            _this.createOrganizationUrl = _this.apiAddress + "";
+            _this.organizationApiUrl = _this.apiAddress + "/api/v1/organization";
         });
     }
-    OrganizationService.prototype.createOrganization = function () {
-        throw new Error("Not implemented");
+    OrganizationService.prototype.createOrganization = function (organization) {
+        var _this = this;
+        return this.configurationAwait.flatMap(function (result) {
+            var options = {
+                url: _this.organizationApiUrl,
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                data: organization
+            };
+            return Observable_1.Observable.from(axios_1.default(options))
+                .map(function (res) { return res.data; })
+                .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
+        });
     };
     OrganizationService = __decorate([
         inversify_1.injectable(), 
@@ -33,3 +45,4 @@ var OrganizationService = (function () {
     return OrganizationService;
 }());
 exports.OrganizationService = OrganizationService;
+//# sourceMappingURL=organization.service.js.map

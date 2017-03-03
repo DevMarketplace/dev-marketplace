@@ -64,6 +64,7 @@ namespace RestServices.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             return await Task.Run<IActionResult>(() => new OkObjectResult(new GenericResponseMessage<IEnumerable<CountryBo>>(_countryManager.GetCountries())));

@@ -63,7 +63,12 @@ namespace BusinessLogic.Managers
             var entity = company.ToEntity<Company>();
             _companyRepository.Insert(entity);
             _companyRepository.SubmitChanges();
-            return entity.Id;
+            if (entity.Id != null)
+            {
+                return entity.Id.Value;
+            }
+
+            return Guid.Empty;
         }
     }
 }
