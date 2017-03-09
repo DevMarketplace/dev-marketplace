@@ -144,6 +144,9 @@
   <data name="OrganizationText" xml:space="preserve">
     <value>Organization</value>
   </data>
+  <data name="RequiredText" xml:space="preserve">
+    <value>Required</value>
+  </data>
   <data name="TeamText" xml:space="preserve">
     <value>Team</value>
   </data>

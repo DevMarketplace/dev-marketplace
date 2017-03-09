@@ -102,7 +102,7 @@ namespace RestServices
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseCors(builder => builder.WithOrigins("http://www.devmarketplace.com", "https://www.devmarketplace.com")
+                app.UseCors(builder => builder.WithOrigins("http://localhost:6147", "https://localhost:44391", "http://www.devmarketplace.com", "https://www.devmarketplace.com")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials());

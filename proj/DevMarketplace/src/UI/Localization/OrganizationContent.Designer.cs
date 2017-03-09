@@ -141,6 +141,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Required.
+        /// </summary>
+        public static string RequiredText {
+            get {
+                return ResourceManager.GetString("RequiredText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Team.
         /// </summary>
         public static string TeamText {
