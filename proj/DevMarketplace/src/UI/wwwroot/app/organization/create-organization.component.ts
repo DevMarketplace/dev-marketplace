@@ -32,6 +32,8 @@ export class CreateOrganization extends Vue {
             .subscribe((res: Country[]) => {
                 this.countries = res;
                 countrySubscription.unsubscribe();
+                $.validator.unobtrusive.parse(document);
+                $(this.$el).find("form").valid();
             });
     };
 
@@ -43,7 +45,7 @@ export class CreateOrganization extends Vue {
     };
 
     createOrganization(): void {
-        $(this.$el).find("form").validate();
+        $(this.$el).find("form").valid();
         var org = this.organization;
         //let organizationSubscription = this.organizationService
         //    .createOrganization(this.organization)

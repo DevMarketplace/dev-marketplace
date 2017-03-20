@@ -33,6 +33,8 @@ var CreateOrganization = (function (_super) {
             .subscribe(function (res) {
             _this.countries = res;
             countrySubscription.unsubscribe();
+            $.validator.unobtrusive.parse(document);
+            $(_this.$el).find("form").valid();
         });
     };
     ;
@@ -44,7 +46,7 @@ var CreateOrganization = (function (_super) {
     };
     ;
     CreateOrganization.prototype.createOrganization = function () {
-        $(this.$el).find("form").validate();
+        $(this.$el).find("form").valid();
         var org = this.organization;
         //let organizationSubscription = this.organizationService
         //    .createOrganization(this.organization)
