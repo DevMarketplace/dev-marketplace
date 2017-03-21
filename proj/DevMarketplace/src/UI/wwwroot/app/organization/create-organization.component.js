@@ -33,7 +33,7 @@ var CreateOrganization = (function (_super) {
             .subscribe(function (res) {
             _this.countries = res;
             countrySubscription.unsubscribe();
-            $.validator.unobtrusive.parse(document);
+            $.validator.unobtrusive.parse($(_this.$el).find("form"));
             $(_this.$el).find("form").valid();
         });
     };
@@ -47,17 +47,15 @@ var CreateOrganization = (function (_super) {
     ;
     CreateOrganization.prototype.createOrganization = function () {
         $(this.$el).find("form").valid();
-        var org = this.organization;
-        //let organizationSubscription = this.organizationService
-        //    .createOrganization(this.organization)
-        //    .map((res: any) => res.data)
-        //    .subscribe((orgId: string) =>
-        //    {
-        //        if (orgId === "") {
-        //            console.log(orgId);
-        //        }
-        //        organizationSubscription.unsubscribe();
-        //    });
+        var organizationSubscription = this.organizationService
+            .createOrganization(this.organization)
+            .map(function (res) { return res.data; })
+            .subscribe(function (orgId) {
+            if (orgId === "") {
+                console.log(orgId);
+            }
+            organizationSubscription.unsubscribe();
+        });
     };
     ;
     CreateOrganization.prototype.updated = function () {

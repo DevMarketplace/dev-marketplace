@@ -32,7 +32,7 @@ export class CreateOrganization extends Vue {
             .subscribe((res: Country[]) => {
                 this.countries = res;
                 countrySubscription.unsubscribe();
-                $.validator.unobtrusive.parse(document);
+                $.validator.unobtrusive.parse($(this.$el).find("form"));
                 $(this.$el).find("form").valid();
             });
     };
@@ -46,17 +46,16 @@ export class CreateOrganization extends Vue {
 
     createOrganization(): void {
         $(this.$el).find("form").valid();
-        var org = this.organization;
-        //let organizationSubscription = this.organizationService
-        //    .createOrganization(this.organization)
-        //    .map((res: any) => res.data)
-        //    .subscribe((orgId: string) =>
-        //    {
-        //        if (orgId === "") {
-        //            console.log(orgId);
-        //        }
-        //        organizationSubscription.unsubscribe();
-        //    });
+        let organizationSubscription = this.organizationService
+            .createOrganization(this.organization)
+            .map((res: any) => res.data)
+            .subscribe((orgId: string) =>
+            {
+                if (orgId === "") {
+                    console.log(orgId);
+                }
+                organizationSubscription.unsubscribe();
+            });
     };
 
     updated(): any {

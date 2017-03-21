@@ -27,7 +27,7 @@ using BusinessLogic.Utilities;
 
 namespace BusinessLogic.BusinessObjects
 {
-    public class BaseBo
+    public abstract class BaseBo
     {
         public TEntity ToEntity<TEntity>() where TEntity : class, new()
         {

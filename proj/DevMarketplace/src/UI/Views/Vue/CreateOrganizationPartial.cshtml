@@ -5,12 +5,12 @@
             <div class="input-field col s12 m6">
                 <input type="text" name="Name" id="OrganizationName" required data-val="true" data-val-required="@OrganizationContent.OrganizationNameText @OrganizationContent.RequiredText" v-model="organization.name" />
                 <label for="OrganizationName">@OrganizationContent.OrganizationNameText</label>
-                <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationName" data-valmsg-replace="true"></span>
+                <span class="field-validation-error field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
             </div>
             <div class="input-field col s12 m6">
                 <input type="email" id="OrganizationEmail" required data-val="true" data-val-required="@OrganizationContent.OrganizationEmailText @OrganizationContent.RequiredText" name="Email" v-model="organization.email" />
                 <label for="OrganizationEmail">@OrganizationContent.OrganizationEmailText</label>
-                <span class="field-validation-error field-validation-valid" data-valmsg-for="OrganizationEmail" data-valmsg-replace="true"></span>
+                <span class="field-validation-error field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
             </div>
 
             <div class="input-field col s12">
