@@ -4,14 +4,14 @@
   "dependencies": {
     "dotnet-test-nunit": "3.4.0-beta-3",
     "RestServices": "1.0.0-*",
-    "Moq": "4.6.38-alpha",
-    "Microsoft.NETCore.App": {
-      "version": "1.1.0",
-      "type": "platform"
-    },
     "Microsoft.DotNet.InternalAbstractions": "1.0.500-preview2-1-003177",
-    "NUnit": "3.6.0",
-    "BusinessLogic": "1.0.0-*"
+    "BusinessLogic": "1.0.0-*",
+    "Moq": "4.7.1",
+    "NUnit": "3.6.1",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.1.1"
+    }
   },
 
   "testRunner": "nunit",

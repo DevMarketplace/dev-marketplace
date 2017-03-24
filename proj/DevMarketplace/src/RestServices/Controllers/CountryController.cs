@@ -30,9 +30,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using BusinessLogic.Managers;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BusinessLogic.BusinessObjects;
+using Microsoft.AspNetCore.Mvc;
 using RestServices.Messages.Response;
 
 namespace RestServices.Controllers
