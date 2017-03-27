@@ -1,7 +1,8 @@
 ﻿import "../rxjs-operators";
 import "reflect-metadata";
+import serviceIdentifier from "../config/ioc.identifiers";
 import { Observable } from "rxjs/Observable";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { IAppConfig } from "../app.config";
 import { Organization } from "../models/organization.model";
 import axios, {
@@ -21,7 +22,7 @@ export class OrganizationService implements IOrganizationService {
     private apiAddress: string;
     private configurationAwait: Observable<boolean>;
 
-    constructor(private appConfig: IAppConfig) {
+    constructor( @inject(serviceIdentifier.IAppConfig) private appConfig: IAppConfig) {
         this.http = axios.create();
         this.configurationAwait = appConfig.load();
         this.configurationAwait.subscribe((result: boolean) => {
@@ -30,7 +31,7 @@ export class OrganizationService implements IOrganizationService {
         });
     }
 
-    createOrganization(organization: Organization): Observable<boolean> {
+    public createOrganization(organization: Organization): Observable<boolean> {
         return this.configurationAwait.flatMap((result: boolean) => {
             let options: AxiosRequestConfig = {
                 url: this.organizationApiUrl,

@@ -15,7 +15,7 @@ declare var $: any;
 })
 export class CreateOrganization extends Vue {
 
-    @injectLazy(serviceIdentifier.IAccountService)
+    @injectLazy(serviceIdentifier.IOrganizationService)
     private organizationService: IOrganizationService;
 
     @injectLazy(serviceIdentifier.ICountryService)

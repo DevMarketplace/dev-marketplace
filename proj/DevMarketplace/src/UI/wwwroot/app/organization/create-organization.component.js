@@ -65,7 +65,7 @@ var CreateOrganization = (function (_super) {
     };
     ;
     __decorate([
-        container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
+        container_1.injectLazy(ioc_identifiers_1.default.IOrganizationService), 
         __metadata('design:type', Object)
     ], CreateOrganization.prototype, "organizationService", void 0);
     __decorate([

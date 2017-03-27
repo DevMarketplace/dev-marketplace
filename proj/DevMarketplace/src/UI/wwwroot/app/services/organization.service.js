@@ -8,8 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 require("../rxjs-operators");
 require("reflect-metadata");
+var ioc_identifiers_1 = require("../config/ioc.identifiers");
 var Observable_1 = require("rxjs/Observable");
 var inversify_1 = require("inversify");
 var axios_1 = require("axios");
@@ -39,7 +43,8 @@ var OrganizationService = (function () {
         });
     };
     OrganizationService = __decorate([
-        inversify_1.injectable(), 
+        inversify_1.injectable(),
+        __param(0, inversify_1.inject(ioc_identifiers_1.default.IAppConfig)), 
         __metadata('design:paramtypes', [Object])
     ], OrganizationService);
     return OrganizationService;

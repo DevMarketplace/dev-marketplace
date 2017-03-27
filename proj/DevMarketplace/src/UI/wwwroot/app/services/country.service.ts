@@ -25,7 +25,7 @@ export class CountryService implements ICountryService {
     private apiAddress: string;
     private configurationAwait: Observable<boolean>;
 
-    constructor( @inject(serviceIdentifier.IAppConfig) appConfig: IAppConfig) {
+    constructor(@inject(serviceIdentifier.IAppConfig) appConfig: IAppConfig) {
         this.appConfig = appConfig;
         this.http = axios.create();
         this.configurationAwait = appConfig.load();
