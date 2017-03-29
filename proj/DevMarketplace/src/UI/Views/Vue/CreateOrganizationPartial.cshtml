@@ -22,13 +22,14 @@
                 <input type="text" name="Location" id="OrganizationLocation" v-model="organization.location" />
                 <label for="OrganizationLocation">@OrganizationContent.LocationText</label>
             </div>
-            <div class="input-field col s12">
-                <select id="ISOCountryCode" name="ISOCountryCode" v-model="organization.isoCountryCode">
+            <div class="col s12">
+                <label>@OrganizationContent.CountryText</label>
+                <select class="browser-default" id="ISOCountryCode" name="ISOCountryCode" v-model="organization.isoCountryCode">
+                    <option disabled value="">@OrganizationContent.SelectCountryText</option>
                     <option v-for="country in countries" v-bind:value="country.isoCountryCode">
                         {{ country.name}}
                     </option>
                 </select>
-                <label for="IsoCountryCode">@OrganizationContent.CountryText</label>
             </div>
 
             <div class="input-field col s12">

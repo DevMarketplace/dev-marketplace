@@ -26,9 +26,9 @@
                             <span asp-validation-for="Email" class="field-validation-error"></span>
                         </div>
 
-                        <div class="input-field col s12">
-                            <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
-                            <label asp-for="CompanyId"></label>
+                        <div class="col s12">
+                            <label>@Html.DisplayNameFor(m => m.CompanyId)</label>
+                            <select asp-for="CompanyId" class="browser-default" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
                         </div>
                         <div class="input-field col s12">
                             <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ChangePasswordText</a>

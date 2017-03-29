@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using BusinessLogic.Managers;
 using System.Threading.Tasks;
@@ -67,7 +68,9 @@ namespace RestServices.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return await Task.Run<IActionResult>(() => new OkObjectResult(new GenericResponseMessage<IEnumerable<CountryBo>>(_countryManager.GetCountries())));
+            return await Task.Run<IActionResult>(() => new OkObjectResult(new GenericResponseMessage<IEnumerable<CountryBo>>(_countryManager.GetCountries()
+                .OrderByDescending(c => c.IsoCountryCode == "US")
+                .ThenBy(c => c.Name))));
         }
     }
 }

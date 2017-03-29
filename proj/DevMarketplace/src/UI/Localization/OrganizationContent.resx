@@ -147,6 +147,9 @@
   <data name="RequiredText" xml:space="preserve">
     <value>Required</value>
   </data>
+  <data name="SelectCountryText" xml:space="preserve">
+    <value>Select a country</value>
+  </data>
   <data name="TeamText" xml:space="preserve">
     <value>Team</value>
   </data>

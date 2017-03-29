@@ -57,9 +57,9 @@
                 <input asp-for="Password" type="hidden"/>
                 <input asp-for="PasswordConfirm" type="hidden"/>
             }
-            <div class="input-field col s8 m10">
-                <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
-                <label asp-for="CompanyId"></label>
+            <div class="col s8 m10">
+                <label>@Html.DisplayNameFor(m => m.CompanyId)</label>
+                <select asp-for="CompanyId" class="browser-default" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
             </div>
             <div class="input-field col s2 m1">
                 <a class="btn secondary" href="#create-organization-modal" id="create-organization" title="@OrganizationContent.CreateOrganizationTitle">

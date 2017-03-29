@@ -29,9 +29,9 @@
                 <label asp-for="Location"></label>
             </div>
             
-            <div class="input-field col s12">
-                <select asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
-                <label asp-for="IsoCountryCode"></label>
+            <div class="col s12">
+                <label>@Html.DisplayNameFor(m => m.IsoCountryCode)</label>
+                <select class="browser-default" asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
             </div>
 
             <div class="input-field col s12">
@@ -40,9 +40,9 @@
                 <span asp-validation-for="Description" class="field-validation-error"></span>
             </div>
 
-            <div class="input-field col s12">
-                <select asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
-                <label asp-for="IsoCountryCode"></label>
+            <div class="col s12">
+                <label>@Html.DisplayNameFor(m => m.IsoCountryCode)</label>
+                <select class="browser-default" asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
             </div>
             
             <div class="input-field col s12">

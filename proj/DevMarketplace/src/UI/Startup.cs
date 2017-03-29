@@ -52,7 +52,7 @@ namespace UI
 
             if (env.IsDevelopment())
             {
-                builder.AddUserSecrets();
+                builder.AddUserSecrets("aspnet-DevMarketPlace-77c453d8-751d-48e5-a5b1-d0ec19e5d2b0");
             }
 
             builder.AddEnvironmentVariables();

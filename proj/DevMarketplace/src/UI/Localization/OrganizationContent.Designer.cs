@@ -150,6 +150,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Select a country.
+        /// </summary>
+        public static string SelectCountryText {
+            get {
+                return ResourceManager.GetString("SelectCountryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Team.
         /// </summary>
         public static string TeamText {

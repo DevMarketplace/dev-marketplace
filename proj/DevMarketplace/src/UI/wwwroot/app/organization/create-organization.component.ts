@@ -1,13 +1,13 @@
 ﻿import "reflect-metadata";
 import Vue = require("vue");
 import Component from "vue-class-component";
-import serviceIdentifier from "../config/ioc.identifiers";
-import { Organization } from "../models/organization.model";
+import serviceIdentifier from "../config/ioc.identifiers.ts";
+import { Organization } from "../models/organization.model.ts";
+import { injectLazy } from "../config/container.ts";
 import { Subscription } from "rxjs/Subscription";
-import { injectLazy } from "../config/container";
-import { IOrganizationService } from "../services/organization.service";
-import { ICountryService } from "../services/country.service";
-import { Country } from "../models/country.model";
+import { IOrganizationService } from "../services/organization.service.ts";
+import { ICountryService } from "../services/country.service.ts";
+import { Country } from "../models/country.model.ts";
 declare var $: any;
 
 @Component({
@@ -27,7 +27,7 @@ export class CreateOrganization extends Vue {
 
     created(): void {
         this.organization = new Organization();
-        let countrySubscription = this.countryService.getCountries()
+        let countrySubscription : Subscription = this.countryService.getCountries()
             .map((res: any) => res.data)
             .subscribe((res: Country[]) => {
                 this.countries = res;
@@ -41,16 +41,15 @@ export class CreateOrganization extends Vue {
         return {
             countries: this.countries,
             organization: this.organization
-        }
+        };
     };
 
     createOrganization(): void {
         $(this.$el).find("form").valid();
-        let organizationSubscription = this.organizationService
+        let organizationSubscription : Subscription = this.organizationService
             .createOrganization(this.organization)
             .map((res: any) => res.data)
-            .subscribe((orgId: string) =>
-            {
+            .subscribe((orgId: string) => {
                 if (orgId === "") {
                     console.log(orgId);
                 }
@@ -59,8 +58,8 @@ export class CreateOrganization extends Vue {
     };
 
     updated(): any {
-        if ($.fn.material_select !== "undefined") {
-            $("select").material_select();
-        }
+        // if ($.fn.material_select !== "undefined") {
+        //    $("select").material_select();
+        // }
     };
 }
