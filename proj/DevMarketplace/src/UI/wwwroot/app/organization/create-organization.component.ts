@@ -1,13 +1,13 @@
 ﻿import "reflect-metadata";
 import Vue = require("vue");
 import Component from "vue-class-component";
-import serviceIdentifier from "../config/ioc.identifiers.ts";
-import { Organization } from "../models/organization.model.ts";
-import { injectLazy } from "../config/container.ts";
+import serviceIdentifier from "../config/ioc.identifiers";
+import { Organization } from "../models/organization.model";
+import { injectLazy } from "../config/container";
 import { Subscription } from "rxjs/Subscription";
-import { IOrganizationService } from "../services/organization.service.ts";
-import { ICountryService } from "../services/country.service.ts";
-import { Country } from "../models/country.model.ts";
+import { IOrganizationService } from "../services/organization.service";
+import { ICountryService } from "../services/country.service";
+import { Country } from "../models/country.model";
 declare var $: any;
 
 @Component({
