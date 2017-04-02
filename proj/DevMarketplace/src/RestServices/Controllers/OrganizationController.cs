@@ -114,7 +114,7 @@ namespace RestServices.Controllers
                 return StatusCode((int) HttpStatusCode.InternalServerError);
             }
 
-            return new OkObjectResult(companyId);
+            return new OkObjectResult(new { companyId, Name = company.Name });
         }
     }
 }

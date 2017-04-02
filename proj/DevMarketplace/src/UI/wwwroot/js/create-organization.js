@@ -1,6 +1,10 @@
 (function ($) {
     var operations = {
         init: function () {
+            $(document).on("organizationCreated", function (evt, orgInfo) {
+                $("#create-organization-modal").modal("close");
+            });
+
             $("#create-organization").on("click", function (e) {
                 e.preventDefault();
                 operations.openCreateOrganizationModal();

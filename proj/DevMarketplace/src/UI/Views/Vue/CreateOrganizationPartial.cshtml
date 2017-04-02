@@ -25,7 +25,6 @@
             <div class="col s12">
                 <label>@OrganizationContent.CountryText</label>
                 <select class="browser-default" id="ISOCountryCode" name="ISOCountryCode" v-model="organization.isoCountryCode">
-                    <option disabled value="">@OrganizationContent.SelectCountryText</option>
                     <option v-for="country in countries" v-bind:value="country.isoCountryCode">
                         {{ country.name}}
                     </option>

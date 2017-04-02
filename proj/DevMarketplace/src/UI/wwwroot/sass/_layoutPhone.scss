@@ -61,6 +61,12 @@ a.btn, input.btn, button.btn {
             background-color: $secondary-color-hover;
         }
     }
+
+    &.on-side {
+    margin-top: 8px;
+    height: 50px;
+    padding-top: 10px;
+}
 }
 
 button.github-btn {
@@ -280,6 +286,11 @@ footer {
     }
 }
 
+select {
+    height:50px;
+    border: 1px solid #9e9e9e;
+    border-radius: 0!important;
+}
 
 input:not([type]).input-validation-error,
 input[type=text].input-validation-error,

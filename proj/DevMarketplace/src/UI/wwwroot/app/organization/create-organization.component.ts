@@ -27,14 +27,21 @@ export class CreateOrganization extends Vue {
 
     created(): void {
         this.organization = new Organization();
+        this.organization.isoCountryCode = '';
         let countrySubscription : Subscription = this.countryService.getCountries()
             .map((res: any) => res.data)
             .subscribe((res: Country[]) => {
                 this.countries = res;
-                countrySubscription.unsubscribe();
                 $.validator.unobtrusive.parse($(this.$el).find("form"));
                 $(this.$el).find("form").valid();
-            });
+            },
+            (err) => {
+                console.error(err);
+            },
+            () => {
+                countrySubscription.unsubscribe();
+            }
+        );
     };
 
     data(): any {
@@ -48,18 +55,16 @@ export class CreateOrganization extends Vue {
         $(this.$el).find("form").valid();
         let organizationSubscription : Subscription = this.organizationService
             .createOrganization(this.organization)
-            .map((res: any) => res.data)
-            .subscribe((orgId: string) => {
-                if (orgId === "") {
-                    console.log(orgId);
-                }
+            .subscribe((orgInfo: any) => {
+                $(document).trigger("organizationCreated", [orgInfo])
+            },
+            (err) => {
+                console.error(err);
+            },
+            () => {
+                this.organization = new Organization();
                 organizationSubscription.unsubscribe();
-            });
-    };
-
-    updated(): any {
-        // if ($.fn.material_select !== "undefined") {
-        //    $("select").material_select();
-        // }
+            }
+        );
     };
 }

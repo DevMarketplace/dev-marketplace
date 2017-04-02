@@ -28,13 +28,17 @@ var CreateOrganization = (function (_super) {
     CreateOrganization.prototype.created = function () {
         var _this = this;
         this.organization = new organization_model_1.Organization();
+        this.organization.isoCountryCode = '';
         var countrySubscription = this.countryService.getCountries()
             .map(function (res) { return res.data; })
             .subscribe(function (res) {
             _this.countries = res;
-            countrySubscription.unsubscribe();
             $.validator.unobtrusive.parse($(_this.$el).find("form"));
             $(_this.$el).find("form").valid();
+        }, function (err) {
+            console.error(err);
+        }, function () {
+            countrySubscription.unsubscribe();
         });
     };
     ;
@@ -46,22 +50,18 @@ var CreateOrganization = (function (_super) {
     };
     ;
     CreateOrganization.prototype.createOrganization = function () {
+        var _this = this;
         $(this.$el).find("form").valid();
         var organizationSubscription = this.organizationService
             .createOrganization(this.organization)
-            .map(function (res) { return res.data; })
-            .subscribe(function (orgId) {
-            if (orgId === "") {
-                console.log(orgId);
-            }
+            .subscribe(function (orgInfo) {
+            $(document).trigger("organizationCreated", [orgInfo]);
+        }, function (err) {
+            console.error(err);
+        }, function () {
+            _this.organization = new organization_model_1.Organization();
             organizationSubscription.unsubscribe();
         });
-    };
-    ;
-    CreateOrganization.prototype.updated = function () {
-        if ($.fn.material_select !== "undefined") {
-            $("select").material_select();
-        }
     };
     ;
     __decorate([
