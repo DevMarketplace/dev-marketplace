@@ -29,10 +29,13 @@ export class CountryService implements ICountryService {
         this.appConfig = appConfig;
         this.http = axios.create();
         this.configurationAwait = appConfig.load();
-        let configSubscription : Subscription = this.configurationAwait.subscribe((result: boolean) => {
-            this.apiAddress = appConfig.getConfig("apiAddress");
-            this.getCountriesUrl = this.apiAddress + "/api/v1/country";
-            configSubscription.unsubscribe();
+        this.configurationAwait = this.configurationAwait.map((result: boolean) => {
+            if (result) {
+                this.apiAddress = appConfig.getConfig("apiAddress");
+                this.getCountriesUrl = this.apiAddress + "/api/v1/country";                
+            }
+
+            return result;
         });
     }
 

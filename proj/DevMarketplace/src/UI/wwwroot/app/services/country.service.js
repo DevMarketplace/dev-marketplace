@@ -23,10 +23,12 @@ var CountryService = (function () {
         this.appConfig = appConfig;
         this.http = axios_1.default.create();
         this.configurationAwait = appConfig.load();
-        var configSubscription = this.configurationAwait.subscribe(function (result) {
-            _this.apiAddress = appConfig.getConfig("apiAddress");
-            _this.getCountriesUrl = _this.apiAddress + "/api/v1/country";
-            configSubscription.unsubscribe();
+        this.configurationAwait = this.configurationAwait.map(function (result) {
+            if (result) {
+                _this.apiAddress = appConfig.getConfig("apiAddress");
+                _this.getCountriesUrl = _this.apiAddress + "/api/v1/country";
+            }
+            return result;
         });
     }
     CountryService.prototype.getCountries = function () {

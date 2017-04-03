@@ -25,14 +25,23 @@ export class OrganizationService implements IOrganizationService {
     constructor( @inject(serviceIdentifier.IAppConfig) private appConfig: IAppConfig) {
         this.http = axios.create();
         this.configurationAwait = appConfig.load();
-        this.configurationAwait.subscribe((result: boolean) => {
-            this.apiAddress = appConfig.getConfig("apiAddress");
-            this.organizationApiUrl = this.apiAddress + "/api/v1/organization";
+        this.configurationAwait = this.configurationAwait.map((result: boolean) => {
+            if (result) {
+                this.apiAddress = appConfig.getConfig("apiAddress");
+                this.organizationApiUrl = this.apiAddress + "/api/v1/organization";                
+            }
+
+            return result;
         });
     }
 
     public createOrganization(organization: Organization): Observable<boolean> {
         return this.configurationAwait.flatMap((result: boolean) => {
+            if (!result) {
+                console.error("Configuration load error!");
+                return null;
+            }
+
             let options: AxiosRequestConfig = {
                 url: this.organizationApiUrl,
                 method: "POST",
