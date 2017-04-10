@@ -80,11 +80,11 @@ var AppConfig = (function () {
             return Observable_1.Observable.of(true);
         });
     };
-    AppConfig = __decorate([
-        inversify_1.injectable(), 
-        __metadata('design:paramtypes', [])
-    ], AppConfig);
     return AppConfig;
 }());
+AppConfig = __decorate([
+    inversify_1.injectable(),
+    __metadata("design:paramtypes", [])
+], AppConfig);
 exports.AppConfig = AppConfig;
 //# sourceMappingURL=app.config.js.map

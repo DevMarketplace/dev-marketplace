@@ -27,7 +27,7 @@ export class CreateOrganization extends Vue {
 
     created(): void {
         this.organization = new Organization();
-        this.organization.isoCountryCode = '';
+        this.organization.isoCountryCode = "";
         let countrySubscription : Subscription = this.countryService.getCountries()
             .map((res: any) => res.data)
             .subscribe((res: Country[]) => {
@@ -35,7 +35,7 @@ export class CreateOrganization extends Vue {
                 $.validator.unobtrusive.parse($(this.$el).find("form"));
                 $(this.$el).find("form").valid();
             },
-            (err) => {
+            (err : any) => {
                 console.error(err);
             },
             () => {
@@ -56,9 +56,9 @@ export class CreateOrganization extends Vue {
         let organizationSubscription : Subscription = this.organizationService
             .createOrganization(this.organization)
             .subscribe((orgInfo: any) => {
-                $(document).trigger("organizationCreated", [orgInfo])
+                $(document).trigger("organizationCreated", [orgInfo]);
             },
-            (err) => {
+            (err : any) => {
                 console.error(err);
             },
             () => {

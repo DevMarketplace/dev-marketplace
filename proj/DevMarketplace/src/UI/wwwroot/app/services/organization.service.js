@@ -49,12 +49,12 @@ var OrganizationService = (function () {
                 .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
         });
     };
-    OrganizationService = __decorate([
-        inversify_1.injectable(),
-        __param(0, inversify_1.inject(ioc_identifiers_1.default.IAppConfig)), 
-        __metadata('design:paramtypes', [Object])
-    ], OrganizationService);
     return OrganizationService;
 }());
+OrganizationService = __decorate([
+    inversify_1.injectable(),
+    __param(0, inversify_1.inject(ioc_identifiers_1.default.IAppConfig)),
+    __metadata("design:paramtypes", [Object])
+], OrganizationService);
 exports.OrganizationService = OrganizationService;
 //# sourceMappingURL=organization.service.js.map

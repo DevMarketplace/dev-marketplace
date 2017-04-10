@@ -44,12 +44,12 @@ var CountryService = (function () {
                 .catch(function (error) { return Observable_1.Observable.throw(error || "Server error"); });
         });
     };
-    CountryService = __decorate([
-        inversify_1.injectable(),
-        __param(0, inversify_1.inject(ioc_identifiers_1.default.IAppConfig)), 
-        __metadata('design:paramtypes', [Object])
-    ], CountryService);
     return CountryService;
 }());
+CountryService = __decorate([
+    inversify_1.injectable(),
+    __param(0, inversify_1.inject(ioc_identifiers_1.default.IAppConfig)),
+    __metadata("design:paramtypes", [Object])
+], CountryService);
 exports.CountryService = CountryService;
 //# sourceMappingURL=country.service.js.map

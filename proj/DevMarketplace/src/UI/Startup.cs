@@ -33,11 +33,11 @@ using Microsoft.Extensions.Logging;
 using StructureMap;
 using DataAccess;
 using BusinessLogic;
-using DataAccess.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using UI.Utilities;
+using BusinessLogic.Managers;
 
 namespace UI
 {

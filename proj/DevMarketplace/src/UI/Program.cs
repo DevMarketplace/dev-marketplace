@@ -23,11 +23,7 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
 namespace UI
@@ -39,6 +35,7 @@ namespace UI
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://localhost:6147/", "https://localhost:44391/")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();

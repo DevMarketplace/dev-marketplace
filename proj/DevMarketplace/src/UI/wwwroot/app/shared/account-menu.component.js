@@ -22,8 +22,9 @@ var guid_helper_1 = require("../helpers/guid.helper");
 var AccountMenu = (function (_super) {
     __extends(AccountMenu, _super);
     function AccountMenu() {
-        _super.apply(this, arguments);
-        this.authenticated = false;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.authenticated = false;
+        return _this;
     }
     AccountMenu.prototype.created = function () {
         var _this = this;
@@ -50,17 +51,16 @@ var AccountMenu = (function (_super) {
     AccountMenu.prototype.beforeDestroy = function () {
         this.accountSub.unsubscribe();
     };
-    __decorate([
-        container_1.injectLazy(ioc_identifiers_1.default.IAccountService), 
-        __metadata('design:type', Object)
-    ], AccountMenu.prototype, "accountService", void 0);
-    AccountMenu = __decorate([
-        vue_class_component_1.default({
-            template: "#account-menu"
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AccountMenu);
     return AccountMenu;
 }(Vue));
+__decorate([
+    container_1.injectLazy(ioc_identifiers_1.default.IAccountService),
+    __metadata("design:type", Object)
+], AccountMenu.prototype, "accountService", void 0);
+AccountMenu = __decorate([
+    vue_class_component_1.default({
+        template: "#account-menu"
+    })
+], AccountMenu);
 exports.AccountMenu = AccountMenu;
 //# sourceMappingURL=account-menu.component.js.map

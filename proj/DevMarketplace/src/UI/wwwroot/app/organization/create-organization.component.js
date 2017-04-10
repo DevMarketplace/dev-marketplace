@@ -22,13 +22,14 @@ var container_1 = require("../config/container");
 var CreateOrganization = (function (_super) {
     __extends(CreateOrganization, _super);
     function CreateOrganization() {
-        _super.apply(this, arguments);
-        this.countries = [];
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.countries = [];
+        return _this;
     }
     CreateOrganization.prototype.created = function () {
         var _this = this;
         this.organization = new organization_model_1.Organization();
-        this.organization.isoCountryCode = '';
+        this.organization.isoCountryCode = "";
         var countrySubscription = this.countryService.getCountries()
             .map(function (res) { return res.data; })
             .subscribe(function (res) {
@@ -64,21 +65,20 @@ var CreateOrganization = (function (_super) {
         });
     };
     ;
-    __decorate([
-        container_1.injectLazy(ioc_identifiers_1.default.IOrganizationService), 
-        __metadata('design:type', Object)
-    ], CreateOrganization.prototype, "organizationService", void 0);
-    __decorate([
-        container_1.injectLazy(ioc_identifiers_1.default.ICountryService), 
-        __metadata('design:type', Object)
-    ], CreateOrganization.prototype, "countryService", void 0);
-    CreateOrganization = __decorate([
-        vue_class_component_1.default({
-            template: "#create-organization-component"
-        }), 
-        __metadata('design:paramtypes', [])
-    ], CreateOrganization);
     return CreateOrganization;
 }(Vue));
+__decorate([
+    container_1.injectLazy(ioc_identifiers_1.default.IOrganizationService),
+    __metadata("design:type", Object)
+], CreateOrganization.prototype, "organizationService", void 0);
+__decorate([
+    container_1.injectLazy(ioc_identifiers_1.default.ICountryService),
+    __metadata("design:type", Object)
+], CreateOrganization.prototype, "countryService", void 0);
+CreateOrganization = __decorate([
+    vue_class_component_1.default({
+        template: "#create-organization-component"
+    })
+], CreateOrganization);
 exports.CreateOrganization = CreateOrganization;
 //# sourceMappingURL=create-organization.component.js.map

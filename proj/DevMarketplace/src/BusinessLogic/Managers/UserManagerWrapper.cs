@@ -28,7 +28,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace DataAccess.Abstractions
+namespace BusinessLogic.Managers
 {
     public class UserManagerWrapper<TUser> : IUserManagerWrapper<TUser> where TUser : class
     {

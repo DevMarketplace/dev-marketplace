@@ -28,7 +28,6 @@ using System.Threading.Tasks;
 using BusinessLogic.Managers;
 using BusinessLogic.Utilities;
 using DataAccess;
-using DataAccess.Abstractions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

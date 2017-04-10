@@ -28,7 +28,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BusinessLogic.Utilities;
-using DataAccess.Abstractions;
 using Microsoft.Extensions.Logging;
 using UI.Models;
 using Microsoft.AspNetCore.DataProtection;

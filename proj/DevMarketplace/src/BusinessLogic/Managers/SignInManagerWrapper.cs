@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace DataAccess.Abstractions
+namespace BusinessLogic.Managers
 {
     public class SignInManagerWrapper<TUser> : ISignInManagerWrapper<TUser> where TUser : class 
     {
