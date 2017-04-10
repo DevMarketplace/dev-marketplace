@@ -57,5 +57,12 @@ namespace BusinessLogic.Managers
         /// <param name="company"></param>
         /// <returns></returns>
         Guid Create(CompanyBo company);
+
+        /// <summary>
+        /// Sets a user as a company admin
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="companyId"></param>
+        void SetAdmin(Guid userId, Guid companyId);
     }
 }

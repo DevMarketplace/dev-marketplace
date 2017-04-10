@@ -415,6 +415,7 @@ namespace UI.Controllers
 
                 if (identityResult.Succeeded)
                 {
+                    _companyManager.SetAdmin(Guid.Parse(user.Id), user.CompanyId);
                     return RedirectToAction(nameof(SignIn), returnUrl);
                 }
 

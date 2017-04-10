@@ -36,10 +36,12 @@ namespace BusinessLogic.Managers
     public class CompanyManager : ICompanyManager
     {
         private readonly IGenericRepository<Company> _companyRepository;
+        private readonly IGenericRepository<CompanyAdmin> _companyAdminRepository;
 
-        public CompanyManager(IGenericRepository<Company> companyRepository)
+        public CompanyManager(IGenericRepository<Company> companyRepository, IGenericRepository<CompanyAdmin> companyAdminRepository)
         {
             _companyRepository = companyRepository;
+            _companyAdminRepository = companyAdminRepository;
         }
 
         public IEnumerable<CompanyBo> GetCompanies()
@@ -69,6 +71,16 @@ namespace BusinessLogic.Managers
             }
 
             return Guid.Empty;
+        }
+
+        public void SetAdmin(Guid userId, Guid companyId)
+        {
+            var companyAdmin = _companyAdminRepository.Get(ca => ca.CompanyId == companyId).FirstOrDefault();
+            if(companyAdmin == null)
+            {
+                _companyAdminRepository.Insert(new CompanyAdmin { CompanyId = companyId, UserId = userId.ToString() });
+                _companyAdminRepository.SubmitChanges();
+            }
         }
     }
 }
