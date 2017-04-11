@@ -2,11 +2,11 @@
 @using UI.Localization
 @model UI.Models.OrganizationViewModel
 
-<form asp-controller="Organization" asp-action="Create">
+<form asp-controller="Organization" asp-action="Update">
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col s12 m8 push-m2">
-            <div class="col s12 page-title">@OrganizationContent.CreateOrganizationTitle</div>
+            <div class="col s12 page-title">@OrganizationContent.ModifyOrganizationText</div>
            
             <div class="input-field col s12 m6">
                 <input asp-for="Name" />
@@ -39,11 +39,6 @@
                 <label asp-for="Description"></label>
                 <span asp-validation-for="Description" class="field-validation-error"></span>
             </div>
-
-            <div class="col s12">
-                <label>@Html.DisplayNameFor(m => m.IsoCountryCode)</label>
-                <select class="browser-default" asp-for="IsoCountryCode" asp-items="@(new SelectList(Model.Countries, "Value", "Text"))"></select>
-            </div>
             
             <div class="input-field col s12">
                 @if (!ViewData.ModelState.IsValid)
@@ -52,7 +47,7 @@
                 }
             </div>
             <div class="col s6 push-s6 right-align">
-                <input type="submit" class="btn primary" value="@OrganizationContent.CreateButtonText" />
+                <input type="submit" class="btn primary" value="@LayoutContent.SaveChangesText" />
             </div>
         </div>
     </div>

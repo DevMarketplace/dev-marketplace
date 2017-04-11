@@ -24,6 +24,7 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Hosting;
 
 namespace UI
@@ -32,15 +33,23 @@ namespace UI
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls("http://localhost:6147/", "https://localhost:44391/")
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
-
-            host.Run();
+            var host = new WebHostBuilder();
+            var currentEnvironment = host.GetSetting("environment");
+            if (currentEnvironment.ToLower() == "development")
+            {
+                host.UseKestrel(options =>
+                {
+                    options.AddServerHeader = false;
+                    options.UseHttps(new X509Certificate2("DevMarketplaceLocal.pfx", "1234"));
+                    options.UseConnectionLogging();
+                });
+            }
+            host.UseContentRoot(Directory.GetCurrentDirectory())
+            .UseUrls("http://localhost:6147/", "https://localhost:44391/")
+            .UseIISIntegration()
+            .UseStartup<Startup>()
+            .Build()
+            .Run();
         }
     }
 }

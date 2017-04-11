@@ -23,27 +23,47 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
+
+using System;
+using System.Linq;
+using BusinessLogic.Managers;
 using DataAccess.Entity;
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using UI.Models;
 
 namespace UI.Controllers
 {
     public class OrganizationController : Controller
     {
-        private readonly IGenericRepository<Company> _organizationRepository;
+        private readonly ICountryManager _countryManager;
+        private readonly ICompanyManager _companyManager;
 
-        public OrganizationController(IGenericRepository<Company> organizationRepository)
+        public OrganizationController(ICountryManager countryManager, ICompanyManager companyManager)
         {
-            _organizationRepository = organizationRepository;
+            _countryManager = countryManager;
+            _companyManager = companyManager;
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Update(Guid id)
         {
             var model = new OrganizationViewModel();
-            return View(nameof(Create), model);
+            model.Countries = _countryManager.GetCountries().Select(c => new SelectListItem { Text = c.Name, Value = c.IsoCountryCode }).ToList();
+            return View(nameof(Update), model);
+        }
+
+        [HttpPost]
+        public IActionResult Update(OrganizationViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Countries = _countryManager.GetCountries().Select(c => new SelectListItem { Text = c.Name, Value = c.IsoCountryCode }).ToList();
+                return View(nameof(Update), model);
+            }
+
+            return View(nameof(Update), model);
         }
     }
 }

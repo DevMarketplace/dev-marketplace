@@ -23,12 +23,14 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using DataAccess.Entity;
-using DataAccess.Repository;
+
+using System;
+using System.Collections.Generic;
+using BusinessLogic.BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
+using BusinessLogic.Managers;
 using UI.Controllers;
 
 namespace UITests.Controllers
@@ -37,23 +39,33 @@ namespace UITests.Controllers
     public class OrganizationControllerShould
     {
         private OrganizationController _controller;
-        private IGenericRepository<Company> _organizationRepositoryMock;
+        private ICountryManager _countryManagerMock;
+        private ICompanyManager _companyManagerMock;
 
         [SetUp]
         public void SetUp()
         {
-            _organizationRepositoryMock = Mock.Of<IGenericRepository<Company>>();
-            _controller = new OrganizationController(_organizationRepositoryMock);
+            _countryManagerMock = Mock.Of<ICountryManager>();
+            Mock.Get(_countryManagerMock)
+                .Setup(x => x.GetCountries())
+                .Returns(new List<CountryBo> { new CountryBo
+                {
+                    IsoCountryCode = "US",
+                    Name = "United States"
+                } });
+
+            _controller = new OrganizationController(_countryManagerMock, _companyManagerMock);
         }
 
         [Test]
         public void DoGetTheCreateOrganizationPage()
         {
             //Arrange
-            string expectedView = "Create";
+            string expectedView = "Update";
+            var companyId = new Guid();
 
             //Act
-            var result = _controller.Create();
+            var result = _controller.Update(companyId);
 
             //Assert
             Assert.IsInstanceOf<ViewResult>(result);

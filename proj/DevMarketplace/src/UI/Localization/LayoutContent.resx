@@ -126,6 +126,9 @@
   <data name="LogInMenuText" xml:space="preserve">
     <value>Log In</value>
   </data>
+  <data name="SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="SaveChangesText" xml:space="preserve">
     <value>Save changes</value>
   </data>

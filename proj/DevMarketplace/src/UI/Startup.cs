@@ -24,6 +24,7 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
+using System.Security.Cryptography.X509Certificates;
 using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using UI.Utilities;
 using BusinessLogic.Managers;
+using Microsoft.AspNetCore.Server.Kestrel;
 
 namespace UI
 {

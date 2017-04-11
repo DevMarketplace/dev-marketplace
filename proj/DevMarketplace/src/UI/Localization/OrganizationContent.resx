@@ -132,6 +132,9 @@
   <data name="LocationText" xml:space="preserve">
     <value>Location (City, State ...)</value>
   </data>
+  <data name="ModifyOrganizationText" xml:space="preserve">
+    <value>Modify Organization</value>
+  </data>
   <data name="OrganizationDescription" xml:space="preserve">
     <value>Organization bio</value>
   </data>

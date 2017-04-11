@@ -5,7 +5,7 @@
 // All shared stories become available on the Developer Marketplace website
 //  and software engineers from all over the world can work on these stories. 
 // 
-// Copyright (C) 2016 Tosho Toshev
+// Copyright (C) 2017 Tosho Toshev
 // 
 //     This program is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
