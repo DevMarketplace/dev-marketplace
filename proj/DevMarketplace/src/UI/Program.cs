@@ -35,7 +35,7 @@ namespace UI
         {
             var host = new WebHostBuilder();
             var currentEnvironment = host.GetSetting("environment");
-            if (currentEnvironment.ToLower() == "development")
+            if (currentEnvironment.ToLower() == "development" || currentEnvironment.ToLower() == "staging")
             {
                 host.UseKestrel(options =>
                 {
@@ -44,6 +44,14 @@ namespace UI
                     options.UseConnectionLogging();
                 });
             }
+            else
+            {
+                host.UseKestrel(options =>
+                {
+                    options.UseConnectionLogging();
+                });
+            }
+
             host.UseContentRoot(Directory.GetCurrentDirectory())
             .UseUrls("http://localhost:6147/", "https://localhost:44391/")
             .UseIISIntegration()

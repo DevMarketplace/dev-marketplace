@@ -14,38 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\npm\reflect-metadata\AUTHORS.md" />
-    <Content Include="wwwroot\npm\reflect-metadata\bower.json" />
-    <Content Include="wwwroot\npm\reflect-metadata\CopyrightNotice.txt" />
-    <Content Include="wwwroot\npm\reflect-metadata\docs\ecmarkup.css" />
-    <Content Include="wwwroot\npm\reflect-metadata\docs\ecmarkup.js" />
-    <Content Include="wwwroot\npm\reflect-metadata\docs\index.html" />
-    <Content Include="wwwroot\npm\reflect-metadata\docs\spec.biblio.json" />
-    <Content Include="wwwroot\npm\reflect-metadata\gulpfile.js" />
-    <Content Include="wwwroot\npm\reflect-metadata\index.d.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\package.json" />
-    <Content Include="wwwroot\npm\reflect-metadata\README.md" />
-    <Content Include="wwwroot\npm\reflect-metadata\reflect-metadata.d.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\Reflect.d.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\Reflect.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\spec.html" />
-    <Content Include="wwwroot\npm\reflect-metadata\spec\metadata.md" />
-    <Content Include="wwwroot\npm\reflect-metadata\standalone.d.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-decorate.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-definemetadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-deletemetadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-getmetadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-getmetadatakeys.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-getownmetadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-getownmetadatakeys.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-hasmetadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-hasownmetadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\reflect-metadata.ts" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\Reflect.js" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\Reflect.js.map" />
-    <Content Include="wwwroot\npm\reflect-metadata\test\tsconfig.json" />
-    <Content Include="wwwroot\npm\reflect-metadata\tsconfig.json" />
-    <Content Include="wwwroot\npm\reflect-metadata\typings.d.ts" />
+    <Compile Remove="wwwroot\npm\reflect-metadata\**" />
+    <Content Remove="wwwroot\npm\reflect-metadata\**" />
+    <EmbeddedResource Remove="wwwroot\npm\reflect-metadata\**" />
+    <None Remove="wwwroot\npm\reflect-metadata\**" />
   </ItemGroup>
 
   <ItemGroup>
