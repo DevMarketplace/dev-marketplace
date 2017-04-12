@@ -143,6 +143,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organization Profile.
+        /// </summary>
+        public static string OrganizationProfileText {
+            get {
+                return ResourceManager.GetString("OrganizationProfileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organization.
         /// </summary>
         public static string OrganizationText {

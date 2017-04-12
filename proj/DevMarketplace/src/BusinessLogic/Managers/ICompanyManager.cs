@@ -32,6 +32,11 @@ namespace BusinessLogic.Managers
     public interface ICompanyManager
     {
         /// <summary>
+        /// Contains the default e-mail intended when the 'No Company' option is selected
+        /// </summary>
+        string GetDefaultCompanyEmail { get; }
+
+        /// <summary>
         /// Lists all available organizations.
         /// </summary>
         /// <returns></returns>
@@ -47,9 +52,9 @@ namespace BusinessLogic.Managers
         /// <summary>
         /// Gets a company by name
         /// </summary>
-        /// <param name="companyName"></param>
+        /// <param name="companyEmail"></param>
         /// <returns></returns>
-        CompanyBo GetByName(string companyName);
+        CompanyBo GetByEmail(string companyEmail);
 
         /// <summary>
         /// Creates a new company
@@ -59,10 +64,24 @@ namespace BusinessLogic.Managers
         Guid Create(CompanyBo company);
 
         /// <summary>
+        /// Updates an existing company record
+        /// </summary>
+        /// <param name="company"></param>
+        void Update(CompanyBo company);
+
+        /// <summary>
         /// Sets a user as a company admin
         /// </summary>
         /// <param name="UserId"></param>
         /// <param name="companyId"></param>
         void SetAdmin(Guid userId, Guid companyId);
+
+        /// <summary>
+        /// Checks if user is a company admin
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        bool IsUserCompanyAdmin(string userId, Guid companyId);
     }
 }

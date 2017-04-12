@@ -1,4 +1,5 @@
-﻿@using UI.Models
+﻿@using System.Security.Claims
+@using UI.Models
 @using UI.Localization
 @model ProfileViewModel
 
@@ -7,6 +8,7 @@
         <div class="col s12">
             <form asp-controller="Account" asp-action="Profile">
                 @Html.AntiForgeryToken()
+                <input asp-for="IsCompanyAdmin" type="hidden"/>
                 <div class="row">
                     <div class="col s12 m8 push-m2">
                         <div class="col s12 page-title">@AccountContent.UserProfilePageTitle</div>
@@ -31,8 +33,17 @@
                             <select asp-for="CompanyId" class="browser-default" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
                         </div>
                         <div class="input-field col s12">
-                            <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ChangePasswordText</a>
+                            @if (User.Claims.Any(c => c.Type == ClaimTypes.AuthenticationMethod) == false)
+                            {
+                                <a asp-controller="Account" asp-action="ForgotPassword">@AccountContent.ChangePasswordText</a>                                
+                            }
                         </div>
+                        @if (Model.IsCompanyAdmin)
+                        {
+                            <div class="input-field col s12">
+                                <a asp-controller="Organization" asp-action="Update" asp-route-id="@Model.CompanyId">@OrganizationContent.OrganizationProfileText</a>   
+                            </div>
+                        }
                         <div class="input-field col s12">
                             @if (!ViewData.ModelState.IsValid)
                             {

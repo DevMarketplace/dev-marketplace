@@ -42,7 +42,6 @@ namespace RestServices
                 {
                     options.AddServerHeader = false;
                     options.UseHttps(new X509Certificate2("DevMarketplaceLocal.pfx", "1234"));
-                    options.UseConnectionLogging();
                 });
             }
             else

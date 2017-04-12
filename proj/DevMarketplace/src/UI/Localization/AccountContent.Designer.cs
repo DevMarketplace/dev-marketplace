@@ -134,6 +134,15 @@ namespace UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Company.
+        /// </summary>
+        public static string EditCompanyText {
+            get {
+                return ResourceManager.GetString("EditCompanyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must have a confirmed email to log in..
         /// </summary>
         public static string EmailConfirmationRequiredErrorText {
@@ -359,7 +368,7 @@ namespace UI.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile.
+        ///   Looks up a localized string similar to User profile.
         /// </summary>
         public static string UserProfilePageTitle {
             get {

@@ -23,19 +23,32 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
+
+using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using BusinessLogic.BusinessObjects;
+using BusinessLogic.Utilities;
 using UI.Localization;
 
 namespace UI.Models
 {
-    public class OrganizationViewModel
+    public class OrganizationViewModel : ViewModelBase
     {
         public OrganizationViewModel()
         {
-            
+            Countries = new List<SelectListItem>();   
         }
+
+        public OrganizationViewModel(CompanyBo organization)
+            :this()
+        {
+            SimplePropertyMapper.Map(organization, this);
+        }
+
+        [Required]
+        public Guid? Id { get; set; } 
 
         [Required, MinLength(1), MaxLength(300), Display(ResourceType = typeof(OrganizationContent), Name = nameof(OrganizationContent.OrganizationNameText))]
         public string Name { get; set; }
@@ -43,7 +56,7 @@ namespace UI.Models
         [DataType(DataType.Url), Display(ResourceType = typeof(OrganizationContent), Name = nameof(OrganizationContent.WebSiteText))]
         public string Url { get; set; }
 
-        [Required, DataType(DataType.MultilineText), Display(ResourceType = typeof(OrganizationContent), Name = nameof(OrganizationContent.OrganizationDescription))]
+        [DataType(DataType.MultilineText), Display(ResourceType = typeof(OrganizationContent), Name = nameof(OrganizationContent.OrganizationDescription))]
         public string Description { get; set; }
 
         [Required, DataType(DataType.EmailAddress), Display(ResourceType = typeof(OrganizationContent), Name = nameof(OrganizationContent.OrganizationEmailText))]

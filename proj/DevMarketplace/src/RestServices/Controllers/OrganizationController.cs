@@ -60,6 +60,11 @@ namespace RestServices.Controllers
             try
             {
                 var organization = _companyManager.Get(id);
+                if (organization.Email == _companyManager.GetDefaultCompanyEmail)
+                {
+                    return BadRequest();
+                }
+
                 return new OkObjectResult(new GenericResponseMessage<CompanyBo>(organization));
             }
             catch (Exception ex)
@@ -93,7 +98,7 @@ namespace RestServices.Controllers
                 });
             }
 
-            var company = _companyManager.GetByName(organization.Name);
+            var company = _companyManager.GetByEmail(organization.Email);
             if (company != null)
             {
                 return new BadRequestObjectResult(new GenericResponseMessage<CompanyBo>

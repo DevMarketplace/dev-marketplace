@@ -35,6 +35,7 @@ namespace BusinessLogic.Managers
 {
     public class CompanyManager : ICompanyManager
     {
+        private const string DefaultCompanyEmail = "noemail@devmarketplace.com";
         private readonly IGenericRepository<Company> _companyRepository;
         private readonly IGenericRepository<CompanyAdmin> _companyAdminRepository;
 
@@ -43,6 +44,8 @@ namespace BusinessLogic.Managers
             _companyRepository = companyRepository;
             _companyAdminRepository = companyAdminRepository;
         }
+
+        public string GetDefaultCompanyEmail => DefaultCompanyEmail;
 
         public IEnumerable<CompanyBo> GetCompanies()
         {
@@ -54,9 +57,9 @@ namespace BusinessLogic.Managers
             return new CompanyBo(_companyRepository.GetByID(id));
         }
 
-        public CompanyBo GetByName(string companyName)
+        public CompanyBo GetByEmail(string companyEmail)
         {
-            var company = _companyRepository.Get(x => x.Name == companyName).FirstOrDefault();
+            var company = _companyRepository.Get(x => x.Email == companyEmail).FirstOrDefault();
             return company != null ? new CompanyBo(company) : null;
         }
 
@@ -73,14 +76,31 @@ namespace BusinessLogic.Managers
             return Guid.Empty;
         }
 
+        public void Update(CompanyBo company)
+        {
+            _companyRepository.Update(company.ToEntity<Company>());
+            _companyRepository.SubmitChanges();
+        }
+
         public void SetAdmin(Guid userId, Guid companyId)
         {
+            var company = _companyRepository.GetByID(companyId);
+            if (company.Email == DefaultCompanyEmail)
+            {
+                return;
+            }
+
             var companyAdmin = _companyAdminRepository.Get(ca => ca.CompanyId == companyId).FirstOrDefault();
             if(companyAdmin == null)
             {
                 _companyAdminRepository.Insert(new CompanyAdmin { CompanyId = companyId, UserId = userId.ToString() });
                 _companyAdminRepository.SubmitChanges();
             }
+        }
+
+        public bool IsUserCompanyAdmin(string userId, Guid companyId)
+        {
+            return _companyAdminRepository.Get(ca => ca.CompanyId == companyId && ca.UserId == userId.ToString()).Any();
         }
     }
 }

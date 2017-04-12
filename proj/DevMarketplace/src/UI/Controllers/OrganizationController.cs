@@ -26,12 +26,14 @@
 
 using System;
 using System.Linq;
+using BusinessLogic.BusinessObjects;
 using BusinessLogic.Managers;
-using DataAccess.Entity;
-using DataAccess.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using UI.Models;
+using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
 namespace UI.Controllers
 {
@@ -39,22 +41,49 @@ namespace UI.Controllers
     {
         private readonly ICountryManager _countryManager;
         private readonly ICompanyManager _companyManager;
+        private readonly ILogger _logger;
 
-        public OrganizationController(ICountryManager countryManager, ICompanyManager companyManager)
+        public OrganizationController(ICountryManager countryManager, ICompanyManager companyManager, ILoggerFactory loggerFactory)
         {
             _countryManager = countryManager;
             _companyManager = companyManager;
+            _logger = loggerFactory.CreateLogger(nameof(OrganizationController));
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Update(Guid id)
         {
-            var model = new OrganizationViewModel();
-            model.Countries = _countryManager.GetCountries().Select(c => new SelectListItem { Text = c.Name, Value = c.IsoCountryCode }).ToList();
-            return View(nameof(Update), model);
+            try
+            {
+                var company = _companyManager.Get(id);
+                if (company == null)
+                {
+                    return NotFound();
+                }
+
+                var model = new OrganizationViewModel(company)
+                {
+                    Countries = _countryManager.GetCountries()
+                        .Select(c => new SelectListItem
+                        {
+                            Text = c.Name,
+                            Value = c.IsoCountryCode
+                        }).ToList()
+                };
+
+                return View(nameof(Update), model);
+
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.LogError(e.Message, e);
+                return NotFound();
+            }
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(OrganizationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -63,7 +92,19 @@ namespace UI.Controllers
                 return View(nameof(Update), model);
             }
 
-            return View(nameof(Update), model);
+            try
+            {
+                var company = model.ToBusinessObject<CompanyBo>();
+                _companyManager.Update(company);
+
+                return RedirectToAction(nameof(Update), model.Id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                return View(nameof(Update), model);
+            }
         }
     }
 }

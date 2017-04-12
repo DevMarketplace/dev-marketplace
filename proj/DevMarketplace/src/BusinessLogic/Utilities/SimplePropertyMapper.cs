@@ -43,7 +43,8 @@ namespace BusinessLogic.Utilities
                     typeof(DateTime),
                     typeof(DateTimeOffset),
                     typeof(TimeSpan),
-                    typeof(Guid)
+                    typeof(Guid),
+                    typeof(Guid?)
                 }.Contains(type) ||
                 Convert.GetTypeCode(type) != TypeCode.Object ||
                 (type.IsGenericParameter && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]));
@@ -55,11 +56,9 @@ namespace BusinessLogic.Utilities
 
             foreach (var sourceProp in source.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                var targetProperty = targetProps.FirstOrDefault(x => x.Name == sourceProp.Name);
-                if (targetProperty != null && sourceProp.Name == targetProperty.Name &&
-                    sourceProp.PropertyType == targetProperty.PropertyType &&
-                    IsSimpleType(sourceProp.PropertyType) &&
-                    IsSimpleType(targetProperty.PropertyType))
+                var targetProperty = targetProps.FirstOrDefault(x => string.Compare(x.Name, sourceProp.Name, StringComparison.OrdinalIgnoreCase) == 0);
+                if (targetProperty != null && sourceProp.PropertyType == targetProperty.PropertyType &&
+                    IsSimpleType(sourceProp.PropertyType) && IsSimpleType(targetProperty.PropertyType))
                 {
                     targetProperty.SetValue(target, sourceProp.GetValue(source));
                 }

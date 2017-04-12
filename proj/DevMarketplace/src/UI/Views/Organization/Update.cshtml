@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col s12 m8 push-m2">
-            <div class="col s12 page-title">@OrganizationContent.ModifyOrganizationText</div>
+            <div class="col s12 page-title">@OrganizationContent.OrganizationProfileText</div>
            
             <div class="input-field col s12 m6">
                 <input asp-for="Name" />
@@ -22,6 +22,7 @@
             <div class="input-field col s12">
                 <input asp-for="Url" />
                 <label asp-for="Url"></label>
+                <span asp-validation-for="Url" class="field-validation-error"></span>
             </div>
             
             <div class="input-field col s12">
@@ -35,9 +36,8 @@
             </div>
 
             <div class="input-field col s12">
-                <input asp-for="Description" />
+                <textarea asp-for="Description" rows="5" cols="50" class="materialize-textarea"></textarea>
                 <label asp-for="Description"></label>
-                <span asp-validation-for="Description" class="field-validation-error"></span>
             </div>
             
             <div class="input-field col s12">
@@ -46,7 +46,10 @@
                     <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
                 }
             </div>
-            <div class="col s6 push-s6 right-align">
+            <div class="col s6 left-align">
+                <a  class="btn secondary" asp-controller="Account" asp-action="Profile">@AccountContent.UserProfilePageTitle</a>
+            </div>
+            <div class="col s6 right-align">
                 <input type="submit" class="btn primary" value="@LayoutContent.SaveChangesText" />
             </div>
         </div>
