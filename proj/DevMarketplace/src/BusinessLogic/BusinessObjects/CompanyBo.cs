@@ -28,7 +28,7 @@ using System;
 
 namespace BusinessLogic.BusinessObjects
 {
-    public class CompanyBo
+    public class CompanyBo : BaseBo
     {
         public CompanyBo()
         {
@@ -46,7 +46,7 @@ namespace BusinessLogic.BusinessObjects
             Location = entity.Location;
         }
 
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Name { get; set; }
 

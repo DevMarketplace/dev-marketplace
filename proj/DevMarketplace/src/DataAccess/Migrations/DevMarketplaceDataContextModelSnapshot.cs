@@ -1,29 +1,4 @@
-﻿#region License
-// The Developer Marketplace is a web application that allows individuals, 
-// teams and companies share KanBan stories, cards, tasks and items from 
-// their KanBan boards and Scrum boards. 
-// All shared stories become available on the Developer Marketplace website
-//  and software engineers from all over the world can work on these stories. 
-// 
-// Copyright (C) 2016 Tosho Toshev
-// 
-//     This program is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     This program is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-// 
-//     You should have received a copy of the GNU General Public License
-//     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 
-// GitHub repository: https://github.com/cracker4o/dev-marketplace
-// e-mail: cracker4o@gmail.com
-#endregion
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -38,12 +13,13 @@ namespace DataAccess.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.1")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DataAccess.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -53,27 +29,27 @@ namespace DataAccess.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasMaxLength(100);
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -86,7 +62,7 @@ namespace DataAccess.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -104,7 +80,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entity.Company", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
@@ -115,13 +91,13 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("IsoCountryCode")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 2);
+                        .HasMaxLength(2);
 
                     b.Property<string>("Location");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.Property<string>("Url");
 
@@ -132,11 +108,24 @@ namespace DataAccess.Migrations
                     b.ToTable("Company");
                 });
 
+            modelBuilder.Entity("DataAccess.Entity.CompanyAdmin", b =>
+                {
+                    b.Property<Guid?>("CompanyId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("CompanyId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CompanyAdmin");
+                });
+
             modelBuilder.Entity("DataAccess.Entity.Country", b =>
                 {
                     b.Property<string>("IsoCountryCode")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("MaxLength", 2);
+                        .HasMaxLength(2);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -148,20 +137,22 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -233,8 +224,6 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -266,6 +255,19 @@ namespace DataAccess.Migrations
                     b.HasOne("DataAccess.Entity.Country", "Country")
                         .WithMany()
                         .HasForeignKey("IsoCountryCode")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataAccess.Entity.CompanyAdmin", b =>
+                {
+                    b.HasOne("DataAccess.Entity.Company", "Company")
+                        .WithMany("CompanyAdmins")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DataAccess.ApplicationUser", "User")
+                        .WithMany("CompanyAdmins")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

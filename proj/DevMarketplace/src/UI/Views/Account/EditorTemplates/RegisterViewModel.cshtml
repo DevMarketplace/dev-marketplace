@@ -1,5 +1,8 @@
-﻿@using System.Threading.Tasks
+﻿@using System.IO
+@using System.Text.Encodings.Web
+@using System.Threading.Tasks
 @using UI.Localization
+@using UI.Models
 @model UI.Models.RegisterViewModel
 
 <form asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action">
@@ -54,10 +57,23 @@
                 <input asp-for="Password" type="hidden"/>
                 <input asp-for="PasswordConfirm" type="hidden"/>
             }
-            <div class="input-field col s12">
-                <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
-                <label asp-for="CompanyId"></label>
+            <div class="col s8 m10">
+                <label>@Html.DisplayNameFor(m => m.CompanyId)</label>
+                <select asp-for="CompanyId" class="browser-default" asp-items="@(new SelectList(Model.Companies, "Value", "Text"))"></select>
             </div>
+            <div class="input-field col s2 m1">
+                <a class="btn secondary on-side" href="#create-organization-modal" id="create-organization" title="@OrganizationContent.CreateOrganizationTitle">
+                    <i class="material-icons">playlist_add</i>
+                </a>
+            </div>
+            @Html.Partial("ModalWindowPartial", new ModalWindowPartialViewModel
+            {
+                Id = "create-organization-modal",
+                Title = OrganizationContent.CreateOrganizationTitle,
+                Content = "<div id=\"create-organization-app\"><create-organization></create-organization></div>"
+            })
+            @Html.Partial("../Vue/CreateOrganizationPartial")
+
             <input asp-for="Provider" type="hidden"/>
             <div class="input-field col s12">
                 @if (!ViewData.ModelState.IsValid)
@@ -65,7 +81,7 @@
                     <div asp-validation-summary="ModelOnly" class="field-validation-error"></div>
                 }
             </div>
-            <div class="col s6 push-s6 right-align">
+            <div class="col s12 m6 push-m6 right-align">
                 <input type="submit" class="btn primary" value="@AccountContent.RegisterText"/>
             </div>
         </div>

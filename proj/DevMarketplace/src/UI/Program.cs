@@ -23,11 +23,8 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Hosting;
 
 namespace UI
@@ -36,14 +33,30 @@ namespace UI
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
+            var host = new WebHostBuilder();
+            var currentEnvironment = host.GetSetting("environment");
+            if (currentEnvironment.ToLower() == "development" || currentEnvironment.ToLower() == "staging")
+            {
+                host.UseKestrel(options =>
+                {
+                    options.AddServerHeader = false;
+                    options.UseHttps(new X509Certificate2("DevMarketplaceLocal.pfx", "1234"));
+                });
+            }
+            else
+            {
+                host.UseKestrel(options =>
+                {
+                    options.UseConnectionLogging();
+                });
+            }
 
-            host.Run();
+            host.UseContentRoot(Directory.GetCurrentDirectory())
+            .UseUrls("http://localhost:6147/", "https://localhost:44391/")
+            .UseIISIntegration()
+            .UseStartup<Startup>()
+            .Build()
+            .Run();
         }
     }
 }

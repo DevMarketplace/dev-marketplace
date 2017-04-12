@@ -24,6 +24,8 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,7 +34,7 @@ namespace DataAccess.Entity
     public class Company : IHasIdentityEntity
     {
         [Key, Column(Order=1)]
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Column(Order=2), Required, MinLength(1), MaxLength(300)]
         public string Name { get; set; }
@@ -54,5 +56,7 @@ namespace DataAccess.Entity
 
         [Column(Order=7)]
         public string Location { get; set; }
+
+        public ICollection<CompanyAdmin> CompanyAdmins { get; set; }
     }
 }

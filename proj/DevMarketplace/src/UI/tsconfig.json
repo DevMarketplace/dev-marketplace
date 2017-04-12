@@ -6,7 +6,7 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [ "es2015", "dom" ],
+    "lib": [ "es2015", "dom", "es5" ],
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "typeRoots": [
@@ -15,7 +15,10 @@
   },
   "compileOnSave": true,
   "exclude": [
-    "node_modules/*",
-    "**/*-aot.ts"
+    "node_modules",
+    "wwwroot/npm/**",
+    "typings",
+    "**/*-aot.ts",
+    "**/*.spec.ts"
   ]
 }

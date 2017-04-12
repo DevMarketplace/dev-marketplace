@@ -113,7 +113,7 @@ namespace DataAccess.Repository
 
         public void SubmitChanges()
         {
-            
+            _dataContext.SaveChanges();
         }
     }
 }

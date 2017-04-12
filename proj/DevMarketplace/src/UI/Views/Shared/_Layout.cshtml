@@ -21,9 +21,8 @@
         {
             @RenderSection("JumbotronSection", false)
         }
-
         <div class="navigation-bar">
-            <nav>
+            <nav id="main-menu">
                 <div class="nav-wrapper">
                     <a href="/" class="brand-logo">_Dev_Marketplace</a>
                     <a href="#" data-activates="nav-mobile" class="button-collapse">
@@ -31,20 +30,26 @@
                     </a>
                     <ul id="nav-desktop" class="right hide-on-med-and-down">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
-                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
-                        <account-user-info><li>@(await Html.PartialAsync("../Angular/LoaderPartial", "spinner-white-only"))</li></account-user-info>
+                        <account-menu>
+                            @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
+                        </account-menu>
                     </ul>
                     <ul class="side-nav" id="nav-mobile">
                         <li><a href="#">@LayoutContent.StartAProjectMenuText</a></li>
-                        <li><a asp-controller="Account" asp-action="SignIn">@LayoutContent.SignInMenuText</a></li>
                         <li><a asp-controller="Account" asp-action="Register">@LayoutContent.SignUpMenuText</a></li>
+                        <account-menu>
+                            @(await Html.PartialAsync("../Vue/LoaderPartial", "spinner-white-only"))
+                        </account-menu>
                     </ul>
                 </div>
             </nav>
         </div>
+
+        @(await Html.PartialAsync("../Vue/UserAccountMenuPartial"))
+
     </header>
-    
+
     @if (IsSectionDefined("PromoSection"))
     {
         <div class="promo valign-wrapper">
@@ -54,6 +59,7 @@
     <main>
         @RenderBody()
     </main>
+
     <footer></footer>
     <div class="sub-footer">
         <div class="container row">
@@ -70,9 +76,6 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <script src="~/js/materialize.js"></script>
-        <script src="~/npm/core-js/shim.min.js"></script>
-        <script src="~/npm/zone.js/zone.js"></script>
-        <script src="~/npm/reflect-metadata/Reflect.js"></script>
         <script src="~/npm/systemjs/system.src.js"></script>
         <script src="~/systemjs.config.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -82,8 +85,14 @@
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/js/materialize.min.js"></script>
+
+        <script src="~/npm/systemjs/system.src.js"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

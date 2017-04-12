@@ -217,9 +217,12 @@
     <value>Success</value>
   </data>
   <data name="UserProfilePageTitle" xml:space="preserve">
-    <value>Profile</value>
+    <value>User profile</value>
   </data>
   <data name="UseSignInDefault" xml:space="preserve">
     <value>OR just sign in</value>
+  </data>
+  <data name="EditCompanyText" xml:space="preserve">
+    <value>Edit Company</value>
   </data>
 </root>

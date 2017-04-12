@@ -38,6 +38,8 @@ namespace DataAccess
 
         public DbSet<Company> Company { get; set; }
 
+        public DbSet<CompanyAdmin> CompanyAdmin { get; set; }
+
         public DevMarketplaceDataContext()
         {
             Database.EnsureCreated();
@@ -54,6 +56,9 @@ namespace DataAccess
             builder.Entity<Company>()
                 .Property(b => b.Id)
                 .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            builder.Entity<CompanyAdmin>()
+            .HasKey(c => new { c.CompanyId, c.UserId });
         }
 
         void IDataContext.SaveChanges()

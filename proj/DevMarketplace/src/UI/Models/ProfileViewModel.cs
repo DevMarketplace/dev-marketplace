@@ -23,13 +23,15 @@
 // GitHub repository: https://github.com/cracker4o/dev-marketplace
 // e-mail: cracker4o@gmail.com
 #endregion
-using BusinessLogic.Services;
+
 using DataAccess;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using BusinessLogic.Managers;
+using Microsoft.AspNetCore.Mvc;
 using UI.Localization;
 
 namespace UI.Models
@@ -48,6 +50,7 @@ namespace UI.Models
             Email = model.Email;
             CompanyId = model.CompanyId;
             Companies = TransformCompanies(companyManager);
+            IsCompanyAdmin = model.IsCompanyAdmin;
         }
 
         public ProfileViewModel(ApplicationUser user, ICompanyManager companyManager)
@@ -57,6 +60,7 @@ namespace UI.Models
             Email = user.Email;
             CompanyId = user.CompanyId;
             Companies = TransformCompanies(companyManager);
+            IsCompanyAdmin = companyManager.IsUserCompanyAdmin(user.Id, user.CompanyId);
         }
 
         public static void SetUserProperties(ProfileViewModel model, ApplicationUser user)
@@ -66,7 +70,6 @@ namespace UI.Models
             user.CompanyId = model.CompanyId;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
-
         }
 
         private List<SelectListItem> TransformCompanies(ICompanyManager manager)
@@ -91,5 +94,8 @@ namespace UI.Models
         public Guid CompanyId { get; set; }
 
         public List<SelectListItem> Companies { get; set; }
+
+        [Required]
+        public bool IsCompanyAdmin { get; set; }
     }
 }

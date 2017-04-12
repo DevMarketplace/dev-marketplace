@@ -36,9 +36,9 @@ namespace DataAccess.UnitOfWork
         private readonly IDataContext _dataContext;
         private readonly List<object> _repositories;
 
-        public UnitOfWork(IDataContext dataContext)
+        public UnitOfWork(IDataContextFactory dataContextFactory)
         {
-            _dataContext = dataContext;
+            _dataContext = dataContextFactory.CreateDataContext();
             _repositories = new List<object>();
         }
 
@@ -68,6 +68,8 @@ namespace DataAccess.UnitOfWork
                         throw;
                     }
                 }
+
+                transaction.Commit();
             }
         }
 
@@ -77,20 +79,13 @@ namespace DataAccess.UnitOfWork
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    _dataContext.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
 
                 _disposedValue = true;
             }
         }
 
-        // ~UnitOfWork() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
         public void Dispose()
         {
             Dispose(true);

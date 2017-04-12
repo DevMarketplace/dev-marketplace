@@ -24,9 +24,8 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using StructureMap;
-using DataAccess.Abstractions;
 using DataAccess.Repository;
-using Microsoft.AspNetCore.Identity;
+using StructureMap.AutoFactory;
 
 namespace DataAccess
 {
@@ -42,6 +41,7 @@ namespace DataAccess
             });
 
             For<IDataContext>().Use<DevMarketplaceDataContext>();
+            For<IDataContextFactory>().CreateFactory();
         }
     }
 }

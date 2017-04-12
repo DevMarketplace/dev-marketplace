@@ -27,7 +27,7 @@ using DataAccess.Entity;
 
 namespace BusinessLogic.BusinessObjects
 {
-    public class CountryBo
+    public class CountryBo : BaseBo
     {
         public CountryBo()
         {

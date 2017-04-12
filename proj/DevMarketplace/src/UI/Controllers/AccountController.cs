@@ -5,7 +5,7 @@
 // All shared stories become available on the Developer Marketplace website
 //  and software engineers from all over the world can work on these stories. 
 // 
-// Copyright (C) 2016 Tosho Toshev
+// Copyright (C) 2017 Tosho Toshev
 // 
 //     This program is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BusinessLogic.Utilities;
-using DataAccess.Abstractions;
 using Microsoft.Extensions.Logging;
 using UI.Models;
 using Microsoft.AspNetCore.DataProtection;
@@ -38,9 +37,9 @@ using Microsoft.Extensions.Configuration;
 using MimeKit.Text;
 using UI.Localization;
 using UI.Utilities;
-using BusinessLogic.Services;
 using System.Linq;
 using System.Security.Claims;
+using BusinessLogic.Managers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UI.Controllers
@@ -218,6 +217,7 @@ namespace UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterExternal(RegisterViewModel model, [FromQuery] string returnUrl)
         {
@@ -259,6 +259,8 @@ namespace UI.Controllers
 
                     // Update any authentication tokens as well
                     await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                    
+                    _companyManager.SetAdmin(Guid.Parse(newUser.Id), newUser.CompanyId);
 
                     if(!string.IsNullOrWhiteSpace(returnUrl))
                     {
@@ -275,11 +277,11 @@ namespace UI.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            model.Companies = _companyManager.GetCompanies().Select(x => new SelectListItem
+            model.Companies = await Task.FromResult(_companyManager.GetCompanies().Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
-            }).ToList();
+            }).ToList());
 
             return View(nameof(SignInExternal), model);
         }
@@ -313,6 +315,7 @@ namespace UI.Controllers
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
                 return View(nameof(SignIn), new SignInViewModel());
             }
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -327,6 +330,7 @@ namespace UI.Controllers
                 await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
 
                 _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+
                 if(string.IsNullOrWhiteSpace(returnUrl))
                 {
                     return RedirectToAction("Index", "Home");
@@ -356,6 +360,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -386,7 +391,7 @@ namespace UI.Controllers
                 return View(new ProfileViewModel(model, _companyManager));
             }
 
-            return View(new ProfileViewModel(model, _companyManager));
+            return RedirectToAction(nameof(Profile));
         }
 
         [HttpGet]
@@ -416,6 +421,7 @@ namespace UI.Controllers
 
                 if (identityResult.Succeeded)
                 {
+                    _companyManager.SetAdmin(Guid.Parse(user.Id), user.CompanyId);
                     return RedirectToAction(nameof(SignIn), returnUrl);
                 }
 

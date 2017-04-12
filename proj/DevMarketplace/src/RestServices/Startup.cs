@@ -24,9 +24,6 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +32,8 @@ using Microsoft.Extensions.Logging;
 using StructureMap;
 using DataAccess;
 using BusinessLogic;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace RestServices
 {
@@ -56,7 +55,9 @@ namespace RestServices
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc().AddControllersAsServices();
+            services.AddMvc()
+                .AddControllersAsServices();
+            services.AddCors();
 
             return ConfigureIoC(services);
         }
@@ -64,6 +65,9 @@ namespace RestServices
         public IServiceProvider ConfigureIoC(IServiceCollection services)
         {
             var container = new Container();
+
+            var connection = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+            services.AddEntityFrameworkSqlServer().AddDbContext<DevMarketplaceDataContext>(options => options.UseSqlServer(connection), ServiceLifetime.Scoped);
 
             container.Configure(config =>
             {
@@ -87,6 +91,23 @@ namespace RestServices
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseCors(builder => builder.WithOrigins("http://localhost:6147", "https://localhost:44391")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseCors(builder => builder.WithOrigins("http://localhost:6147", "https://localhost:44391", "http://www.devmarketplace.com", "https://www.devmarketplace.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
+            }
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

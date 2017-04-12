@@ -32,6 +32,6 @@ namespace DataAccess.Entity
     /// </summary>
     public interface IHasIdentityEntity
     {
-        Guid Id { get; set; }
+        Guid? Id { get; set; }
     }
 }

@@ -117,11 +117,11 @@ namespace DataAccessTests.Repository
                 SampleProperty = "Some value"
             };
 
-            _genericRepositoryPartial.Setup(x => x.GetByID(existingEntity.Id)).Returns(existingEntity);
+            _genericRepositoryPartial.Setup(x => x.GetByID(existingEntity.Id.Value)).Returns(existingEntity);
             _genericRepositoryPartial.Setup(x => x.Delete(existingEntity));
 
             //Act
-            _genericRepositoryPartial.Object.Delete(existingEntity.Id);
+            _genericRepositoryPartial.Object.Delete(existingEntity.Id.Value);
 
             //Assert
             _genericRepositoryPartial.Verify(x => x.Delete(existingEntity));
@@ -130,7 +130,7 @@ namespace DataAccessTests.Repository
 
     public class TestEntity : IHasIdentityEntity
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string SampleProperty { get; set; }
     }

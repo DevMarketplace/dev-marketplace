@@ -24,6 +24,8 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
+using System.Security.Cryptography.X509Certificates;
+using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,11 +34,12 @@ using Microsoft.Extensions.Logging;
 using StructureMap;
 using DataAccess;
 using BusinessLogic;
-using DataAccess.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using UI.Utilities;
+using BusinessLogic.Managers;
+using Microsoft.AspNetCore.Server.Kestrel;
 
 namespace UI
 {
@@ -51,7 +54,7 @@ namespace UI
 
             if (env.IsDevelopment())
             {
-                builder.AddUserSecrets();
+                builder.AddUserSecrets("aspnet-DevMarketPlace-77c453d8-751d-48e5-a5b1-d0ec19e5d2b0");
             }
 
             builder.AddEnvironmentVariables();
@@ -152,9 +155,10 @@ namespace UI
 
             app.UseStaticFiles();
             app.UseIdentity();
-            app.UseGitHubAuthentication(options => {
-                options.ClientId = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientId"];
-                options.ClientSecret = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientSecret"];
+            app.UseGitHubAuthentication(new GitHubAuthenticationOptions {
+                ClientId = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientId"],
+                ClientSecret = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientSecret"],
+                Scope = { "user:email" }
             });
 
             app.UseMvc(routes =>
