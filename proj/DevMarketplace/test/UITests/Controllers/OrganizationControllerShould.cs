@@ -31,6 +31,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using BusinessLogic.Managers;
+using Microsoft.Extensions.Logging;
 using UI.Controllers;
 
 namespace UITests.Controllers
@@ -41,10 +42,12 @@ namespace UITests.Controllers
         private OrganizationController _controller;
         private ICountryManager _countryManagerMock;
         private ICompanyManager _companyManagerMock;
+        private ILoggerFactory _loggerFactory;
 
         [SetUp]
         public void SetUp()
         {
+            _loggerFactory = Mock.Of<ILoggerFactory>();
             _countryManagerMock = Mock.Of<ICountryManager>();
             Mock.Get(_countryManagerMock)
                 .Setup(x => x.GetCountries())
@@ -54,7 +57,7 @@ namespace UITests.Controllers
                     Name = "United States"
                 } });
 
-            _controller = new OrganizationController(_countryManagerMock, _companyManagerMock);
+            _controller = new OrganizationController(_countryManagerMock, _companyManagerMock, _loggerFactory);
         }
 
         [Test]
