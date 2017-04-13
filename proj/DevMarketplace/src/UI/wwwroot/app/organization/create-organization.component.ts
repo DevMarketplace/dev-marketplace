@@ -27,11 +27,13 @@ export class CreateOrganization extends Vue {
 
     created(): void {
         this.organization = new Organization();
-        this.organization.isoCountryCode = "";
         let countrySubscription : Subscription = this.countryService.getCountries()
             .map((res: any) => res.data)
             .subscribe((res: Country[]) => {
                 this.countries = res;
+                if (this.countries.length > 0) {
+                    this.organization.isoCountryCode = this.countries[0].isoCountryCode;                    
+                }
                 $.validator.unobtrusive.parse($(this.$el).find("form"));
                 $(this.$el).find("form").valid();
             },

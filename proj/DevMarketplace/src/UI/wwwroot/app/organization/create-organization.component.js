@@ -29,11 +29,13 @@ var CreateOrganization = (function (_super) {
     CreateOrganization.prototype.created = function () {
         var _this = this;
         this.organization = new organization_model_1.Organization();
-        this.organization.isoCountryCode = "";
         var countrySubscription = this.countryService.getCountries()
             .map(function (res) { return res.data; })
             .subscribe(function (res) {
             _this.countries = res;
+            if (_this.countries.length > 0) {
+                _this.organization.isoCountryCode = _this.countries[0].isoCountryCode;
+            }
             $.validator.unobtrusive.parse($(_this.$el).find("form"));
             $(_this.$el).find("form").valid();
         }, function (err) {
