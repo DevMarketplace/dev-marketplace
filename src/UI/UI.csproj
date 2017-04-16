@@ -81,6 +81,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="envsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Localization\AccountContent.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AccountContent.Designer.cs</LastGenOutput>

@@ -1,5 +1,7 @@
 param (
-    [switch] $noinit
+    [switch] $noinit,
+
+    [switch] $noDbConfig
 )
 
 #verifies all prerequisites
@@ -18,6 +20,34 @@ function checkForNetCore () {
     }
 }
 
+function configureDatabase([string] $projectFolder, [string] $connectionString) {
+    Push-Location $projectFolder
+
+    $appSettings = (Get-Content "appsettings.json" | Out-String | ConvertFrom-Json)
+    $appSettings.ConnectionStrings.Default = $connectionString;
+    $appSettings | ConvertTo-Json -depth 100 | Out-File "appsettings.json" -Force    
+
+    Pop-Location
+}
+
+function buildProject([string] $folder, [string] $projectName) {
+    Push-Location $folder
+    
+    Write-Output "Restoring nuget packages for $projectName"
+    dotnet restore;
+
+    Write-Output "Building $projectName"
+    dotnet build;
+
+    if($LASTEXITCODE -ne 0) {
+        exit;
+    }
+
+    Write-Output "Running $projectName"
+    Start-Process powershell {dotnet run};
+    Pop-Location;
+}
+
 #main routine
 function main() {
     if ([System.IntPtr]::Size -eq 4) 
@@ -29,22 +59,16 @@ function main() {
     if($noinit -eq $false) {
         checkForNetCore;
     }
-    
-    Push-Location .\src\RestServices\
-    
-    Write-Output "Restoring nuget packages for RestServices"
-    dotnet restore;
 
-    Write-Output "Building RestServices"
-    dotnet build;
-
-    if($LASTEXITCODE -ne 0) {
-        exit;
+    if($noDbConfig -eq $false) {
+        $connectionString = Read-Host -Prompt "Please set a connection string to an empty or existing database"
+        configureDatabase -projectFolder ".\src\RestServices\" -connectionString $connectionString;
+        configureDatabase -projectFolder ".\src\UI\" -connectionString $connectionString;
     }
+    
+    buildProject -folder ".\src\RestServices\" -projectName "RestServices"
 
-    Write-Output "Running RestServices"
-    dotnet run;
-
+    buildProject -folder ".\src\UI\" -projectName "DevMarketplace"
 }
 
 main;

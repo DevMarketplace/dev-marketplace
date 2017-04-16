@@ -33,7 +33,6 @@ using StructureMap;
 using DataAccess;
 using BusinessLogic;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Serialization;
 
 namespace RestServices
 {
