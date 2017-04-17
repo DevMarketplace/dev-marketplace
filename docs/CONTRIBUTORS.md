@@ -19,8 +19,7 @@ Some companies require their software engineers to sign a special agreement whic
 The Kanban board is managed on Waffle.IO . It is an UI over GitHub issues and it gives kanban states to all GitHub issues. It is preferable for every new issue/story to be created in the Waffle.IO board. It has to be described thoroughly and estimated with story points from 1 to 8 (if a story is greater than 8, then it needs to be split into multiple smaller stories). Every story is tagged with the `enhancement` tag and every defect is tagged as a `bug`. If you need help from some of the other contributors, please tag the defect/story with the `help wanted` tag.
 
 ## Development guidelines
-
-
+To start contributing to the Developer Marketplace project, you can clone the repository and build the project using the `build.ps1` on Windows and the `build.sh` script on Linux. The project requires the dotnet core 1.1 runtime and the 1.0.3 SDK versions which you can download [for your OS](https://www.microsoft.com/net/download/core). It is recommended to add the self signed certificate to the trusted certificates so your development environment can better match the real environment.
 
 ## Git guidelines
 
