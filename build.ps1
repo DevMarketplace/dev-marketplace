@@ -14,8 +14,13 @@ function checkForNetCore () {
     }
 
     #.NetCore SDK
-    if((Test-Path "C:\Program Files\dotnet\sdk\1.0.3") -eq $false) {
-        Write-Output "The .Net Core SDK 1.0.3 is not installed on your machine.`r`nPlease get it from here: 'https://go.microsoft.com/fwlink/?linkid=843448' "
+    if((Test-Path "C:\Program Files\dotnet\sdk\1.0.3") -eq $false -and (Test-Path "C:\Program Files\dotnet\sdk\1.0.2") -eq $false) {
+        Write-Output "The .Net Core SDK is not installed on your machine.`r`nPlease get it from here: 'https://go.microsoft.com/fwlink/?linkid=843448' "
+        exit;
+    }
+
+    if((Test-Path "C:\Program Files\nodejs") -eq $false) {
+        Write-Output "NodeJS is required. Please install."
         exit;
     }
 }
@@ -67,6 +72,10 @@ function main() {
     }
     
     buildProject -folder ".\src\RestServices\" -projectName "RestServices"
+
+    Push-Location ".\src\UI\"
+        npm  install
+    Pop-Location
 
     buildProject -folder ".\src\UI\" -projectName "DevMarketplace"
 }
