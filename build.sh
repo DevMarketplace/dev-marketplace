@@ -57,16 +57,28 @@ sub_db_config()
             encoding="utf-16"
             ;;
     esac
-    
-    cat appsettings.json | iconv -f $encoding -t ascii | jq '.ConnectionStrings.Default="'$1'"' | iconv -f ascii -t $encoding > appsettings.json
+
+    contents=`cat appsettings.json | iconv -f $encoding -t ascii`
+
+    echo $contents | jq '.ConnectionStrings.Default="'$2'"' | iconv -f ascii -t $encoding > appsettings.json
         
     cd $old_folder
     echo "switching back to parent dir"
 }
 
-main()
+build_project()
 {
-    echo "Main"
+    folder=$1
+    current_location=`pwd`
+    cd $folder
+        echo "Restoring nuget packages"
+        dotnet restore
+
+        echo "Building project $2"
+        dotnet build
+
+        xterm -e dotnet run
+    cd $current_location    
 }
 
 init=true;
@@ -101,4 +113,12 @@ then
     sub_db_config "src/UI/" $connection_string
 fi
 
-main
+build_project "src/RestServices" "RestServices"
+
+current=`pwd`
+
+cd "src/UI"
+    npm install
+cd $current
+
+build_project "src/UI" "Developer Marketplace"
