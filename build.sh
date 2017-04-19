@@ -1,18 +1,20 @@
-function get_help() 
+#!/bin/sh
+
+get_help()
 {
     echo "Usage: build -n -d"
     echo "-n : skip initialization <optional>"
     echo "-d : skip database configuration <optional>"
 }
 
-function exists() 
+exists()
 {
     command -v "$1" >/dev/null 2>&1
 }
 
-function sub_init() 
+sub_init()
 {
-    if exists cp
+    if exists dotnet
     then
         echo "dotnet core is installed on your machine"
     else
@@ -27,27 +29,42 @@ function sub_init()
         echo "jq is installed"
     else
         echo "The jq JSON parser is not installed. Installing jq..."
-        apt-get install jq
+        sudo apt-get install jq
     fi
 
-    if exists node 
+    if exists nodejs 
     then
-        echo "Node is installed"
+        echo "NodeJS is installed"
     else
-        echo "Node is not installed. Installing NodeJs..."
-        apt-get install node
+        echo "NodeJS is not installed. Installing NodeJs..."
+        sudo apt-get install nodejs
     fi
 }
 
-function sub_db_config() 
+sub_db_config()
 {
     conn_str=$2; 
-    pushd $1;
-        cat appsettings.json | jq 'ConnectionStrings.Default=$2' appsettings.json
-    popd;
+    echo "switching dir to $1"
+    old_folder=`pwd`
+    cd $1
+
+    encoding=`file --mime-encoding -b appsettings.json`
+    case $encoding in
+        "utf-16le")
+            encoding="utf-16"
+            ;;
+        "utf-16be")
+            encoding="utf-16"
+            ;;
+    esac
+    
+    cat appsettings.json | iconv -f $encoding -t ascii | jq '.ConnectionStrings.Default="'$1'"' | iconv -f ascii -t $encoding > appsettings.json
+        
+    cd $old_folder
+    echo "switching back to parent dir"
 }
 
-function main() 
+main()
 {
     echo "Main"
 }
@@ -62,10 +79,9 @@ case $OPTION in
         init=false;            
         ;;
     d)
-        echo "D passed"
         db_config=false;
         ;;
-    ?)
+    h)
         get_help
         exit
         ;;
