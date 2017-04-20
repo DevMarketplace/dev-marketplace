@@ -38,6 +38,27 @@ sub_init()
     else
         echo "NodeJS is not installed. Installing NodeJs..."
         sudo apt-get install nodejs
+
+        current_location=`pwd`
+        cd /usr/bin
+        sudo ln -s nodejs node
+        cd $current_location
+    fi
+
+    if exists npm
+    then
+        echo "npm is installed"
+    else 
+        echo "npm is not installed. Installing npm..."
+        sudo apt-get install npm
+    fi
+
+    if exists gulp
+    then
+        echo "gulp is installed"
+    else
+        echo "gulp is not installed. Installing gulp..."
+        sudo npm install --global gulp
     fi
 }
 
@@ -77,7 +98,7 @@ build_project()
         echo "Building project $2"
         dotnet build
 
-        xterm -e dotnet run
+        xterm -e dotnet run &
     cd $current_location    
 }
 
@@ -119,6 +140,24 @@ current=`pwd`
 
 cd "src/UI"
     npm install
+    gulp -b "`pwd`" --color --gulpfile gulpfile.js copy-all
+    gulp -b "`pwd`" --color --gulpfile gulpfile.js sass
 cd $current
 
 build_project "src/UI" "Developer Marketplace"
+
+echo "All Done!"
+
+cat << "EOF"
+ __________________________________________________
+|          _____________________________           |
+| [1] [2]  _____________________________ [_][_][_] |
+| [3] [4]  [_][_][_] [_][_][_][_] [_][_] [_][_][_] |
+| [5] [6]  [][][][][][][][][][][][][][_] [1][2][3] |
+| [7] [8]  [_][][][][][][][][][][][][][] [4][5][6] |
+| [9][10]  [__][][][][][][][][][][][][_] [7][8][9] |
+| [11][12] [___][][][][][][][][][][][__] [__][0][] |
+|          [_][______________][_]                  |
+|__________________________________________________|
+
+EOF
