@@ -105,7 +105,7 @@ build_project()
 init=true;
 db_config=true;
 
-while getopts "nd" OPTION
+while getopts "ndh" OPTION
 do
 case $OPTION in
     n)
