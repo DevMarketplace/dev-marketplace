@@ -20,6 +20,21 @@ The Kanban board is managed on Waffle.IO . It is an UI over GitHub issues and it
 
 ## Development guidelines
 To start contributing to the Developer Marketplace project, you can clone the repository and build the project using the `build.ps1` on Windows and the `build.sh` script on Linux. The project requires the dotnet core 1.1 runtime and the 1.0.3 SDK versions which you can download [for your OS](https://www.microsoft.com/net/download/core). It is recommended to add the self signed certificate to the trusted certificates so your development environment can better match the real environment.
+* Running the build.sh script (Ubuntu)
+    
+    Before runnung the sh script, please make sure that you have the following prerequisites:
+    
+    - You have installed the latest version of the DotNetCore SDK for Ubuntu. You can find instructions here - [https://www.microsoft.com/net/core#linuxubuntu](https://www.microsoft.com/net/core#linuxubuntu)
+    - You have installed the MSSQL server for linux following the instructions here - 
+    [https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu)
+
+    The script will automatically install nodejs, npm and gulp in order to perform all necessary build/run operations.
+
+* Running the build.ps1 script (Windows)
+
+    
+
+
 
 ## Git guidelines
 
