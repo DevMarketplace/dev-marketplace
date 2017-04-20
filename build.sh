@@ -81,7 +81,7 @@ sub_db_config()
 
     contents=`cat appsettings.json | iconv -f $encoding -t ascii`
 
-    echo $contents | jq '.ConnectionStrings.Default="'$2'"' | iconv -f ascii -t $encoding > appsettings.json
+    echo $contents | jq ".ConnectionStrings.Default=\"$2\"" | iconv -f ascii -t $encoding > appsettings.json
         
     cd $old_folder
     echo "switching back to parent dir"
@@ -128,10 +128,10 @@ fi
 
 if $db_config
 then
-    echo "Please set a connection string to an empty or existing database"
-    read connection_string
-    sub_db_config "src/RestServices/" $connection_string
-    sub_db_config "src/UI/" $connection_string
+    IFS= read -r -p "Please set a connection string to an empty or existing database: " connection_string
+    echo "The connection string is: $connection_string "
+    sub_db_config "src/RestServices/" "$connection_string"
+    sub_db_config "src/UI/" "$connection_string"
 fi
 
 build_project "src/RestServices" "RestServices"
