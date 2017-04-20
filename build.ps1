@@ -23,6 +23,8 @@ function checkForNetCore () {
         Write-Output "NodeJS is required. Please install."
         exit;
     }
+
+    npm install gulp -g
 }
 
 function configureDatabase([string] $projectFolder, [string] $connectionString) {
@@ -75,9 +77,23 @@ function main() {
 
     Push-Location ".\src\UI\"
         npm  install
+        gulp -b ".\" --color --gulpfile gulpfile.js copy-all
+        gulp -b ".\" --color --gulpfile gulpfile.js sass
     Pop-Location
 
     buildProject -folder ".\src\UI\" -projectName "DevMarketplace"
+
+    Write-Output "All Done"
+
+    $text = @"
+  \==============_=_/ ____.---'---`---.____
+             \_ \    \----._________.----/
+               \ \   /  /    `-_-'
+           __,--`.`-'..'-_
+          /____          ||
+               `--.____,-'
+"@
+    Write-Output $text
 }
 
 main;
