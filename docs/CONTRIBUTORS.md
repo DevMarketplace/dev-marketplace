@@ -19,8 +19,33 @@ Some companies require their software engineers to sign a special agreement whic
 The Kanban board is managed on Waffle.IO . It is an UI over GitHub issues and it gives kanban states to all GitHub issues. It is preferable for every new issue/story to be created in the Waffle.IO board. It has to be described thoroughly and estimated with story points from 1 to 8 (if a story is greater than 8, then it needs to be split into multiple smaller stories). Every story is tagged with the `enhancement` tag and every defect is tagged as a `bug`. If you need help from some of the other contributors, please tag the defect/story with the `help wanted` tag.
 
 ## Development guidelines
+To start contributing to the Developer Marketplace project, you can clone the repository and build the project using the `build.ps1` on Windows and the `build.sh` script on Linux. The project requires the dotnet core 1.1 runtime and the 1.0.3 SDK versions which you can download [for your OS](https://www.microsoft.com/net/download/core). It is recommended to add the self signed certificate to the trusted certificates so your development environment can better match the real environment.
+* Running the build.sh script (Ubuntu)
+    
+    Before runnung the sh script, please make sure that you have the following prerequisites:
+    
+    - You have installed the latest version of the DotNetCore SDK for Ubuntu. You can find instructions here - [https://www.microsoft.com/net/core#linuxubuntu](https://www.microsoft.com/net/core#linuxubuntu)
+    - You have installed the MSSQL server for linux following the instructions here - 
+    [https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu)
 
+    The script will automatically install nodejs, npm and gulp in order to perform all necessary build/run operations.
+    
+    `sh build.sh -h` displays help information about the build script
+    `sh build.sh` builds and runs the DevMarketplace project. It checks all necessery prerequisites and it also configures the connection string to the MSSQL instance
+    `sh build.sh -n -d` the parameter -d skips the database connection string input and the -n parameter disables the prerequisites check
 
+* Running the build.ps1 script (Windows)
+
+    The powershell script needs the following prerequisites:
+
+    - The latest version of the DotNetCore SDK which can be found here: [https://www.microsoft.com/net/download/core](https://www.microsoft.com/net/download/core)
+    - An instance of MSSQL server or MSSQL server EXPRESS
+    - NodeJS and NPM
+
+    The powershell script will automatically install gulp.
+
+    `./build.ps1` builds and runs the DevMarketplace project
+    `./build.ps1 -noinit -noDbConfig` the parameter -noinit skips the prerequisites check and teh -noDbConfig doesn't prompt for a connection string 
 
 ## Git guidelines
 

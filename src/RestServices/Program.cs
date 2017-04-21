@@ -27,6 +27,7 @@
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json.Linq;
 
 namespace RestServices
 {
@@ -34,9 +35,15 @@ namespace RestServices
     {
         public static void Main(string[] args)
         {
+            var currentDirectoryPath = Directory.GetCurrentDirectory();
+            var envSettingsPath = Path.Combine(currentDirectoryPath, "envsettings.json");
+            var envSettings = JObject.Parse(File.ReadAllText(envSettingsPath));
+            var enviromentValue = envSettings["aspNetEnvironment"].ToString();
+
+
             var host = new WebHostBuilder();
-            var currentEnvironment = host.GetSetting("environment");
-            if (currentEnvironment.ToLower() == "development" || currentEnvironment.ToLower() == "staging")
+            
+            if (enviromentValue.ToLower() == "development" || enviromentValue.ToLower() == "staging")
             {
                 host.UseKestrel(options =>
                 {
@@ -52,7 +59,13 @@ namespace RestServices
                 });
             }
 
+            if (!string.IsNullOrWhiteSpace(enviromentValue))
+            {
+                host.UseEnvironment(enviromentValue);
+            }
+
             host.UseUrls("http://localhost:6170/", "https://localhost:6171/")
+            .CaptureStartupErrors(true)
             .UseContentRoot(Directory.GetCurrentDirectory())
             .UseIISIntegration()
             .UseStartup<Startup>()

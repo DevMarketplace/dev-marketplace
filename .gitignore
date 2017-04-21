@@ -237,3 +237,6 @@ _Pvt_Extensions
 #CSS stylesheets
 src/UI/wwwroot/css/
 src/UI/wwwroot/npm/
+
+!src/UI/DevMarketplaceLocal.pfx
+!src/RestServices/DevMarketplaceLocal.pfx

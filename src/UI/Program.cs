@@ -26,6 +26,7 @@
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json.Linq;
 
 namespace UI
 {
@@ -34,8 +35,12 @@ namespace UI
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder();
-            var currentEnvironment = host.GetSetting("environment");
-            if (currentEnvironment.ToLower() == "development" || currentEnvironment.ToLower() == "staging")
+            var currentDirectoryPath = Directory.GetCurrentDirectory();
+            var envSettingsPath = Path.Combine(currentDirectoryPath, "envsettings.json");
+            var envSettings = JObject.Parse(File.ReadAllText(envSettingsPath));
+            var enviromentValue = envSettings["aspNetEnvironment"].ToString();
+
+            if (enviromentValue.ToLower() == "development" || enviromentValue.ToLower() == "staging")
             {
                 host.UseKestrel(options =>
                 {
@@ -51,8 +56,14 @@ namespace UI
                 });
             }
 
+            if (!string.IsNullOrWhiteSpace(enviromentValue))
+            {
+                host.UseEnvironment(enviromentValue);
+            }
+
             host.UseContentRoot(Directory.GetCurrentDirectory())
             .UseUrls("http://localhost:6147/", "https://localhost:44391/")
+            .CaptureStartupErrors(true)
             .UseIISIntegration()
             .UseStartup<Startup>()
             .Build()

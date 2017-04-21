@@ -1,0 +1,7 @@
+{
+  // Possible string values reported below. When empty it use ENV variable value or Visual Studio setting.
+  // - Production
+  // - Staging
+  // - Development
+  "aspNetEnvironment": ""
+}
