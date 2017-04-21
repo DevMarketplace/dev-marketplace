@@ -29,12 +29,23 @@ To start contributing to the Developer Marketplace project, you can clone the re
     [https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-ubuntu)
 
     The script will automatically install nodejs, npm and gulp in order to perform all necessary build/run operations.
+    
+    `sh build.sh -h` displays help information about the build script
+    `sh build.sh` builds and runs the DevMarketplace project. It checks all necessery prerequisites and it also configures the connection string to the MSSQL instance
+    `sh build.sh -n -d` the parameter -d skips the database connection string input and the -n parameter disables the prerequisites check
 
 * Running the build.ps1 script (Windows)
 
-    
+    The powershell script needs the following prerequisites:
 
+    - The latest version of the DotNetCore SDK which can be found here: [https://www.microsoft.com/net/download/core](https://www.microsoft.com/net/download/core)
+    - An instance of MSSQL server or MSSQL server EXPRESS
+    - NodeJS and NPM
 
+    The powershell script will automatically install gulp.
+
+    `./build.ps1` builds and runs the DevMarketplace project
+    `./build.ps1 -noinit -noDbConfig` the parameter -noinit skips the prerequisites check and teh -noDbConfig doesn't prompt for a connection string 
 
 ## Git guidelines
 
