@@ -31,7 +31,9 @@ To start contributing to the Developer Marketplace project, you can clone the re
     The script will automatically install nodejs, npm and gulp in order to perform all necessary build/run operations.
     
     `sh build.sh -h` displays help information about the build script
+    
     `sh build.sh` builds and runs the DevMarketplace project. It checks all necessery prerequisites and it also configures the connection string to the MSSQL instance
+    
     `sh build.sh -n -d` the parameter -d skips the database connection string input and the -n parameter disables the prerequisites check
 
 * Running the build.ps1 script (Windows)
