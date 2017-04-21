@@ -47,6 +47,7 @@ To start contributing to the Developer Marketplace project, you can clone the re
     The powershell script will automatically install gulp.
 
     `./build.ps1` builds and runs the DevMarketplace project
+    
     `./build.ps1 -noinit -noDbConfig` the parameter -noinit skips the prerequisites check and teh -noDbConfig doesn't prompt for a connection string 
 
 ## Git guidelines
