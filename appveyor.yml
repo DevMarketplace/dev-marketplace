@@ -1,0 +1,18 @@
+version: 1.0.{build}
+skip_tags: true
+image: Visual Studio 2017
+clone_folder: c:\projects\dev-marketplace
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+before_build:
+- cmd: dotnet restore
+build:
+  verbosity: minimal
+notifications:
+- provider: Email
+  to:
+  - cracker4o@gmail.com
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: false
