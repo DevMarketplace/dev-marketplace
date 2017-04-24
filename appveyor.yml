@@ -11,7 +11,9 @@ before_build:
 - ps: Push-Location ".\src\UI"
 - npm install
 - ps: gulp -b ".\" --color --gulpfile "Gulpfile.js" copy-all;
+- ps: Get-Location
 - ps: Pop-Location
+- ps: Get-Location
 build:
   verbosity: minimal
 notifications:
