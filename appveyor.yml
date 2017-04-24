@@ -1,4 +1,4 @@
-version: 1.0.0.{build}
+version: 0.0.0.{build}
 skip_tags: true
 image: Visual Studio 2017
 clone_folder: c:\projects\dev-marketplace
@@ -9,8 +9,8 @@ before_build:
 - cmd: dotnet restore
 - cmd: npm install src\UI\
 - cmd: npm install gulp -g
-- cmd: gulp -b ".\" --color --gulpfile src\UI\gulpfile.js copy-all
-- cmd: gulp -b ".\" --color --gulpfile src\UI\gulpfile.js sass
+- ps: .\src\UI\gulp -b ".\" --color --gulpfile src\UI\gulpfile.js copy-all
+- ps: .\src\UI\gulp -b ".\" --color --gulpfile src\UI\gulpfile.js sass
 build:
   verbosity: minimal
 notifications:
