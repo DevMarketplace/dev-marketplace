@@ -6,12 +6,12 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 before_build:
-- ps: dotnet restore
-  - npm install src\UI\
-  - npm install gulp -g
-  - Push-Location ".\src\UI\"
-  - gulp -b ".\" --color --gulpfile "Gulpfile.js" copy-all
-  - Pop-Location
+- ps: >- dotnet restore
+    npm install src\UI\
+    npm install gulp -g
+    Push-Location ".\src\UI\"
+    gulp -b ".\" --color --gulpfile "Gulpfile.js" copy-all
+    Pop-Location
 build:
   verbosity: minimal
 notifications:
