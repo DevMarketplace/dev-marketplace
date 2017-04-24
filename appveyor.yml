@@ -15,6 +15,7 @@ before_build:
 - ps: Pop-Location
 - ps: Get-Location
 build:
+  project: DevMarketplace.sln
   verbosity: minimal
 notifications:
 - provider: Email
