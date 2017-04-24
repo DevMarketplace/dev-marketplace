@@ -17,6 +17,7 @@ before_build:
 build:
   project: DevMarketplace.sln
   verbosity: minimal
+test: off
 notifications:
 - provider: Email
   to:
