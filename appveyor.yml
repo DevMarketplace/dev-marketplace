@@ -9,8 +9,8 @@ before_build:
 - cmd: dotnet restore
 - cmd: npm install src\UI\
 - cmd: npm install gulp -g
-- ps: .\src\UI\gulp -b ".\" --color --gulpfile src\UI\gulpfile.js copy-all
-- ps: .\src\UI\gulp -b ".\" --color --gulpfile src\UI\gulpfile.js sass
+- ps: Push-Location ".\src\UI\"; gulp -b ".\" --color --gulpfile gulpfile.js copy-all; Pop-Location;
+- ps: Push-Location ".\src\UI\"; gulp -b ".\" --color --gulpfile gulpfile.js sass; Pop-Location;
 build:
   verbosity: minimal
 notifications:
