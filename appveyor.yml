@@ -7,10 +7,8 @@ environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 before_build:
 - cmd: dotnet restore
-- cmd: npm install src\UI\
-- cmd: npm install gulp -g
-- ps: Push-Location ".\src\UI\"; gulp -b ".\" --color --gulpfile gulpfile.js copy-all; Pop-Location;
-- ps: Push-Location ".\src\UI\"; gulp -b ".\" --color --gulpfile gulpfile.js sass; Pop-Location;
+- ps: Push-Location ".\src\UI\"; npm install; gulp -b ".\" --color --gulpfile gulpfile.js copy-all; Pop-Location;
+- ps: Push-Location ".\src\UI\"; npm install; gulp -b ".\" --color --gulpfile gulpfile.js sass; Pop-Location;
 build:
   verbosity: minimal
 notifications:
