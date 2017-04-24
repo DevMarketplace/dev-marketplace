@@ -8,8 +8,10 @@ environment:
 before_build:
 - ps: dotnet restore
 - npm install gulp -g
-- npm install src\UI\
-- ps: Push-Location ".\src\UI\"; gulp -b ".\" --color --gulpfile "Gulpfile.js" copy-all; Pop-Location;
+- ps: Push-Location ".\src\UI"
+- npm install
+- ps: gulp -b ".\" --color --gulpfile "Gulpfile.js" copy-all;
+- ps: Pop-Location
 build:
   verbosity: minimal
 notifications:
