@@ -6,7 +6,7 @@ If you want to become a contributor, you have to follow this workflow:
 - Accept the Contributors License Agreement (CLA). You can find more information about the CLA below.
 - Go to `Git Issues` or [Waffle.IO](https://waffle.io) and select a story that is tagged with the `help wanted` (most of them are).
 - If you're using Waffle.IO please move the story to the `In Progress` column and create a new branch from `master` using the following name convention `US##_FriendlyName` where `##` is a placeholder for the git issue ID (e.g. US35_ClaimsAuthentication).
-- You can use either Visual Studio 2015, VSCode or any IDE in combination with .netcore. Just exclude from the .gitignore any potential temporary and configuration files that are specific to the IDE. 
+- You can use either Visual Studio 2017, VSCode or any IDE in combination with .netcore. Just exclude from the .gitignore any potential temporary and configuration files that are specific to the IDE. 
 - The Developer Marketplace project abides by [TDD](https://en.wikipedia.org/wiki/Test-driven_development) practices. For every piece of production code there should be a unit test that failed and the production code fixes it and makes it pass. All code is subject to testing except the generated code, business objects, models and POCOs. An AppVeyor CI build is in place to assure that all unit tests pass and the project code base is intact.
 - Follow the coding conventions described in the [CONVENTIONS.md](https://github.com/cracker4o/dev-marketplace/blob/master/docs/CODING_CONVENTIONS.md) file.
 - When you are finished implementing the code for the story, please commit and push your changes and make a pull request.
