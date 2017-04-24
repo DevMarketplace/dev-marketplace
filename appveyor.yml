@@ -7,7 +7,7 @@ environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 before_build:
 - cmd: dotnet restore
-- cmd: npm install
+- cmd: npm install src\UI\
 build:
   verbosity: minimal
 notifications:
@@ -17,3 +17,4 @@ notifications:
   on_build_success: true
   on_build_failure: true
   on_build_status_changed: false
+  
