@@ -50,5 +50,9 @@ To start contributing to the Developer Marketplace project, you can clone the re
     
     `./build.ps1 -noinit -noDbConfig` the parameter -noinit skips the prerequisites check and teh -noDbConfig doesn't prompt for a connection string 
 
+* GitHub OAuth settings
+
+    If you want to use the GitHub OAuth feature to sign in for the Developer marketplace please contact <cracker4o@gmail.com> to get the ClientID and the Client Secret.
+
 ## Git guidelines
 
