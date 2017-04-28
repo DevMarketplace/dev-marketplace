@@ -39,6 +39,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using UI.Utilities;
 using BusinessLogic.Managers;
+using Hangfire;
 using Microsoft.AspNetCore.Server.Kestrel;
 
 namespace UI
@@ -95,6 +96,11 @@ namespace UI
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.AddHangfire(options =>
+            {
+                options.UseSqlServerStorage(Configuration.GetSection("ConnectionStrings").GetValue<string>("Default"));
+            });
+
             // Add framework services.
             services.AddMvc().AddControllersAsServices();
 
@@ -147,7 +153,6 @@ namespace UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseBrowserLink();
             }
             else
             {
@@ -156,6 +161,7 @@ namespace UI
 
             app.UseStaticFiles();
             app.UseIdentity();
+            app.UseHangfireServer();
             app.UseGitHubAuthentication(new GitHubAuthenticationOptions {
                 ClientId = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientId"],
                 ClientSecret = Configuration.GetSection("LoginProviders").GetSection("GitHub")["GitHubClientSecret"],
