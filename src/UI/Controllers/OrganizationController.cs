@@ -28,6 +28,7 @@ using System;
 using System.Linq;
 using BusinessLogic.BusinessObjects;
 using BusinessLogic.Managers;
+using DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -41,12 +42,14 @@ namespace UI.Controllers
     {
         private readonly ICountryManager _countryManager;
         private readonly ICompanyManager _companyManager;
+        private readonly IUserManagerWrapper<ApplicationUser> _userManager;
         private readonly ILogger _logger;
 
-        public OrganizationController(ICountryManager countryManager, ICompanyManager companyManager, ILoggerFactory loggerFactory)
+        public OrganizationController(ICountryManager countryManager, ICompanyManager companyManager, IUserManagerWrapper<ApplicationUser> userManager, ILoggerFactory loggerFactory)
         {
             _countryManager = countryManager;
             _companyManager = companyManager;
+            _userManager = userManager;
             _logger = loggerFactory.CreateLogger(nameof(OrganizationController));
         }
 
@@ -56,6 +59,12 @@ namespace UI.Controllers
         {
             try
             {
+                var user = _userManager.GetUserAsync(User).Result;
+                if (!_companyManager.IsUserCompanyAdmin(user.Id, id))
+                {
+                    return NotFound();
+                }
+
                 var company = _companyManager.Get(id);
                 if (company == null)
                 {
@@ -90,6 +99,12 @@ namespace UI.Controllers
             {
                 model.Countries = _countryManager.GetCountries().Select(c => new SelectListItem { Text = c.Name, Value = c.IsoCountryCode }).ToList();
                 return View(nameof(Update), model);
+            }
+
+            var user = _userManager.GetUserAsync(User).Result;
+            if (model.Id.HasValue && !_companyManager.IsUserCompanyAdmin(user.Id, model.Id.Value))
+            {
+                return NotFound();
             }
 
             try
