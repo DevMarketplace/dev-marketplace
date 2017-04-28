@@ -31,6 +31,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using BusinessLogic.Managers;
+using DataAccess;
 using Microsoft.Extensions.Logging;
 using UI.Controllers;
 
@@ -43,12 +44,23 @@ namespace UITests.Controllers
         private ICountryManager _countryManagerMock;
         private ICompanyManager _companyManagerMock;
         private ILoggerFactory _loggerFactory;
+        private IUserManagerWrapper<ApplicationUser> _userManagerMock;
+        private ApplicationUser _currentUser;
 
         [SetUp]
         public void SetUp()
         {
             _loggerFactory = Mock.Of<ILoggerFactory>();
             _countryManagerMock = Mock.Of<ICountryManager>();
+            _userManagerMock = Mock.Of<IUserManagerWrapper<ApplicationUser>>();
+            _companyManagerMock = Mock.Of<ICompanyManager>();
+            _currentUser = new ApplicationUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "test_user@user.com",
+                Email = "test_user@user.com"
+            };
+
             Mock.Get(_countryManagerMock)
                 .Setup(x => x.GetCountries())
                 .Returns(new List<CountryBo> { new CountryBo
@@ -57,15 +69,22 @@ namespace UITests.Controllers
                     Name = "United States"
                 } });
 
-            _controller = new OrganizationController(_countryManagerMock, _companyManagerMock, _loggerFactory);
+            Mock.Get(_userManagerMock)
+                .Setup(x => x.GetUserAsync(_controller.User).Result)
+                .Returns(_currentUser);
+
+            _controller = new OrganizationController(_countryManagerMock, _companyManagerMock, _userManagerMock, _loggerFactory);
         }
 
         [Test]
-        public void DoGetTheCreateOrganizationPage()
+        public void DoGetTheUpdateOrganizationPage()
         {
             //Arrange
             string expectedView = "Update";
             var companyId = new Guid();
+            Mock.Get(_companyManagerMock)
+                .Setup(x => x.IsUserCompanyAdmin(_currentUser.Id, companyId))
+                .Returns(true);
 
             //Act
             var result = _controller.Update(companyId);
