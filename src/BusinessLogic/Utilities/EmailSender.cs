@@ -63,6 +63,7 @@ namespace BusinessLogic.Utilities
             await _smtpClient.ConnectAsync(configuration.SmtpServer, configuration.SmtpPort, configuration.SecureSocketOption).ConfigureAwait(false);
             await _smtpClient.SendAsync(emailMessage).ConfigureAwait(false);
             await _smtpClient.DisconnectAsync(true).ConfigureAwait(false);
+            
         }
 
         private static void SetCarbonCopy(EmailSenderConfiguration configuration, MimeMessage emailMessage)

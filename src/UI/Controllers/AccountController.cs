@@ -41,6 +41,7 @@ using System.Linq;
 using System.Security.Claims;
 using BusinessLogic.Managers;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Hangfire;
 
 namespace UI.Controllers
 {
@@ -57,6 +58,8 @@ namespace UI.Controllers
         private readonly ICompanyManager _companyManager;
         private readonly IUrlUtilityWrapper _urlEncoderWrapper;
 
+        private readonly IBackgroundJobClient _backgroundJobClient;
+
         public AccountController(IUserManagerWrapper<ApplicationUser> userManager,
             ISignInManagerWrapper<ApplicationUser> signInManager,
             IEmailSender emailSender,
@@ -65,7 +68,9 @@ namespace UI.Controllers
             IViewRenderer viewRenderer,
             IConfiguration configuration,
             ICompanyManager companyManager,
-            IUrlUtilityWrapper urlEncoderWrapper)
+            IUrlUtilityWrapper urlEncoderWrapper,
+            IBackgroundJobClient backgroundJobClient
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -76,6 +81,7 @@ namespace UI.Controllers
             _protector = protectionProvider.CreateProtector(GetType().FullName);
             _companyManager = companyManager;
             _urlEncoderWrapper = urlEncoderWrapper;
+            _backgroundJobClient = backgroundJobClient;
         }
 
         [HttpGet]
@@ -567,7 +573,7 @@ namespace UI.Controllers
                 protectedSequence = _urlEncoderWrapper.UrlEncode(_protector.Protect(user.Id)), code = code
             }, protocol: HttpContext.Request.Scheme);
             var emailBody = _viewRenderer.Render("Account\\ForgottenPasswordEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = callbackUrl });
-            await SendEmailAsync(user, AccountContent.ResetPasswordEmailSubjectText, emailBody);
+            _backgroundJobClient.Enqueue(() => SendEmail(user, AccountContent.ResetPasswordEmailSubjectText, emailBody));
         }
 
         [NonAction]
@@ -584,10 +590,11 @@ namespace UI.Controllers
                 protocol: HttpContext.Request.Scheme);
 
             var emailBody = _viewRenderer.Render("Account\\ActivationEmailTemplate", new ActivationEmailViewModel { User = user, ActivationUrl = activationUrl });
-            await SendEmailAsync(user, AccountContent.ActivationEmailSubject, emailBody);
+            _backgroundJobClient.Enqueue(() => SendEmail(user, AccountContent.ActivationEmailSubject, emailBody));
         }
 
-        private async Task SendEmailAsync(ApplicationUser user, string subject, string emailBody)
+        [AutomaticRetry(Attempts = 3)]
+        public void SendEmail(ApplicationUser user, string subject, string emailBody)
         {
             var configuration = new EmailSenderConfiguration
             {
@@ -613,7 +620,7 @@ namespace UI.Controllers
                 Domain = _configuration.GetSection("EmailSettings")["Domain"]
             };
 
-            await _emailSender.SendEmailAsync(configuration);
+            _emailSender.SendEmailAsync(configuration).Wait();            
         }
     }
 }
