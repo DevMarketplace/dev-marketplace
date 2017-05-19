@@ -57,7 +57,6 @@ namespace UI.Controllers
         private readonly IDataProtector _protector;
         private readonly ICompanyManager _companyManager;
         private readonly IUrlUtilityWrapper _urlEncoderWrapper;
-
         private readonly IBackgroundJobClient _backgroundJobClient;
 
         public AccountController(IUserManagerWrapper<ApplicationUser> userManager,

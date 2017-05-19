@@ -37,6 +37,7 @@ using NUnit.Framework;
 using UI.Controllers;
 using UI.Models;
 using UI.Utilities;
+using Hangfire;
 
 namespace UITests.Controllers
 {
@@ -52,6 +53,7 @@ namespace UITests.Controllers
         private IConfiguration _configurationMock;
         private IDataProtector _protectorMock;
         private ICompanyManager _companyManagerMock;
+        private IBackgroundJobClient _backgroundJobClientMock;
         private IUrlUtilityWrapper _urlEncoderWrapper;
 
         [SetUp]
@@ -65,11 +67,12 @@ namespace UITests.Controllers
             _protectorMock = Mock.Of<IDataProtector>();
             _configurationMock = Mock.Of<IConfiguration>();
             _companyManagerMock = Mock.Of<ICompanyManager>();
+            _backgroundJobClientMock = Mock.Of<IBackgroundJobClient>();
             _urlEncoderWrapper = new UrlUtilityWrapper();
             _accountControllerPartialMock = new Mock<AccountController>(_userManagerMock, 
                 _signInManagerMock, _emailSenderMock, _loggerMock, 
                 _protectorMock, _viewRendererMock, 
-                _configurationMock, _companyManagerMock, _urlEncoderWrapper) { CallBase = true };
+                _configurationMock, _companyManagerMock, _urlEncoderWrapper, _backgroundJobClientMock) { CallBase = true };
         }
 
         [Test]

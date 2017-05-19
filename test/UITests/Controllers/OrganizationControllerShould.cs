@@ -34,6 +34,7 @@ using BusinessLogic.Managers;
 using DataAccess;
 using Microsoft.Extensions.Logging;
 using UI.Controllers;
+using System.Threading.Tasks;
 
 namespace UITests.Controllers
 {
@@ -69,11 +70,11 @@ namespace UITests.Controllers
                     Name = "United States"
                 } });
 
-            Mock.Get(_userManagerMock)
-                .Setup(x => x.GetUserAsync(_controller.User).Result)
-                .Returns(_currentUser);
-
             _controller = new OrganizationController(_countryManagerMock, _companyManagerMock, _userManagerMock, _loggerFactory);
+
+            Mock.Get(_userManagerMock)
+                .Setup(x => x.GetUserAsync(_controller.User))
+                .Returns(Task.FromResult(_currentUser));
         }
 
         [Test]
@@ -81,10 +82,14 @@ namespace UITests.Controllers
         {
             //Arrange
             string expectedView = "Update";
-            var companyId = new Guid();
+            var companyId = Guid.NewGuid();
             Mock.Get(_companyManagerMock)
                 .Setup(x => x.IsUserCompanyAdmin(_currentUser.Id, companyId))
                 .Returns(true);
+
+            Mock.Get(_companyManagerMock)
+                .Setup(x => x.Get(companyId))
+                .Returns(new CompanyBo());
 
             //Act
             var result = _controller.Update(companyId);
