@@ -19,6 +19,9 @@ build:
   verbosity: normal
 test_script:
 - dotnet test .\test\BusinessLogicTests\BusinessLogicTests.csproj
+- dotnet test .\test\DataAccessTests\DataAccessTests.csproj
+- dotnet test .\test\RestServicesTests\RestServicesTests.csproj
+- dotnet test .\test\UITests\UITests.csproj
 notifications:
 - provider: Email
   to:
