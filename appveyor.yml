@@ -17,7 +17,8 @@ before_build:
 build:
   project: DevMarketplace.sln
   verbosity: normal
-test: off
+test_script:
+- dotnet test .\test\BusinessLogicTests\BusinessLogicTests.csproj
 notifications:
 - provider: Email
   to:
