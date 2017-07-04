@@ -35,7 +35,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
     <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="1.0.0-beta2-final" />
-    <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.3.0" />
+    <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.3.1" />
     <PackageReference Include="BundlerMinifier.Core" Version="2.4.337" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.2" />

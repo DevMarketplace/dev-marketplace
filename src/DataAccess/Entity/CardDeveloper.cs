@@ -24,39 +24,25 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entity
 {
-    public class Company : IHasIdentityEntity
+    public class CardDeveloper
     {
-        [Key, Column(Order=1)]
-        public Guid? Id { get; set; }
+        [Required]
+        [Key, Column(Order = 1)]
+        public string UserId { get; set; }
 
-        [Column(Order=2), Required, MinLength(1), MaxLength(300)]
-        public string Name { get; set; }
+        [Required]
+        [Key, Column(Order = 2)]
+        public Guid? CardId { get; set; }
 
-        [Column(Order=3), DataType(DataType.Url)]
-        public string Url { get; set; }
+        [ForeignKey("CardId")]
+        public Card Card { get; set; }
 
-        [Column(Order = 4)]
-        public string Description { get; set; }
-
-        [Required, Column(Order = 5), DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-        [Required, Column(Order = 6), StringLength(2)]
-        public string IsoCountryCode { get; set; }
-
-        [ForeignKey("IsoCountryCode")]
-        public virtual Country Country { get; set; }
-
-        [Column(Order=7)]
-        public string Location { get; set; }
-
-        public ICollection<CompanyAdmin> CompanyAdmins { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
     }
 }

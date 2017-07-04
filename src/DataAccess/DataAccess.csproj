@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
     <PackageReference Include="StructureMap.AutoFactory" Version="1.0.1" />
-    <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.3.0" />
+    <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="1.3.1" />
   </ItemGroup>
 
 </Project>

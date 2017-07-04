@@ -8,9 +8,10 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DevMarketplaceDataContext))]
-    partial class DevMarketplaceDataContextModelSnapshot : ModelSnapshot
+    [Migration("20170704030424_InsertProjectRelatedStatuses")]
+    partial class InsertProjectRelatedStatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

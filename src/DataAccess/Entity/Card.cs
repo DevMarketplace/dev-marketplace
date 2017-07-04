@@ -24,39 +24,55 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entity
 {
-    public class Company : IHasIdentityEntity
+    public class Card : IHasIdentityEntity
     {
-        [Key, Column(Order=1)]
+        [Key, Column(Order = 1)]
         public Guid? Id { get; set; }
 
-        [Column(Order=2), Required, MinLength(1), MaxLength(300)]
-        public string Name { get; set; }
+        [Required, Column(Order = 2)]
+        public Guid ProjectId { get; set; }
 
-        [Column(Order=3), DataType(DataType.Url)]
-        public string Url { get; set; }
+        [Required, Column(Order = 3)]
+        public string Title { get; set; }
 
         [Column(Order = 4)]
         public string Description { get; set; }
 
-        [Required, Column(Order = 5), DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        [Column(Order = 5)]
+        public string Estimate { get; set; }
 
-        [Required, Column(Order = 6), StringLength(2)]
-        public string IsoCountryCode { get; set; }
+        [Column(Order = 6)]
+        public string CardProperties { get; set; }
 
-        [ForeignKey("IsoCountryCode")]
-        public virtual Country Country { get; set; }
+        [Required, Column(Order = 7)]
+        public string Status { get; set; }
 
-        [Column(Order=7)]
-        public string Location { get; set; }
+        [Required, Column(Order = 8)]
+        public string Assignee { get; set; }
 
-        public ICollection<CompanyAdmin> CompanyAdmins { get; set; }
+        [Column(Order = 9)]
+        public DateTime CreatedDate { get; set; }
+
+        [Column(Order = 10)]
+        public DateTime ModifiedDate { get; set; }
+
+        [ForeignKey("Status")]
+        public CardStatus CardStatus { get; set; }
+
+        [ForeignKey("Assignee")]
+        public ApplicationUser User { get; set; }
+
+        public ICollection<CardTask> Tasks { get; set; }
+
+        public ICollection<CardBidder> CardBidders { get; set; }
+
+        [ForeignKey("ProjectId")]
+        public Project Project { get; set; }
     }
 }

@@ -24,39 +24,49 @@
 // e-mail: cracker4o@gmail.com
 #endregion
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entity
 {
-    public class Company : IHasIdentityEntity
+    public class Project : IHasIdentityEntity
     {
-        [Key, Column(Order=1)]
+        [Key, Column(Order = 1)]
         public Guid? Id { get; set; }
 
-        [Column(Order=2), Required, MinLength(1), MaxLength(300)]
-        public string Name { get; set; }
+        [Required, Column(Order = 2)]
+        public string Title { get; set; }
 
-        [Column(Order=3), DataType(DataType.Url)]
-        public string Url { get; set; }
+        [Required, Column(Order = 3)]
+        public string Summary { get; set; }
 
-        [Column(Order = 4)]
+        [Required, Column(Order = 4)]
         public string Description { get; set; }
 
-        [Required, Column(Order = 5), DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        [Required, Column(Order = 5)]
+        public string TileImageUrl { get; set; }
 
-        [Required, Column(Order = 6), StringLength(2)]
-        public string IsoCountryCode { get; set; }
+        [Column(Order = 6)]
+        public string MainImageUrl { get; set; }
 
-        [ForeignKey("IsoCountryCode")]
-        public virtual Country Country { get; set; }
+        [Column(Order = 7)]
+        public string VanityImageUrl { get; set; }
 
-        [Column(Order=7)]
-        public string Location { get; set; }
+        [Required, Column(Order = 8)]
+        public string Status { get; set; }
 
-        public ICollection<CompanyAdmin> CompanyAdmins { get; set; }
-    }
+        [Column(Order = 9)]
+        public DateTime CreatedDate { get; set; }
+
+        [Column(Order = 10)]
+        public DateTime ModifiedDate { get; set; }
+
+        [ForeignKey("Status")]
+        public virtual ProjectStatus ProjectStatus {get; set;}
+
+        public ICollection<ProjectOwner> ProjectOwners { get; set; }
+
+        public ICollection<Card> ProjectCards { get; set; }
+}
 }

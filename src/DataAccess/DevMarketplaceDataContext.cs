@@ -40,6 +40,22 @@ namespace DataAccess
 
         public DbSet<CompanyAdmin> CompanyAdmin { get; set; }
 
+        public DbSet<Project> Project { get; set; }
+
+        public DbSet<ProjectOwner> ProjectOwner { get; set; }
+
+        public DbSet<ProjectStatus> ProjectStatus { get; set; }
+
+        public DbSet<Card> Card { get; set; }
+
+        public DbSet<CardBidder> CardBidder { get; set; }
+
+        public DbSet<CardDeveloper> CardDeveloper { get; set; }
+
+        public DbSet<CardStatus> CardStatus { get; set; }
+
+        public DbSet<CardTask> CardTask { get; set; }
+
         public DevMarketplaceDataContext()
         {
             Database.EnsureCreated();
@@ -47,7 +63,63 @@ namespace DataAccess
 
         public DevMarketplaceDataContext(DbContextOptions options) : base(options)
         {
-            
+
+        }
+
+        private void SetupProject(ModelBuilder builder)
+        {
+            builder.Entity<Project>()
+                .Property(b => b.Id)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            builder.Entity<Project>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Entity<Project>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Entity<ProjectOwner>()
+                .HasKey(c => new { c.ProjectId, c.UserId });
+        }
+
+        private void SetupCard(ModelBuilder builder)
+        {
+            builder.Entity<Card>()
+                .Property(b => b.Id)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            builder.Entity<Card>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Entity<Card>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Entity<CardTask>()
+                .Property(b => b.Id)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            builder.Entity<CardTask>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Entity<CardTask>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Entity<CardBidder>()
+                .HasKey(c => new { c.CardId, c.UserId });
+
+            builder.Entity<CardBidder>()
+                .HasOne(f => f.Card)
+                .WithMany(f => f.CardBidders)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict);
+
+            builder.Entity<CardDeveloper>()
+                .HasKey(c => new { c.CardId, c.UserId });
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -58,7 +130,11 @@ namespace DataAccess
                 .HasDefaultValueSql("NEWSEQUENTIALID()");
 
             builder.Entity<CompanyAdmin>()
-            .HasKey(c => new { c.CompanyId, c.UserId });
+                .HasKey(c => new { c.CompanyId, c.UserId });
+
+            SetupProject(builder);
+
+            SetupCard(builder);
         }
 
         void IDataContext.SaveChanges()
